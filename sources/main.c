@@ -18,6 +18,8 @@ int main(int argc, char const *argv[])
     int gnl_status = 0; //Il manque une ligne pour init ca dans gnl :/
     char *gnl_test;
     gnl_test = get_next_line_safe(0, &gnl_status);
+    if (ft_strcmp(gnl_test, "yo"))
+        ft_printf2("man\n");
     ft_printf2("gnl status = %i\n", gnl_status);
     free(gnl_test);
     //end gnl test
