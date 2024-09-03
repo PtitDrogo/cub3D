@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:11:39 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/09/03 16:52:52 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:23:24 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,6 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*ft_strjoin_free_s1(char *s1, char const *s2);
 long	ft_safe_atoi(const char *nptr);
+int		ft_strcmp(const char *s1, const char *s2);
 
 #endif
