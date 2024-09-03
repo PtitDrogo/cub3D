@@ -1,27 +1,36 @@
-# include <../libft/includes/libft.h>
+#include "parsing.h"
 
 int main(int argc, char const *argv[])
 {
-    (void)argc;
-    (void)argv;
-    //DO Parsing
+	if (argc != 2)
+	{
+		ft_printf2("Invalid number of arguments\n");
+		return (0);
+	}
+	//First hint of parsing test
+	
+	int cub_fd;
+	cub_fd = open(argv[1], O_RDONLY);
+	if (cub_fd == -1)
+	{
+		perror("Error opening map file\n"); //we can actually use perror here since write is a system call !
+		return (1);
+	}
 
-    //do the Cube
-    
-    //Random functions test;
+	char **map_file;
 
-    //ft_printf2 test;
-    ft_printf2("Yo la team est ce que l'espace\
-        de ouf est la\n"); // Mettre un \ marche pas ouuin
+	map_file = get_map_file(cub_fd);
+	if (map_file == NULL)
+		return (1); 
 
-    //safe gnl test
-    int gnl_status = 0; //Il manque une ligne pour init ca dans gnl :/
-    char *gnl_test;
-    gnl_test = get_next_line_safe(0, &gnl_status);
-    if (ft_strcmp(gnl_test, "yo"))
-        ft_printf2("man\n");
-    ft_printf2("gnl status = %i\n", gnl_status);
-    free(gnl_test);
-    //end gnl test
-    return 0;
+	//test if it worked
+	for(int i = 0; map_file[i]; i++)
+	{
+		ft_printf("%s\n", map_file[i]);
+	}
+
+	//tmp cleanup;
+	ft_free_array((void *)map_file);
+	close(cub_fd);
+	return 0;
 }
