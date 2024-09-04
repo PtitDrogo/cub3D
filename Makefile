@@ -14,6 +14,8 @@ DEPS 	= 	$(OBJS:.o=.d)
 #---------------------------------Sources---------------------------------#
 SRCS =		$(SRCS_DIR)/parsing/parsing.c \
 			$(SRCS_DIR)/main.c \
+			$(SRCS_DIR)/events.c \
+			$(SRCS_DIR)/windows_op.c \
 			
 #------------------------------------------------------------------------#
 

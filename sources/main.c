@@ -1,27 +1,23 @@
-# include <../libft/includes/libft.h>
+# include "parsing.h"
 
 int main(int argc, char const *argv[])
 {
-    (void)argc;
-    (void)argv;
-    //DO Parsing
-
+	//DO Parsing
     //do the Cube
+
+
+	t_info w;  //temporaire
+	char *filename;
     
-    //Random functions test;
-
-    //ft_printf2 test;
-    ft_printf2("Yo la team est ce que l'espace\
-        de ouf est la\n"); // Mettre un \ marche pas ouuin
-
-    //safe gnl test
-    int gnl_status = 0; //Il manque une ligne pour init ca dans gnl :/
-    char *gnl_test;
-    gnl_test = get_next_line_safe(0, &gnl_status);
-    if (ft_strcmp(gnl_test, "yo"))
-        ft_printf2("man\n");
-    ft_printf2("gnl status = %i\n", gnl_status);
-    free(gnl_test);
-    //end gnl test
+   if (argc != 2)
+		return (ft_printf("Error\n/!\\ WRONG NB OF PARAMETERS!\n"));
+	filename = argv[1];
+	if (!load_window(&w))
+		return (1);
+	draw_all(&w);
+	mlx_hook(w.id_wind, KeyPress, KeyPressMask, deal_key, &w);
+	mlx_hook(w.id_wind, DestroyNotify, StructureNotifyMask, free_window, &w);
+	mlx_loop_hook(w.id_mlx, no_events, &w);
+	mlx_loop(w.id_mlx);
     return 0;
 }
