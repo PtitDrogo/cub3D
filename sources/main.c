@@ -6,12 +6,34 @@ int main(int argc, char const *argv[])
     //do the Cube
 
 
-	t_info w;  //temporaire
-	char *filename;
-    
-   if (argc != 2)
-		return (ft_printf("Error\n/!\\ WRONG NB OF PARAMETERS!\n"));
-	filename = argv[1];
+	t_info 	w;  //temporaire
+    char 	**map_file;
+	int 	cub_fd;
+
+	if (argc != 2)
+	{
+		ft_printf2("Invalid number of arguments\n");
+		return (0);
+	}
+	//First hint of parsing test
+	
+	
+	cub_fd = open(argv[1], O_RDONLY);
+	if (cub_fd == -1)
+	{
+		perror("Error opening map file\n"); //we can actually use perror here since write is a system call !
+		return (1);
+	}
+
+	map_file = get_map_file(cub_fd);
+	if (map_file == NULL)
+		return (1); 
+
+	//test if it worked
+	for(int i = 0; map_file[i]; i++)
+	{
+		ft_printf("%s\n", map_file[i]);
+	}
 	if (!load_window(&w))
 		return (1);
 	draw_all(&w);
@@ -19,5 +41,9 @@ int main(int argc, char const *argv[])
 	mlx_hook(w.id_wind, DestroyNotify, StructureNotifyMask, free_window, &w);
 	mlx_loop_hook(w.id_mlx, no_events, &w);
 	mlx_loop(w.id_mlx);
+
+	//tmp cleanup;
+	ft_free_array((void *)map_file);
+	close(cub_fd);
     return 0;
 }
