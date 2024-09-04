@@ -1,4 +1,4 @@
-#include "parsing.h"
+#include "../../includes/parsing.h"
 
 //get map file, maybe add a bool for if theres an error idk
 char **get_map_file(int cub_fd)

@@ -16,6 +16,8 @@ SRCS =		$(SRCS_DIR)/parsing/get_map.c \
 			$(SRCS_DIR)/main.c \
 			$(SRCS_DIR)/events.c \
 			$(SRCS_DIR)/windows_op.c \
+			$(SRCS_DIR)/is_valid.c \
+			$(SRCS_DIR)/parse_utils.c \
 			
 #------------------------------------------------------------------------#
 
