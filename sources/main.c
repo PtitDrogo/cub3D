@@ -28,10 +28,10 @@ int main(int argc, char const *argv[])
 	map_file = get_map_file(cub_fd);
 	if (map_file == NULL)
 		return (1); 
-	// for(int i = 0; map_file[i]; i++)
-	// {
-	// 	ft_printf("%s\n", map_file[i]);
-	// }
+	for(int i = 0; map_file[i]; i++)
+	{
+		ft_printf("%s\n", map_file[i]);
+	}
 
 	ft_bzero(&data, sizeof(data));
 	//Parsing file, fills the data in data
