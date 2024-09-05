@@ -1,11 +1,9 @@
 # include "parsing.h"
 
+static void debug_print_printed_parameters(t_parse_data *data);
+
 int main(int argc, char const *argv[])
 {
-	//DO Parsing
-    //do the Cube
-
-
 	// t_info 	w;  //temporaire
 	t_parse_data data;
     char 	**map_file;
@@ -16,8 +14,6 @@ int main(int argc, char const *argv[])
 		ft_printf2("Invalid number of arguments\n");
 		return (0);
 	}
-	//First hint of parsing test
-	
 	cub_fd = open(argv[1], O_RDONLY);
 	if (cub_fd == -1)
 	{
@@ -32,12 +28,25 @@ int main(int argc, char const *argv[])
 	{
 		ft_printf("%s\n", map_file[i]);
 	}
-
+	ft_printf("\n");
 	ft_bzero(&data, sizeof(data));
+	
 	//Parsing file, fills the data in data
-	if (big_parser(map_file, &data) == 1) //we can have fun with error codes here idk;
-		return (1);
-	//test if it worked
+	int map_start = big_parser(map_file, &data);
+	debug_print_printed_parameters(&data);
+	if (map_start == -1) //this means error
+	{	
+		printf("There was an error of type %i! Exiting ...\n", data.status);
+		ft_free_array((void *)map_file);
+		return (1); //PRINT ERROR MESSAGE HERE
+	}	
+	else
+	{
+		// char **actual_map = &map_file[map_start]; //this never needs to be freed
+		//Feed the above to map parser;
+	
+	}
+
 	// if (!load_window(&w))
 	// 	return (1);
 	// draw_all(&w);
@@ -50,4 +59,31 @@ int main(int argc, char const *argv[])
 	ft_free_array((void *)map_file);
 	close(cub_fd);
     return 0;
+}
+
+
+static void debug_print_printed_parameters(t_parse_data *data)
+{
+	printf("My parameters are :\n\
+		- NO_texts = %s\n\
+		- SO_texts = %s\n\
+		- WE_texts = %s\n\
+		- EA_texts = %s\n\
+		- FLOOR_r = %i\n\
+		- FLOOR_g = %i\n\
+		- FLOOR_b = %i\n\
+		- Ceiling_r = %i\n\
+		- Ceiling_g = %i\n\
+		- Ceiling_b = %i\n", 
+		  data->NO_texts
+		, data->SO_texts
+		, data->WE_texts
+		, data->EA_texts
+		, data->floor_colors.r
+		, data->floor_colors.g
+		, data->floor_colors.b
+		, data->ceiling_colors.r
+		, data->ceiling_colors.g
+		, data->ceiling_colors.b);
+	
 }

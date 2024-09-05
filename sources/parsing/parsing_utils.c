@@ -28,6 +28,14 @@ void    update_status(int err_value, int *status)
 
 bool	is_map_char(char c)
 {
-	return (c == '0' || c == '1'); //maybe add more here if we add features;
+	return (c == '0' || c == '1'); //TODO add fonction leo pour tout les possibles mapchars;
+}
+//with index being at the start of a word, moves to the index to the first char of the next word
+void	skip_word(const char *line, size_t *index)
+{
+	while (is_white_space(line[*index]) == false)
+		(*index)++;
+	while (is_white_space(line[*index]))
+		(*index)++;
 }
 

@@ -25,20 +25,29 @@
 # define ERR_RGB_NaN 704
 # define ERR_RGB_INVALID_VALUE 705
 # define ERR_MAP_TOO_SOON 706
+# define ERR_TOO_FEW_CHARS 707
+# define ERR_INVALID_CHAR 708
+
+typedef struct s_rgb 
+{
+	int 	r;
+	int 	g;
+	int		b;
+	bool 	is_defined;
+} t_rgb;
 
 
 typedef struct s_parse_data
 {
-	size_t  		map_heigth;
-	size_t  		map_width;
+	size_t  		map_heigth; //Used by leo for map so maybe not here
+	size_t  		map_width; //Used by leo for map so maybe not here
 	char			NO_texts[PATH_MAX];
 	char			SO_texts[PATH_MAX];
 	char			WE_texts[PATH_MAX];
 	char			EA_texts[PATH_MAX];
-	unsigned char 	floor_colors[4];
-	unsigned char 	ceiling_colors[4];
-
-	int		status;
+	t_rgb 			floor_colors;
+	t_rgb 			ceiling_colors;
+	int				status;
 } t_parse_data;
 
 
@@ -63,7 +72,8 @@ int		big_parser(char **file, t_parse_data *data);
 bool	is_white_space(char c);
 size_t	strlen_until_whitespace(const char *s);
 void    update_status(int err_value, int *status);
-void	rgb_parsing(char *line, unsigned char colors[4], int *status);
+void	rgb_parsing(const char *line, t_rgb *rgb, int *status);
 bool	is_map_char(char c);
+void	skip_word(const char *line, size_t *index);
 
 #endif
