@@ -49,11 +49,19 @@ typedef struct t_m_rgb
 	unsigned char	b_value;
 }				t_rgb;
 
+typedef struct t_m_point
+{
+	float x;
+	float y;
+}				t_point;
+
 typedef struct t_w_info
 {
 	void			*id_mlx;  // mlx session id
 	void			*id_wind; //window id
 	char			**map_file; // split map
+	int				map_heigth;
+	int				map_lenght;
 	t_image			m_door; //sprites : 
 	t_image			n_wall;
 	t_image			s_wall;
@@ -61,6 +69,7 @@ typedef struct t_w_info
 	t_image			w_wall;
 	t_rgb			floor_v;
 	t_rgb			celling_v;
+	t_point			player;
 }				t_info;
 
 //---------------------Functions---------------------//
@@ -69,8 +78,10 @@ int		no_events(t_info *w);
 int		deal_key(int id_key, t_info *w);
 int		free_window(t_info *w);
 int		load_window(t_info *w);
-bool	is_map_valid(char **m_map);
+bool	is_map_valid(t_info *w, char **m_map);
 void	print_map(char **map); //only for debug, to delete after
 bool	is_allowed_char(char c);
 bool	is_direction_c(char c);
+bool	is_whitespace_c(char c);
+void	find_player(t_info *w); // set player x | y
 #endif

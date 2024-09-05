@@ -24,10 +24,7 @@ bool	contains_invalid_char(char *str, int *cpt)
 			i++;
 		}
 		else
-		{
-			// printf("Sorry ! (%c)->int %d is invalid !\n", str[i], str[i]); //remove
 			return (true);
-		}
 	}
 	return (false);
 }
@@ -42,7 +39,6 @@ int	invalid_player(char **m_map)
 
 	while (m_map[i])
 	{
-		// printf("\nAnalysing (%s) ...\n\n", m_map[i]);
 		if (contains_invalid_char(m_map[i], &cpt))
 			return (3);
 		if (cpt > 1)
@@ -83,18 +79,25 @@ int	check_outer_line(char **map, int height, int length)
 
 	x = 0;
 	y = 0;
-	while (y < height - 1)
+	while (y < height)
 	{
-		if ((map[y][0] == '0') ||
-				(map[y][length - 1] == '0'))
+		// printf("checking map[%d][0] AND ",y);
+		// printf("checking map[%d][%d]\n", y, length - 1);
+		if ((map[y][0] == '0') || (map[y][0] == 'E') ||
+				(map[y][length - 1] == '0') ||
+				(map[y][length - 1] == 'E'))
 			return (1);
 		else
 			y++;
 	}
-	while (x < length - 2)
+	// printf("\ndone checking vertically ....\n\n");
+	while (x < length - 1)
 	{
-		if ((map[0][x] == '0') ||
-				(map[height - 1][x] == '0'))
+		// printf(" 2 :checking map[0][%d] AND ",x);
+		// printf("checking map[%d][%d]\n", height - 1, x);
+		if ((map[0][x] == '0') || (map[0][x] == 'E') ||
+				(map[height - 1][x] == '0') ||
+				(map[height - 1][x] == 'E'))
 			return (1);
 		else
 			x++;
@@ -102,9 +105,51 @@ int	check_outer_line(char **map, int height, int length)
 	return (0);
 }
 
+bool	invalid_neighbour(char **map, int x, int y)
+{
+	if (is_whitespace_c(map[y][x - 1]))
+		return (true);
+	if (is_whitespace_c(map[y][x + 1]))
+		return (true);
+	if (is_whitespace_c(map[y - 1][x]))
+		return (true);
+	if (is_whitespace_c(map[y + 1][x]))
+		return (true);
+	return (false);
+}
+
+int		check_inner_map(char **map, int height, int length)
+{
+	int	x;
+	int	y;
+
+	x = 1;
+	y = 1;
+	while (y < height - 1)
+	{
+		x = 1;
+		// printf("|");
+		while (x < length - 1)
+		{
+			// printf("%c", map[y][x]);
+			if (map[y][x] == '0' || is_direction_c(map[y][x]))
+			{
+				if(invalid_neighbour(map, x , y))
+					return (1);
+			}
+			x++;
+		}
+		// printf("|\n");
+		y++;
+	}
+	return (0);
+}
+
 int		unclosed_map(char **map, int height, int length)
 {
 	if(check_outer_line(map, height, length))
+		return (4);
+	if (check_inner_map(map, height, length))
 		return (4);
 	return (0);
 }
@@ -138,23 +183,25 @@ void	expand_map(char **map, int max_len)
 	print_map(map); //debug
 }
 
-bool	is_map_valid(char **m_map)
+bool	is_map_valid(t_info *w, char **m_map)
 {
-	int	map_height;
-	int	map_length;
+	int	m_height;
+	int	m_length;
 	int	err_code;
 
-	get_map_height(m_map, &map_height, &map_length);
-	expand_map(m_map, map_length);
+	get_map_height(m_map, &m_height, &m_length);
+	w->map_heigth = m_height;
+	w->map_lenght = m_length;
+	expand_map(m_map, m_length);
 	err_code = invalid_player(m_map);
 	if (!err_code)
-		err_code = unclosed_map(m_map, map_height, map_length);
-	if (err_code) // final check
+		err_code = unclosed_map(m_map, m_height, m_length);
+	if (err_code)
 	{
 		print_error_msg(err_code);
-		printf("Leaving ...\n\n\n");
+		printf("Leaving ...\n\n\n"); //debug
 		return (false);
 	}
 	printf("Everything is valid ! Leaving ...\n");
-	return (false); //only for debug, to change back to true
+	return (true);
 }

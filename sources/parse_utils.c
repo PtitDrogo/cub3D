@@ -22,6 +22,18 @@ bool	is_direction_c(char c)
 		return (false);
 }
 
+bool	is_whitespace_c(char c)
+{
+	if (c == '\t' || c == '\v'
+		|| c == '\f' || c == '\r'
+		|| c == ' ')
+	{
+		return (true);
+	}
+	else
+		return (false);
+}
+
 bool	is_allowed_char(char c)
 {
 	if (c == '0' || c == '1' 

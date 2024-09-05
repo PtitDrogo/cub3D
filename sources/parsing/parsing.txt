@@ -52,3 +52,7 @@
     1111111    
 */
 
+
+Autres : 
+
+- Si on strcmp "NO ", l'espace peut etre un whitespace

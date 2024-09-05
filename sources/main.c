@@ -26,17 +26,18 @@ int main(int argc, char const *argv[])
 	if (w.map_file == NULL)
 		return (1);
 	close(cub_fd); 
-	if (!is_map_valid(w.map_file))
+	if (!is_map_valid(&w, w.map_file))
 	{
 		ft_free_array((void *)w.map_file);
 		exit(0);
 	}
+	find_player(&w);
 	if (!load_window(&w))
 		return (1);
 	// draw_all(&w);
 	mlx_hook(w.id_wind, KeyPress, KeyPressMask, deal_key, &w);
 	mlx_hook(w.id_wind, DestroyNotify, StructureNotifyMask, free_window, &w);
 	mlx_loop_hook(w.id_mlx, no_events, &w);
-	mlx_loop(w.id_mlx);	
-    return 0;
+	mlx_loop(w.id_mlx);
+    return (0);
 }
