@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   events.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lchapard <lchapard@student.42lyon.fr>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 13:43:52 by lchapard          #+#    #+#             */
-/*   Updated: 2024/09/04 13:43:53 by lchapard         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "parsing.h"
 
 int	no_events(t_info *w)
@@ -29,9 +17,4 @@ int	deal_key(int id_key, t_info *w)
 	return (0);
 }
 
-int	free_window(t_info *w)
-{
-	mlx_destroy_window(w->id_mlx, w->id_wind);
-	return (0);
-}
 

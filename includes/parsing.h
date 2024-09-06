@@ -11,12 +11,9 @@
 # include <fcntl.h>
 
 # define MAX_HEIGHT 2100 // bruteforce, recuperable ailleurs
-# define MAX_LENGHT 3905 // taille max pour ecran mac
-
-#define  RED 0
-#define  GREEN 1
-#define  BLUE 2
-#define  DEF_STATUS 3
+# define MAX_LENGTH 3905 // taille max pour ecran mac
+# define DEFAULT_LENGTH 1000
+# define DEFAULT_HEIGHT 800
 
 # define ERR_TOO_MANY_PATHS 700
 # define ERR_PATH_TOO_BIG	701
@@ -27,6 +24,10 @@
 # define ERR_MAP_TOO_SOON 706
 # define ERR_TOO_FEW_CHARS 707
 # define ERR_INVALID_CHAR 708
+# define ERR_TOO_MANY_PLYR 709
+# define ERR_ZERO_PLAYER 710
+# define ERR_INVALID_CHAR_MAP 711
+
 
 typedef struct s_rgb 
 {
@@ -39,8 +40,6 @@ typedef struct s_rgb
 
 typedef struct s_parse_data
 {
-	size_t  		map_heigth; //Used by leo for map so maybe not here
-	size_t  		map_width; //Used by leo for map so maybe not here
 	char			NO_texts[PATH_MAX];
 	char			SO_texts[PATH_MAX];
 	char			WE_texts[PATH_MAX];
@@ -50,13 +49,41 @@ typedef struct s_parse_data
 	int				status;
 } t_parse_data;
 
+typedef struct t_my_image
+{
+	int		width;
+	int		height;
+	int		x;
+	int		y;
+	void	*img_ptr; //link to pointer , to free
+}				t_image;
+
+typedef struct t_m_vector
+{
+	double x_pl;
+	double y_pl;
+	double xPos;
+	double yPos;
+	double xCam;
+	double yCam;
+}				t_vector;
 
 typedef struct t_w_info
 {
-	void	*id_mlx;
-	void	*id_wind;
-	size_t	w_height;
-	size_t	w_lenght;
+	void			*id_mlx;  // mlx session id
+	void			*id_wind; //window id
+	char			**map_file; // split map
+	char			**actual_map;
+	int				map_heigth;
+	int				map_lenght;
+	t_image			m_door; //sprites : 
+	t_image			n_wall;
+	t_image			s_wall;
+	t_image			e_wall;
+	t_image			w_wall;
+	t_rgb			floor_v;
+	t_rgb			celling_v;
+	t_vector		player;
 }				t_info;
 
 //---------------------Functions---------------------//
@@ -75,5 +102,12 @@ void    update_status(int err_value, int *status);
 void	rgb_parsing(const char *line, t_rgb *rgb, int *status);
 bool	is_map_char(char c);
 void	skip_word(const char *line, size_t *index);
+//---------------------Map-Parsing---------------------//
+bool	is_map_valid(t_info *w, char **m_map);
+void	print_map(char **map); //only for debug, to delete after
+bool	is_allowed_char(char c);
+bool	is_direction_c(char c);
+bool	is_whitespace_c(char c);
+void	find_player(t_info *w); // set player x | y
 
 #endif
