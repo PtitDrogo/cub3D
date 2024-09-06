@@ -1,64 +1,63 @@
-# include "parsing.h"
+# include "../includes/parsing.h"
 
 static void debug_print_printed_parameters(t_parse_data *data);
 
 int main(int argc, char const *argv[])
 {
-	// t_info 	w;  //temporaire
-	t_parse_data data;
-    char 	**map_file;
-	int 	cub_fd;
+	t_info 			w;
+	t_parse_data	data;
+	int				cub_fd;
 
 	if (argc != 2)
 	{
 		ft_printf2("Invalid number of arguments\n");
-		return (0);
+		return (1);
 	}
+	ft_memset(&w, 0, sizeof(w));
+	ft_bzero(&data, sizeof(data)); //set struct to NULL
+	//First hint of parsing test
 	cub_fd = open(argv[1], O_RDONLY);
 	if (cub_fd == -1)
 	{
 		perror("Error opening map file\n"); //we can actually use perror here since open is a system call !
 		return (1);
 	}
-
-	map_file = get_map_file(cub_fd);
-	if (map_file == NULL)
-		return (1); 
-	for(int i = 0; map_file[i]; i++)
-	{
-		ft_printf("%s\n", map_file[i]);
-	}
-	ft_printf("\n");
-	ft_bzero(&data, sizeof(data));
-	
+	w.map_file = get_map_file(cub_fd);
+	// print_map(w.map_file);
+	if (w.map_file == NULL)
+		return (1);
 	//Parsing file, fills the data in data
-	int map_start = big_parser(map_file, &data);
+	int map_start = big_parser(w.map_file, &data);
 	debug_print_printed_parameters(&data);
 	if (map_start == -1) //this means error
 	{	
 		printf("There was an error of type %i! Exiting ...\n", data.status);
-		ft_free_array((void *)map_file);
+		ft_free_array((void *)w.map_file);
 		return (1); //PRINT ERROR MESSAGE HERE
 	}	
 	else
 	{
-		// char **actual_map = &map_file[map_start]; //this never needs to be freed
+		w.actual_map = &w.map_file[map_start]; //this never needs to be freed
 		//Feed the above to map parser;
-	
 	}
-
-	// if (!load_window(&w))
-	// 	return (1);
-	// draw_all(&w);
-	// mlx_hook(w.id_wind, KeyPress, KeyPressMask, deal_key, &w);
-	// mlx_hook(w.id_wind, DestroyNotify, StructureNotifyMask, free_window, &w);
-	// mlx_loop_hook(w.id_mlx, no_events, &w);
-	// mlx_loop(w.id_mlx);
-
-	//tmp cleanup;
-	ft_free_array((void *)map_file);
 	close(cub_fd);
-    return 0;
+
+	//FUNCTION TO FILL W STRUCT WITH DATA FROM PARSE STRUCT
+	if (!is_map_valid(&w, w.actual_map))
+	{
+		ft_free_array((void *)w.map_file);
+		exit(0);
+	}
+	
+	find_player(&w);
+	if (!load_window(&w))
+		return (1);
+	// draw_all(&w);
+	mlx_hook(w.id_wind, KeyPress, KeyPressMask, deal_key, &w);
+	mlx_hook(w.id_wind, DestroyNotify, StructureNotifyMask, free_window, &w);
+	mlx_loop_hook(w.id_mlx, no_events, &w);
+	mlx_loop(w.id_mlx);
+    return (0);
 }
 
 
