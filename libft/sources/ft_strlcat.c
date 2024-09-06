@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:39:00 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/06/03 06:23:45 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:26:49 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ size_t	ft_strlcat(char *dest, const char *src, size_t size)
 
 	i = 0;
 	j = 0;
-	dest_len = ft_len(dest);
-	src_len = ft_len(src);
+	dest_len = ft_strlen(dest);
+	src_len = ft_strlen(src);
 	while (dest[i])
 		i++;
 	if (size < i || size == 0)

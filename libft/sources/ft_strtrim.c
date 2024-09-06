@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 12:32:44 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/06/03 06:23:45 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:26:49 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 	i = 0;
 	start = 0;
-	end = ft_len(s1) - 1;
+	end = ft_strlen(s1) - 1;
 	if (set[0])
 	{
 		while (s1[start] && is_set(s1[start], set) && start <= end)
