@@ -1,12 +1,13 @@
 #include "cub3D.h"
 
-//get map file, maybe add a bool for if theres an error idk
 char **get_map_file2D(int cub_fd)
 {    
-	int gnl_status = 0;
+	int gnl_status;
+	char **map_file;
 	char *curr_line;
 	char *map;
 
+	gnl_status = 0;
 	curr_line = get_next_line_safe(cub_fd, &gnl_status);
 	map = ft_calloc(1, 1);
 	if (map == NULL || gnl_status == 1)
@@ -19,7 +20,7 @@ char **get_map_file2D(int cub_fd)
 		if (map == NULL || gnl_status == 1)
 			return (free(curr_line), NULL);
 	}
-    char **map_file = ft_split(map, '\n');
+    map_file = ft_split(map, '\n');
     free(map);
 	return(map_file);
 }

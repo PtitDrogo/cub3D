@@ -8,7 +8,7 @@ void	print_error_msg(int err_code)
 	else if (err_code == ERR_ZERO_PLAYER)
 		ft_printf2("No players were found !\n");
 	else if (err_code == ERR_INVALID_CHAR_MAP)
-		ft_printf2("An invalid char was found !\n");
+		ft_printf2("An invalid char was found on the map!\n");
     else if (err_code == ERR_TOO_MANY_PATHS)
 		ft_printf2("Too many possible texture paths !\n");
     else if (err_code == ERR_PATH_TOO_BIG)

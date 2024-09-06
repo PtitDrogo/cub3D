@@ -3,7 +3,7 @@
 void	free_mlx_map(t_info *w)
 {
 	mlx_destroy_display(w->id_mlx);
-	ft_free_array((void *)w->map_file); //free split
+	ft_free_array((void *)w->map_file);
 	free(w->id_mlx);
 	exit(0);
 }

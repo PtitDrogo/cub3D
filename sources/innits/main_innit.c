@@ -11,7 +11,7 @@ static void debug_print_printed_parameters(t_parse_data *data);
 void	init_game(t_info *w, t_parse_data *data, int argc, char const *argv[])
 {
 	early_init(w, data, argc, argv);
-	values_parser(get_map(argv[1]), data);
+	values_parser(w->map_file, data);
 	debug_print_printed_parameters(data); //DEBUG
 	check_map(w, data);
 	return ;

@@ -30,7 +30,7 @@ int	invalid_player(char **m_map)
 	while (m_map[i])
 	{
 		if (contains_invalid_char(m_map[i], &cpt))
-			return (ERR_INVALID_CHAR);
+			return (ERR_INVALID_CHAR_MAP);
 		if (cpt > 1)
 			return (ERR_TOO_MANY_PLYR);
 		i++;
