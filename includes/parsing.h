@@ -49,11 +49,15 @@ typedef struct t_m_rgb
 	unsigned char	b_value;
 }				t_rgb;
 
-typedef struct t_m_point
+typedef struct t_m_vector
 {
-	float x;
-	float y;
-}				t_point;
+	double x_pl;
+	double y_pl;
+	double xPos;
+	double yPos;
+	double xCam;
+	double yCam;
+}				t_vector;
 
 typedef struct t_w_info
 {
@@ -69,7 +73,7 @@ typedef struct t_w_info
 	t_image			w_wall;
 	t_rgb			floor_v;
 	t_rgb			celling_v;
-	t_point			player;
+	t_vector		player;
 }				t_info;
 
 //---------------------Functions---------------------//
