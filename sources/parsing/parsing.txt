@@ -29,7 +29,8 @@
     - Difficulter, gerer le debut et fin de map;
     - si on est a x = 0 ou y = 0, ne pas check x/y - 1 !
     - si on est a x = map_width, ne pas check x + 1; same for y = map_heigth;
-    
+
+
     //LES INFOS QUON FILE A LEXEC
     (ce sera sa propre struct)
     - Map heigth map width;

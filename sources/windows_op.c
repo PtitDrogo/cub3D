@@ -1,4 +1,4 @@
-#include "../includes/parsing.h"
+#include "cub3D.h"
 
 void	free_mlx_map(t_info *w)
 {

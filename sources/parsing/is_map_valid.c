@@ -1,14 +1,4 @@
-#include "../includes/parsing.h"
-
-void	print_error_msg(int err_code)
-{
-	if (err_code == ERR_TOO_MANY_PLYR)
-		printf("Too many players were found !\n");
-	if (err_code == ERR_ZERO_PLAYER)
-		printf("No players were found !\n");
-	if (err_code == ERR_INVALID_CHAR_MAP)
-		printf("An invalid char was found !\n");
-}
+#include "cub3D.h"
 
 bool	contains_invalid_char(char *str, int *cpt)
 {
@@ -17,7 +7,7 @@ bool	contains_invalid_char(char *str, int *cpt)
 	i = 0;
 	while(str[i])
 	{
-		if (is_allowed_char(str[i]))
+		if (is_map_char(str[i]))
 		{
 			if (is_direction_c(str[i]))
 				(*cpt) += 1;
@@ -40,13 +30,13 @@ int	invalid_player(char **m_map)
 	while (m_map[i])
 	{
 		if (contains_invalid_char(m_map[i], &cpt))
-			return (3);
+			return (ERR_INVALID_CHAR);
 		if (cpt > 1)
-			return (1);
+			return (ERR_TOO_MANY_PLYR);
 		i++;
 	}
 	if (cpt == 0)
-		return (2);
+		return (ERR_ZERO_PLAYER);
 	return (0);
 }
 
@@ -107,13 +97,13 @@ int	check_outer_line(char **map, int height, int length)
 
 bool	invalid_neighbour(char **map, int x, int y)
 {
-	if (is_whitespace_c(map[y][x - 1]))
+	if (is_white_space(map[y][x - 1]))
 		return (true);
-	if (is_whitespace_c(map[y][x + 1]))
+	if (is_white_space(map[y][x + 1]))
 		return (true);
-	if (is_whitespace_c(map[y - 1][x]))
+	if (is_white_space(map[y - 1][x]))
 		return (true);
-	if (is_whitespace_c(map[y + 1][x]))
+	if (is_white_space(map[y + 1][x]))
 		return (true);
 	return (false);
 }
@@ -148,9 +138,9 @@ int		check_inner_map(char **map, int height, int length)
 int		unclosed_map(char **map, int height, int length)
 {
 	if(check_outer_line(map, height, length))
-		return (4);
+		return (ERR_INVALID_CHAR_MAP);
 	if (check_inner_map(map, height, length))
-		return (4);
+		return (ERR_INVALID_CHAR_MAP);
 	return (0);
 }
 
@@ -199,7 +189,7 @@ bool	is_map_valid(t_info *w, char **m_map)
 	if (err_code)
 	{
 		print_error_msg(err_code);
-		printf("Leaving ...\n\n\n"); //debug
+		printf("Leaving errcode was %i...\n\n\n", err_code); //debug
 		return (false);
 	}
 	printf("Everything is valid ! Leaving ...\n");

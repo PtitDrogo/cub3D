@@ -1,15 +1,14 @@
-#include "../../includes/parsing.h"
+#include "cub3D.h"
 
 //get map file, maybe add a bool for if theres an error idk
-char **get_map_file(int cub_fd)
+char **get_map_file2D(int cub_fd)
 {    
-    //Lets store everything in a 1d array at first;
 	int gnl_status = 0;
 	char *curr_line;
 	char *map;
 
 	curr_line = get_next_line_safe(cub_fd, &gnl_status);
-	map = ft_calloc(1, 1); // so that I dont have to be like map[0] = '\0' right after.
+	map = ft_calloc(1, 1);
 	if (map == NULL || gnl_status == 1)
 		return (free(map), NULL);
 	while (curr_line)
@@ -18,7 +17,7 @@ char **get_map_file(int cub_fd)
 		free(curr_line);
 		curr_line = get_next_line_safe(cub_fd, &gnl_status);
 		if (map == NULL || gnl_status == 1)
-			return (free(curr_line), NULL); //malloc error msg later
+			return (free(curr_line), NULL);
 	}
     char **map_file = ft_split(map, '\n');
     free(map);
