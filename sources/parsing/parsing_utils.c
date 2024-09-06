@@ -1,10 +1,9 @@
-#include "parsing.h"
+#include "cub3D.h"
 
 bool is_white_space(char c)
 {
     return ((c >= 9 && c <= 13) || c == 32);
 }
-
 
 size_t strlen_until_whitespace(const char *s)
 {
@@ -24,11 +23,6 @@ void    update_status(int err_value, int *status)
 {
     *status = err_value;
     return ;
-}
-
-bool	is_map_char(char c)
-{
-	return (c == '0' || c == '1'); //TODO add fonction leo pour tout les possibles mapchars;
 }
 //with index being at the start of a word, moves to the index to the first char of the next word
 void	skip_word(const char *line, size_t *index)

@@ -1,29 +1,31 @@
-#include "parsing.h"
+#include "cub3D.h"
 
 static void		texture_path_check(const char *line, char *data_buffer, int *status);
 static int		char_process(const char *line, t_parse_data *data);
 static bool		is_correct_code(const char *line, const char *code);
-static bool is_premap_data_ready(const t_parse_data *m);
+static bool		is_premap_data_ready(const t_parse_data *m);
 
-//returns -1 if map is bad, returns the start of map if good
-int	big_parser(char **file, t_parse_data *data)
+void	values_parser(char **file, t_parse_data *data)
 {
 	size_t i;
 	size_t line;
 	
-	i = 0;
 	line = 0;
 	while (file[line])
 	{
+		i = 0;
 		if (data->status != 0)
-			return (-1);
+			return ;
 		while (is_white_space(file[line][i]))
 			i++;
 		if (char_process(&file[line][i], data) == 0)
-			return (line);
+		{	
+			data->map_start = line;
+			return ;
+		}
 		line++;
 	}
-	return (0);
+	return ;
 }
 //Returns 0 if map is good
 //Returns 1 if need to keep looping;
@@ -53,7 +55,10 @@ static int	char_process(const char *line, t_parse_data *data)
 		return (0);
 	}
 	else
+	{	
+		printf("the invalid char is %c| on line %s", line[0], line);
 		return (update_status(ERR_INVALID_CHAR, &data->status), 1);
+	}
 	return (1);
 }
 

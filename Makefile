@@ -16,12 +16,14 @@ SRCS =		$(SRCS_DIR)/parsing/get_map.c \
 			$(SRCS_DIR)/main.c \
 			$(SRCS_DIR)/events.c \
 			$(SRCS_DIR)/windows_op.c \
-			$(SRCS_DIR)/parsing/big_parser.c \
+			$(SRCS_DIR)/parsing/values_parser.c \
 			$(SRCS_DIR)/parsing/parsing_utils.c \
 			$(SRCS_DIR)/parsing/rgb_parsing.c \
-			$(SRCS_DIR)/is_valid.c \
-			$(SRCS_DIR)/parse_utils.c \
+			$(SRCS_DIR)/parsing/is_map_valid.c \
+			$(SRCS_DIR)/parsing/map_parsing_utils.c \
 			$(SRCS_DIR)/set_elements.c \
+			$(SRCS_DIR)/innits/main_innit.c \
+			$(SRCS_DIR)/Errors/errors.c \
 			
 #------------------------------------------------------------------------#
 
@@ -29,8 +31,7 @@ SRCS =		$(SRCS_DIR)/parsing/get_map.c \
 CC		=	cc
 RM		=	rm -f
 
-CFLAGS	=	-g3 
-#-Wall -Wextra -Werror
+CFLAGS	=	-g3 -Wall -Wextra -Werror
 LINKLIBS = -L minilibx-linux/ -lmlx_Linux -L libft/ -lft
 INCLUDES = -I $(HEADER_DIR) -I minilibx-linux -I libft -MMD -MP
 

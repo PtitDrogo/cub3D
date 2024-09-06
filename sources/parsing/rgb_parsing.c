@@ -1,4 +1,4 @@
-#include "parsing.h"
+#include "cub3D.h"
 
 static int 	get_rgb_value(const char buffer[4], int *status);
 static int	update_rgb_data(t_rgb *rgb, int num, const char buffer[4], int *status);

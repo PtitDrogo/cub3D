@@ -1,4 +1,4 @@
-# include "../includes/parsing.h"
+# include "cub3D.h"
 
 void	setMapVectors(t_vector *vec, char c)
 {
