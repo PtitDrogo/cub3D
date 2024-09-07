@@ -2,22 +2,22 @@
 
 static void		transfer_parsing_data(t_info *w, t_parse_data *data);
 static char 	**get_map(const char *map_path_name);
-static void		check_map(t_info *w, t_parse_data *data);
-static void    	early_init(t_info *w, t_parse_data *data, int argc, char const *argv[]);
+static void		map_parser(t_info *w, t_parse_data *data);
+static void    	parser_init(t_info *w, t_parse_data *data, int argc, char const *argv[]);
 
 //TO delete
 static void debug_print_printed_parameters(t_parse_data *data);
 
 void	init_game(t_info *w, t_parse_data *data, int argc, char const *argv[])
 {
-	early_init(w, data, argc, argv);
+	parser_init(w, data, argc, argv);
 	values_parser(w->map_file, data);
 	debug_print_printed_parameters(data); //DEBUG
-	check_map(w, data);
+	map_parser(w, data);
 	return ;
 }
 
-static void    early_init(t_info *w, t_parse_data *data, int argc, char const *argv[])
+static void    parser_init(t_info *w, t_parse_data *data, int argc, char const *argv[])
 {
 	if (argc != 2)
 	{
@@ -51,7 +51,7 @@ static char **get_map(const char *map_path_name)
 	return (map);
 }
 
-static void	check_map(t_info *w, t_parse_data *data)
+static void	map_parser(t_info *w, t_parse_data *data)
 {
 	if (data->map_start == INVALID_MAP) //this means error
 	{	
