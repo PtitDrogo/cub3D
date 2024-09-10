@@ -2,9 +2,6 @@
 
 void	print_map(char **map) //only for debug, to delete
 {
-	int	i;
-
-	i = 0;
 	printf("\n\n");
 	for(int i = 0; map[i]; i++)
 		ft_printf("|%s|\n", map[i]);

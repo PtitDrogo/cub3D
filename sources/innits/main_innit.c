@@ -70,6 +70,7 @@ static void	map_parser(t_info *w, t_parse_data *data)
 }
 static void	transfer_parsing_data(t_info *w, t_parse_data *data)
 {
+	printf("map start value is %i\n", data->map_start);
 	w->actual_map = &w->map_file[data->map_start];
 	w->floor_v.r = data->floor_colors.r;
 	w->floor_v.g = data->floor_colors.g;

@@ -11,6 +11,7 @@ void	values_parser(char **file, t_parse_data *data)
 	size_t line;
 	
 	line = 0;
+	data->map_start = -1;
 	while (file[line])
 	{
 		i = 0;
