@@ -1,15 +1,15 @@
 #include "cub3D.h"
 
-static void		texture_path_check(const char *line, char *data_buffer, int *status);
+static void		path_check(const char *line, char *data_buffer, int *status);
 static int		char_process(const char *line, t_parse_data *data);
 static bool		is_correct_code(const char *line, const char *code);
 static bool		is_premap_data_ready(const t_parse_data *m);
 
 void	values_parser(char **file, t_parse_data *data)
 {
-	size_t i;
-	size_t line;
-	
+	size_t	i;
+	size_t	line;
+
 	line = 0;
 	data->map_start = -1;
 	while (file[line])
@@ -20,7 +20,7 @@ void	values_parser(char **file, t_parse_data *data)
 		while (is_white_space(file[line][i]))
 			i++;
 		if (char_process(&file[line][i], data) == 0)
-		{	
+		{
 			data->map_start = line;
 			return ;
 		}
@@ -28,23 +28,21 @@ void	values_parser(char **file, t_parse_data *data)
 	}
 	return ;
 }
-//Returns 0 if map is good
-//Returns 1 if need to keep looping;
-//(above function will check data->status for errors)
+
 static int	char_process(const char *line, t_parse_data *data)
 {
 	if (line[0] == '\0')
 		return (1);
 	if (ft_strlen(line) < 3)
 		return (update_status(ERR_TOO_FEW_CHARS, &data->status), 1);
-	if (line[0] == 'N' && is_correct_code(line, "NO")) 
-		texture_path_check(line, data->NO_texts, &data->status);
-	else if (line[0] == 'S' && is_correct_code(line, "SO")) 
-		texture_path_check(line, data->SO_texts, &data->status);
-	else if (line[0] == 'W' && is_correct_code(line, "WE")) 
-		texture_path_check(line, data->WE_texts, &data->status);
-	else if (line[0] == 'E' && is_correct_code(line, "EA")) 
-		texture_path_check(line, data->EA_texts, &data->status);
+	if (line[0] == 'N' && is_correct_code(line, "NO"))
+		path_check(line, data->NO_texts, &data->status);
+	else if (line[0] == 'S' && is_correct_code(line, "SO"))
+		path_check(line, data->SO_texts, &data->status);
+	else if (line[0] == 'W' && is_correct_code(line, "WE"))
+		path_check(line, data->WE_texts, &data->status);
+	else if (line[0] == 'E' && is_correct_code(line, "EA"))
+		path_check(line, data->EA_texts, &data->status);
 	else if (line[0] == 'C' && is_correct_code(line, "C"))
 		rgb_parsing(line, &data->ceiling_colors, &data->status);
 	else if (line[0] == 'F' && is_correct_code(line, "F"))
@@ -56,19 +54,15 @@ static int	char_process(const char *line, t_parse_data *data)
 		return (0);
 	}
 	else
-	{	
-		printf("the invalid char is %c| on line %s", line[0], line);
 		return (update_status(ERR_INVALID_CHAR, &data->status), 1);
-	}
 	return (1);
 }
 
-static void	texture_path_check(const char *line, char *data_buffer, int *status)
+static void	path_check(const char *line, char *data_buffer, int *status)
 {
+	size_t	i;
+	size_t	path_len;
 
-	size_t i;
-	size_t path_len;
-	
 	i = 0;
 	if (data_buffer[0] != '\0')
 		return (update_status(ERR_DEFINED_TWICE, status));
@@ -84,9 +78,9 @@ static void	texture_path_check(const char *line, char *data_buffer, int *status)
 		return (update_status(ERR_TOO_MANY_PATHS, status));
 }
 
-static bool is_premap_data_ready(const t_parse_data *m)
+static bool	is_premap_data_ready(const t_parse_data *m)
 {
-	if (!*m->NO_texts  || !*m->NO_texts || !*m->WE_texts || !*m->EA_texts)
+	if (!*m->NO_texts || !*m->NO_texts || !*m->WE_texts || !*m->EA_texts)
 		return (false);
 	if (m->floor_colors.is_defined == false)
 		return (false);
@@ -95,9 +89,9 @@ static bool is_premap_data_ready(const t_parse_data *m)
 	return (true);
 }
 
-static bool is_correct_code(const char *line, const char *code)
+static bool	is_correct_code(const char *line, const char *code)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (ft_strncmp(line, code, ft_strlen(code)) == 0)
@@ -108,4 +102,3 @@ static bool is_correct_code(const char *line, const char *code)
 	}
 	return (false);
 }
-

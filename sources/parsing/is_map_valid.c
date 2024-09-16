@@ -5,7 +5,7 @@ bool	contains_invalid_char(char *str, int *cpt)
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (is_map_char(str[i]))
 		{
@@ -26,7 +26,6 @@ int	invalid_player(char **m_map)
 
 	i = 0;
 	cpt = 0;
-
 	while (m_map[i])
 	{
 		if (contains_invalid_char(m_map[i], &cpt))
@@ -48,14 +47,14 @@ void	get_map_height(char **map, int *height, int *length)
 
 	i = 0;
 	longest = 0;
-	while(map[i])
+	while (map[i])
 		i++;
 	*height = i;
 	i = 0;
-	while(map[i])
+	while (map[i])
 	{
 		current = ft_strlen(map[i]);
-		if (current > longest) 
+		if (current > longest)
 			longest = current;
 		i++;
 	}
@@ -71,8 +70,6 @@ int	check_outer_line(char **map, int height, int length)
 	y = 0;
 	while (y < height)
 	{
-		// printf("checking map[%d][0] AND ",y);
-		// printf("checking map[%d][%d]\n", y, length - 1);
 		if ((map[y][0] == '0') || (map[y][0] == 'E') ||
 				(map[y][length - 1] == '0') ||
 				(map[y][length - 1] == 'E'))
@@ -80,11 +77,8 @@ int	check_outer_line(char **map, int height, int length)
 		else
 			y++;
 	}
-	// printf("\ndone checking vertically ....\n\n");
 	while (x < length - 1)
 	{
-		// printf(" 2 :checking map[0][%d] AND ",x);
-		// printf("checking map[%d][%d]\n", height - 1, x);
 		if ((map[0][x] == '0') || (map[0][x] == 'E') ||
 				(map[height - 1][x] == '0') ||
 				(map[height - 1][x] == 'E'))
@@ -108,7 +102,7 @@ bool	invalid_neighbour(char **map, int x, int y)
 	return (false);
 }
 
-int		check_inner_map(char **map, int height, int length)
+int	check_inner_map(char **map, int height, int length)
 {
 	int	x;
 	int	y;
@@ -118,26 +112,23 @@ int		check_inner_map(char **map, int height, int length)
 	while (y < height - 1)
 	{
 		x = 1;
-		// printf("|");
 		while (x < length - 1)
 		{
-			// printf("%c", map[y][x]);
 			if (map[y][x] == '0' || is_direction_c(map[y][x]))
 			{
-				if(invalid_neighbour(map, x , y))
+				if (invalid_neighbour(map, x, y))
 					return (1);
 			}
 			x++;
 		}
-		// printf("|\n");
 		y++;
 	}
 	return (0);
 }
 
-int		unclosed_map(char **map, int height, int length)
+int	unclosed_map(char **map, int height, int length)
 {
-	if(check_outer_line(map, height, length))
+	if (check_outer_line(map, height, length))
 		return (ERR_INVALID_CHAR_MAP);
 	if (check_inner_map(map, height, length))
 		return (ERR_INVALID_CHAR_MAP);
@@ -146,7 +137,7 @@ int		unclosed_map(char **map, int height, int length)
 
 char	*add_spaces_to_str(char *line, int max_len, int len)
 {
-	char *new_line;
+	char	*new_line;
 
 	new_line = ft_calloc(sizeof(char), max_len + 1);
 	if (!new_line)
@@ -163,15 +154,15 @@ void	expand_map(char **map, int max_len)
 	int		i;
 
 	i = 0;
-	while(map[i])
+	while (map[i])
 	{
 		len = ft_strlen(map[i]);
 		if (len < max_len)
-			map[i] = add_spaces_to_str(map[i], max_len, len);		
+			map[i] = add_spaces_to_str(map[i], max_len, len);
 		i++;
 	}
 	printf("the map that map parser sees is : \n");
-	print_map(map); //debug
+	print_map(map);
 }
 
 bool	is_map_valid(t_info *w, char **m_map)
@@ -190,10 +181,10 @@ bool	is_map_valid(t_info *w, char **m_map)
 	if (err_code)
 	{
 		print_error_msg(err_code);
-		printf("Leaving errcode was %i...\n\n\n", err_code); //debug
+		printf("Leaving errcode was %i...\n\n\n", err_code);
 		return (false);
 	}
 	printf("Everything is valid ! Leaving ...\n");
-	printf("\n\n\n############################################################################\n\n\n");
+	printf("\n\n\n###########\n\n\n");
 	return (true);
 }
