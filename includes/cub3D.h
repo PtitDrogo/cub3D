@@ -66,8 +66,7 @@ typedef struct t_my_image
 
 typedef struct t_m_vector
 {
-	double	x_pl; //Player X
-	double	y_pl; //Player Y
+
 	double	xPos; //x of player vector
 	double	yPos; //y of player vector
 	double	xCam; //x of cam vector
@@ -76,8 +75,7 @@ typedef struct t_m_vector
 	double	nextDistY; //length of ray from current position to next y-side 
 	double	deltaX; //length of ray from one x to next x-side
 	double	deltaY; //length of ray from one y to next y-side
-	int		current_map_x; // current x on the map (int)
-	int		current_map_y; // current y on the map (int)
+	
 	int		stepX;	// how much to step in x
 	int		stepY;	// how much to step in y
 }				t_vector;
@@ -90,6 +88,10 @@ typedef struct t_w_info
 	char			**actual_map;
 	int				map_heigth;
 	int				map_lenght;
+	int		current_map_x; // current x on the map (int)
+	int		current_map_y; // current y on the map (int)
+	double	x_pl; //Player X
+	double	y_pl; //Player Y
 	t_image			m_door; //sprites : 
 	t_image			n_wall;
 	t_image			s_wall;
