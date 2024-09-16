@@ -5,7 +5,7 @@ bool	contains_invalid_char(char *str, int *cpt)
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (is_map_char(str[i]))
 		{

@@ -40,7 +40,7 @@ static char **get_map(const char *map_path_name)
 		perror("Error\nFailed to open map file");
 		exit (1);
 	}
-    map = get_map_file2D(map_fd);
+    map = get_map_file2d(map_fd);
     print_map(map); //DEBUG TO DELETE
 	if (map == NULL)
 	{	

@@ -6,14 +6,14 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 18:27:36 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/09/04 15:26:49 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:59:50 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 static void	*secure_init(int *line_status, int fd, int *status);
-static char	*line_check(char *line, char *buffer, int *line_status, int *status);
+static char	*check(char *line, char *buffer, int *line_status, int *status);
 static int	safe_read(char *line, char *buffer, int fd);
 static char	*join_and_free(char *line, char *buffer, int *status);
 
@@ -29,7 +29,7 @@ char	*get_next_line_safe(int fd, int *status)
 		return (free_and_null(line));
 	if (buffer[0])
 	{
-		line = line_check(line, buffer, &line_status, status);
+		line = check(line, buffer, &line_status, status);
 		if (line_status)
 			return (line);
 	}
@@ -38,7 +38,7 @@ char	*get_next_line_safe(int fd, int *status)
 	{
 		if (bytes_read < 0)
 			return (NULL);
-		line = line_check(line, buffer, &line_status, status);
+		line = check(line, buffer, &line_status, status);
 		if (line_status)
 			return (line);
 		bytes_read = safe_read(line, buffer, fd);
@@ -57,15 +57,15 @@ static void	*secure_init(int *line_status, int fd, int *status)
 		return (NULL);
 	line = malloc(1);
 	if (!line)
-    {
+	{
 		*status = 1;
-        return (NULL);
-    }
-    line[0] = '\0';
+		return (NULL);
+	}
+	line[0] = '\0';
 	return (line);
 }
 
-static char	*line_check(char *line, char *buffer, int *line_status, int *status)
+static char	*check(char *line, char *buffer, int *line_status, int *status)
 {
 	int	i;
 
@@ -116,11 +116,11 @@ static char	*join_and_free(char *line, char *buffer, int *status)
 	linelen = ft_strlen(line);
 	new_line = malloc(sizeof(char) * (linelen + effective_bufferlen + 1));
 	if (!new_line)
-	{	
-        *status = 1;
-        return (free_and_null(line));
-    }
-    new_line[linelen + effective_bufferlen] = '\0';
+	{
+		*status = 1;
+		return (free_and_null(line));
+	}
+	new_line[linelen + effective_bufferlen] = '\0';
 	i = -1;
 	while (++i < linelen)
 		new_line[i] = line[i];
