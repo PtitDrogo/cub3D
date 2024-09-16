@@ -34,6 +34,7 @@ int	load_window(t_info *w)
 		ft_free_array((void *)w->map_file);
 		exit(0); // free all
 	}
+	
 	w->id_wind = mlx_new_window(w->id_mlx,
 			DEFAULT_LENGTH, DEFAULT_HEIGHT , "My beautiful cube...");
 	if (w->id_wind == NULL)
