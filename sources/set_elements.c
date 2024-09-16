@@ -5,14 +5,14 @@ void	setMapVectors(t_vector *vec, char c)
 	if (c == 'N')
 	{
 		vec->xPos = 0;
-		vec->yPos = 1;
+		vec->yPos = -1;
 		vec->xCam = 0.66;
 		vec->yCam = 0;
 	}
 	if (c == 'S')
 	{
 		vec->xPos = 0;
-		vec->yPos = -1;
+		vec->yPos = 1;
 		vec->xCam = -0.66;
 		vec->yCam = 0;
 	}
@@ -21,14 +21,14 @@ void	setMapVectors(t_vector *vec, char c)
 		vec->xPos = -1;
 		vec->yPos = 0;
 		vec->xCam = 0;
-		vec->yCam = 0.66;
+		vec->yCam = -0.66;
 	}
 	if (c == 'E')
 	{
 		vec->xPos = 1;
 		vec->yPos = 0;
 		vec->xCam = 0;
-		vec->yCam = -0.66;
+		vec->yCam = 0.66;
 	}
 }
 
@@ -48,7 +48,7 @@ void	find_player(t_info *w)
 			{
 				w->x_pl = x;
 				w->y_pl = y;
-				setMapVectors(&w->vectors, w->map_file[y][x]);
+				setMapVectors(&w->vectors, w->actual_map[y][x]);
 				return ;
 			}
 			x++;

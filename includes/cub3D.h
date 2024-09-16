@@ -129,5 +129,7 @@ bool	is_map_char(char c);
 bool	is_direction_c(char c);
 void	find_player(t_info *w); // set player x | y
 void	set_rays(t_info *w); // raytracing
+void	print_map_current(char **map, int x, int y);
+void	get_map_height(char **map, int *height, int *length);
 
 #endif
