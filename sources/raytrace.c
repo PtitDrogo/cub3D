@@ -30,29 +30,28 @@ int	applyDDA(t_info *w, int side)
 
 	while(42)
 	{
-		printf("current x :%d, current y:%d !\n", w->current_map_x, w->current_map_y);
-		printf("current nextDistX :%f, current nextDistY:%f !\n", w->vectors.nextDistX, w->vectors.nextDistY);
 		if(w->vectors.nextDistX < w->vectors.nextDistY)
 		{
-			printf("X < Y !\n");
-			printf("nextDistX + %f = %f !\n", w->vectors.deltaX, w->vectors.nextDistX + w->vectors.deltaX);
-			printf("current_map_x + %d = %d !\n\n", w->vectors.stepX ,w->current_map_x + w->vectors.stepX);
+			printf("moving on x..\n");
 			w->vectors.nextDistX += w->vectors.deltaX;
 			w->current_map_x += w->vectors.stepX;
 			side = 0;
+			// print_map_current(w->actual_map, w->current_map_x, w->current_map_y);
+
 		}
 		else
 		{
-			printf("X > Y !\n");
-			printf("nextDistY + %f = %f !\n", w->vectors.deltaY, w->vectors.nextDistY + w->vectors.deltaY);
-			printf("current_map_y + %d = %d !\n\n", w->vectors.stepY ,w->current_map_y + w->vectors.stepY);
+			printf("moving on y..\n");
 			w->vectors.nextDistY += w->vectors.deltaY;
 			w->current_map_y += w->vectors.stepY;
 			side = 1;
+			// print_map_current(w->actual_map, w->current_map_x, w->current_map_y);
+
 		}
 		//Check if ray has hit a wall
-		if(w->map_file[w->current_map_x][w->current_map_y] == '1')
+		if(w->actual_map[w->current_map_y][w->current_map_x] == '1')
 		{
+			print_map_current(w->actual_map, w->current_map_x, w->current_map_y);
 			printf("a wall was hit at x :%d, y:%d !\n\n", w->current_map_x, w->current_map_y);
 			break;
 		}
@@ -93,6 +92,8 @@ void	set_rays(t_info *w)
 		i = 0 ;
 		while (i < DEFAULT_LENGTH)
 		{
+			printf("xPos is %f\n", w->vectors.xPos);
+			printf("yPos is %f\n", w->vectors.yPos);
 			cameraX = 2 * i / (double)DEFAULT_LENGTH - 1;
 	  		rayDirX = w->vectors.xPos + w->vectors.xCam * cameraX;
 	  		rayDirY = w->vectors.yPos + w->vectors.yCam * cameraX;
@@ -100,17 +101,24 @@ void	set_rays(t_info *w)
 			w->current_map_x = (int)w->x_pl; // cast float into int
 			w->current_map_y = (int)w->y_pl;
 			///////////////
-			w->vectors.deltaX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
-			w->vectors.deltaY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
 			if (rayDirX == 0)
+			{
+				printf("RayDirX is 0.\n");
 				w->vectors.deltaX = 1e30;
+			}
+			else
+				w->vectors.deltaX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
 			if (rayDirY == 0)
+			{
+				printf("RayDirY is 0.\n");
 				w->vectors.deltaY = 1e30;
+			}
+			else
+				w->vectors.deltaY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
 			//////////////
 			moovetoFirstXY(w, rayDirX, rayDirY);
 			distWall = applyDDA(w, 0);
 			getDrawLimits(distWall);
-			break ; //comment
 			i++;
 		}
 		break ;
