@@ -22,6 +22,7 @@ SRCS =		$(SRCS_DIR)/parsing/get_map.c \
 			$(SRCS_DIR)/parsing/is_map_valid.c \
 			$(SRCS_DIR)/parsing/map_parsing_utils.c \
 			$(SRCS_DIR)/set_elements.c \
+			$(SRCS_DIR)/raytrace.c \
 			$(SRCS_DIR)/innits/main_innit.c \
 			$(SRCS_DIR)/Errors/errors.c \
 			
@@ -32,7 +33,7 @@ CC		=	cc
 RM		=	rm -f
 
 CFLAGS	=	-g3 -Wall -Wextra -Werror
-LINKLIBS = -L minilibx-linux/ -lmlx_Linux -L libft/ -lft
+LINKLIBS = -L minilibx-linux/ -lmlx_Linux -L libft/ -lft -lm
 INCLUDES = -I $(HEADER_DIR) -I minilibx-linux -I libft -MMD -MP
 
 #------------------------------------------------------------------------#

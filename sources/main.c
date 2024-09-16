@@ -6,8 +6,9 @@ int main(int argc, char const *argv[])
 	t_parse_data	data;
 
 	init_game(&w, &data, argc, argv);
-	if (!load_window(&w))
-		return (1);
+	set_rays(&w);
+	// if (!load_window(&w))
+	// 	return (1);
 	// draw_all(&w);
 	mlx_hook(w.id_wind, KeyPress, KeyPressMask, deal_key, &w);
 	mlx_hook(w.id_wind, DestroyNotify, StructureNotifyMask, free_window, &w);
