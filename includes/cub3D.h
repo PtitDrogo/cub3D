@@ -61,7 +61,7 @@ typedef struct t_my_image
 	int		height;
 	int		x;
 	int		y;
-	void	*img_ptr; //link to pointer , to free
+	void	*img_ptr;
 }				t_image;
 
 typedef struct t_m_vector
@@ -131,5 +131,6 @@ void	find_player(t_info *w); // set player x | y
 void	set_rays(t_info *w); // raytracing
 void	print_map_current(char **map, int x, int y);
 void	get_map_height(char **map, int *height, int *length);
+void	load_sprites(t_info *w);
 
 #endif
