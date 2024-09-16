@@ -46,8 +46,8 @@ void	find_player(t_info *w)
 		{
 			if (is_direction_c(w->actual_map[y][x]))
 			{
-				w->vectors.x_pl = x;
-				w->vectors.y_pl = y;
+				w->x_pl = x;
+				w->y_pl = y;
 				setMapVectors(&w->vectors, w->map_file[y][x]);
 				return ;
 			}
