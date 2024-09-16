@@ -1,4 +1,4 @@
-#include "../includes/parsing.h"
+#include "cub3D.h"
 
 void	moovetoFirstXY(t_info *w, double rayX, double rayY)
 {

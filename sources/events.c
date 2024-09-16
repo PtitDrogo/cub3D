@@ -1,4 +1,4 @@
-#include "parsing.h"
+#include "cub3D.h"
 
 int	no_events(t_info *w)
 {

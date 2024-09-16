@@ -1,4 +1,4 @@
-# include "../includes/parsing.h"
+# include "cub3D.h"
 
 void	setMapVectors(t_vector *vec, char c)
 {
@@ -44,7 +44,7 @@ void	find_player(t_info *w)
 		x = 1;
 		while (x < w->map_lenght - 1)
 		{
-			if (is_direction_c(w->map_file[y][x]))
+			if (is_direction_c(w->actual_map[y][x]))
 			{
 				w->vectors.x_pl = x;
 				w->vectors.y_pl = y;

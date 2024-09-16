@@ -22,14 +22,15 @@
     - Si on voit un 1 - 0 - W/N/E/S, on start le map checking;
     - BIEN CHECK QUIL NY A PAS DEUX JOUEURS.
     - Si un char est invalide, map est fausse. (check full map en bourrin)
-    - Si tous nos param ne sont pas definis, c'est faux;
+    - Si tous nos param ne sont pas definis, c'est faux; //Je m'en occupe
     - Checker si tous les 0 sont bien a coters d'un 0 ou 1.
     - Verifier que le joueur est en tourer de 1 ou 0
-    - bien verifier qu'il y a un span de joueur sinon c'est faux;
+    - bien verifier qu'il y a un spaw de joueur sinon c'est faux;
     - Difficulter, gerer le debut et fin de map;
     - si on est a x = 0 ou y = 0, ne pas check x/y - 1 !
     - si on est a x = map_width, ne pas check x + 1; same for y = map_heigth;
-    
+
+
     //LES INFOS QUON FILE A LEXEC
     (ce sera sa propre struct)
     - Map heigth map width;
