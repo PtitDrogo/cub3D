@@ -1,11 +1,11 @@
 #include "cub3D.h"
 
-bool is_white_space(char c)
+bool	is_white_space(char c)
 {
-    return ((c >= 9 && c <= 13) || c == 32);
+	return ((c >= 9 && c <= 13) || c == 32);
 }
 
-size_t strlen_until_whitespace(const char *s)
+size_t	strlen_until_whitespace(const char *s)
 {
 	size_t	i;
 
@@ -19,12 +19,12 @@ size_t strlen_until_whitespace(const char *s)
 	return (i);
 }
 
-void    update_status(int err_value, int *status)
+void	update_status(int err_value, int *status)
 {
-    *status = err_value;
-    return ;
+	*status = err_value;
+	return ;
 }
-//with index being at the start of a word, moves to the index to the first char of the next word
+
 void	skip_word(const char *line, size_t *index)
 {
 	while (is_white_space(line[*index]) == false)
@@ -32,4 +32,3 @@ void	skip_word(const char *line, size_t *index)
 	while (is_white_space(line[*index]))
 		(*index)++;
 }
-
