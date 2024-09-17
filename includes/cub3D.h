@@ -15,6 +15,8 @@
 # define MAX_LENGTH 3905 // taille max pour ecran mac
 # define DEFAULT_LENGTH 1000
 # define DEFAULT_HEIGHT 800
+# define SPRITE_HEIGHT 64
+# define SPRITE_LENGTH 64
 
 # define INVALID_MAP -1
 
@@ -61,38 +63,41 @@ typedef struct t_my_image
 	int		height;
 	int		x;
 	int		y;
-	void	*img_ptr;
+	void	*img_ptr;		//Contains return value of mlx_xpm_file_to_image()
+	char	*pix_addr;		//Begining of the memory area where the image is stored
+	int		bits_per_pixel;	//Number of bits needed to represent a pixel color
+	int		size_line; 		//Number of bytes used to store one line of the image
+	int		endian;			//0 = Little endian, 1 = Big endian
 }				t_image;
 
 typedef struct t_m_vector
 {
-
-	double	xPos; //x of player vector
-	double	yPos; //y of player vector
-	double	xCam; //x of cam vector
-	double	yCam; //y of cam vector
-	double	nextDistX; //length of ray from current position to next x-side
-	double	nextDistY; //length of ray from current position to next y-side 
-	double	deltaX; //length of ray from one x to next x-side
-	double	deltaY; //length of ray from one y to next y-side
-	
-	int		stepX;	// how much to step in x
-	int		stepY;	// how much to step in y
+	double	xPos; //x of player vector (dirX)
+	double	yPos; //y of player vector (dirY)
+	double	xCam; //x of cam vector (planeX)
+	double	yCam; //y of cam vector (planeY)
+	double	nextDistX;	//Length of ray from current position to next x-side (sideDistX)
+	double	nextDistY;	//Length of ray from current position to next y-side (sideDistY)
+	double	deltaX;		//Length of ray from one x to next x-side (deltaDistX)
+	double	deltaY;		//Length of ray from one y to next y-side (deltaDistY)
+	int		stepX;		//How much to step in x
+	int		stepY;		//How much to step in y
 }				t_vector;
 
 typedef struct t_w_info
 {
-	void			*id_mlx;  // mlx session id
-	void			*id_wind; //window id
-	char			**map_file; // split map
-	char			**actual_map;
-	int				map_heigth;
-	int				map_lenght;
-	int		current_map_x; // current x on the map (int)
-	int		current_map_y; // current y on the map (int)
-	double	x_pl; //Player X
-	double	y_pl; //Player Y
-	t_image			m_door; //sprites : 
+	void			*id_mlx; 		//MLX Session ID
+	void			*id_wind;		//Window ID
+	char			**map_file;		//Map[][] with NO, SE, RGB...
+	char			**actual_map;	//Map[][] only
+	int				side;			//side hit by ray
+	int				map_heigth;		//Number of rows
+	int				map_lenght;		//Size of longest line
+	int				current_map_x;	//Current x on the map, int (mapX)
+	int				current_map_y;	//Current y on the map, int (mapY)
+	double			x_pl; 			//Player X (posX)
+	double			y_pl; 			//Player Y (posY)
+	t_image			m_door; 
 	t_image			n_wall;
 	t_image			s_wall;
 	t_image			e_wall;
@@ -124,13 +129,13 @@ void	skip_word(const char *line, size_t *index);
 
 //---------------------Map-Parsing---------------------//
 bool	is_map_valid(t_info *w, char **m_map);
-void	print_map(char **map); //only for debug, to delete after
+void	print_map(char **map);	//Only for debug, to delete after
 bool	is_map_char(char c);
 bool	is_direction_c(char c);
-void	find_player(t_info *w); // set player x | y
-void	set_rays(t_info *w); // raytracing
+void	find_player(t_info *w); //Set player x | y
+void	set_rays(t_info *w); 	//Raytracing
 void	print_map_current(char **map, int x, int y);
 void	get_map_height(char **map, int *height, int *length);
-void	load_sprites(t_info *w);
+void	load_sprites(t_info *w, t_parse_data *d);
 
 #endif

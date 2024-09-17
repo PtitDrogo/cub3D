@@ -23,12 +23,13 @@ void	print_map_current(char **map, int x, int y)
 
 	i = 0;
 	get_map_height(map, &height, &length);
-	cpy = malloc(sizeof(char *) * height + 1);
-	while (map[i])
+	cpy = malloc(sizeof(char **) * (height * sizeof(char *)) + 1);
+	while(map[i])
 	{
 		cpy[i] = ft_strdup(map[i]);
 		i++;
 	}
+	cpy[i] = NULL;
 	if (cpy[y][x] == '1')
 		cpy[y][x] = 'X';
 	else

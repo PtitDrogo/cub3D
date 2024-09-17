@@ -9,7 +9,7 @@ int main(int argc, char const *argv[])
 	set_rays(&w);
 	if (!load_window(&w))
 		return (1);
-	load_sprites(&w);
+	load_sprites(&w, &data);
 	// draw_all(&w);
 	mlx_hook(w.id_wind, KeyPress, KeyPressMask, deal_key, &w);
 	mlx_hook(w.id_wind, DestroyNotify, StructureNotifyMask, free_window, &w);
