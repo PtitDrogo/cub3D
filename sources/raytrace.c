@@ -24,10 +24,8 @@ void	moovetoFirstXY(t_info *w, double rayX, double rayY)
 	  }
 }
 
-int	applyDDA(t_info *w, int side)
+int	applyDDA(t_info *w, int	wallDist)
 {
-	int	wallDist;
-
 	while(42)
 	{
 		if(w->vectors.nextDistX < w->vectors.nextDistY)
@@ -35,20 +33,17 @@ int	applyDDA(t_info *w, int side)
 			printf("moving on x..\n");
 			w->vectors.nextDistX += w->vectors.deltaX;
 			w->current_map_x += w->vectors.stepX;
-			side = 0;
+			w->side = 0;
 			// print_map_current(w->actual_map, w->current_map_x, w->current_map_y);
-
 		}
 		else
 		{
 			printf("moving on y..\n");
 			w->vectors.nextDistY += w->vectors.deltaY;
 			w->current_map_y += w->vectors.stepY;
-			side = 1;
+			w->side = 1;
 			// print_map_current(w->actual_map, w->current_map_x, w->current_map_y);
-
 		}
-		//Check if ray has hit a wall
 		if(w->actual_map[w->current_map_y][w->current_map_x] == '1')
 		{
 			print_map_current(w->actual_map, w->current_map_x, w->current_map_y);
@@ -56,7 +51,7 @@ int	applyDDA(t_info *w, int side)
 			break;
 		}
 	}
-	if(side == 0) 
+	if(w->side == 0) 
 		wallDist = (w->vectors.nextDistX - w->vectors.deltaX);
 	else
 		wallDist = (w->vectors.nextDistY - w->vectors.deltaY);
@@ -77,6 +72,25 @@ void	getDrawLimits(double wallDist)
 	drawEnd = lineHeight / 2 + DEFAULT_HEIGHT / 2;
 	if(drawEnd >= DEFAULT_HEIGHT)
 		drawEnd = DEFAULT_HEIGHT - 1;
+}
+
+int	getX_CoordTexture(t_info *w, int rayDirX, int rayDirY, int distWall)
+{
+	double	wallX; //where exactly the wall was hit
+	int		texX;
+
+	if(w->side == 0)
+	  	wallX = w->y_pl + distWall * rayDirY;
+	else
+	  	wallX = w->x_pl + distWall * rayDirX;
+	wallX -= floor((wallX));
+		
+	texX = wallX * (double)SPRITE_LENGTH; //x coordinate on the texture
+	if(w->side == 0 && rayDirX > 0)
+	  	texX = SPRITE_LENGTH - texX - 1;
+	if(w->side == 1 && rayDirY < 0)
+	  	texX = SPRITE_LENGTH - texX - 1;
+	return (texX);
 }
 
 void	set_rays(t_info *w)
