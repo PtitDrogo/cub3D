@@ -1,5 +1,7 @@
 *.o
 *.d
+*.cub
 .vscode
 cub3D
 raycaster_textured.cpp
+libft/libft.a

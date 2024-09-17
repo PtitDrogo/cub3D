@@ -1,9 +1,9 @@
 #include "cub3D.h"
 
 static void		transfer_parsing_data(t_info *w, t_parse_data *data);
-static char 	**get_map(const char *map_path_name);
+static char		**get_map(const char *map_path_name);
 static void		map_parser(t_info *w, t_parse_data *data);
-static void    	parser_init(t_info *w, t_parse_data *data, int argc, char const *argv[]);
+static void		parser_init(t_info *w, t_parse_data *data, int argc, char const *argv[]);
 
 //TO delete
 static void debug_print_printed_parameters(t_parse_data *data);
@@ -40,8 +40,8 @@ static char **get_map(const char *map_path_name)
 		perror("Error\nFailed to open map file");
 		exit (1);
 	}
-    map = get_map_file2D(map_fd);
-    print_map(map); //DEBUG TO DELETE
+    map = get_map_file2d(map_fd);
+    print_map(map); //TODELETE
 	if (map == NULL)
 	{	
         ft_printf2(MALLOC_FAILED_MSG);
@@ -53,7 +53,7 @@ static char **get_map(const char *map_path_name)
 
 static void	map_parser(t_info *w, t_parse_data *data)
 {
-	if (data->map_start == INVALID_MAP) //this means error
+	if (data->map_start == INVALID_MAP)
 	{	
 		print_error_msg(data->status);
 		ft_free_array((void *)w->map_file);
@@ -80,29 +80,6 @@ static void	transfer_parsing_data(t_info *w, t_parse_data *data)
 	w->ceiling_v.b = data->ceiling_colors.b;
 }
 
-
-// static void	init_images(t_info *w, t_parse_data *data)
-// {
-// 	int		*width;
-// 	int		*height;
-// 	void	*mlx;
-
-// 	mlx = w->id_mlx;
-// 	width = &(w->img_width);
-// 	height = &(w->img_height);
-// 	w->wall = mlx_xpm_file_to_image(mlx, "./img/wall.xpm", width, height);
-// 	w->coin = mlx_xpm_file_to_image(mlx, "./img/coin.xpm", width, height);
-// 	w->floor = mlx_xpm_file_to_image(mlx, "./img/floor.xpm", width, height);
-// 	w->hero = mlx_xpm_file_to_image(mlx, "./img/hero.xpm", width, height);
-// 	w->exit = mlx_xpm_file_to_image(mlx, "./img/end.xpm", width, height);
-// 	// if (game_img_check(w) == 0)
-// 	// {
-// 	// 	perror("Error\nfailed to load img");
-// 	// 	exit_w(w);
-// 	// }
-// }
-
-//TO delete eventually
 static void debug_print_printed_parameters(t_parse_data *data)
 {
 	printf("My parameters are :\n\
@@ -125,6 +102,5 @@ static void debug_print_printed_parameters(t_parse_data *data)
 		, data->floor_colors.b
 		, data->ceiling_colors.r
 		, data->ceiling_colors.g
-		, data->ceiling_colors.b);
-	
+		, data->ceiling_colors.b);	
 }

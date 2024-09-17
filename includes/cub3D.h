@@ -108,7 +108,7 @@ typedef struct t_w_info
 }				t_info;
 
 //---------------------Functions---------------------//
-char 	**get_map_file2D(int cub_fd);
+char 	**get_map_file2d(int cub_fd);
 int		no_events(t_info *w);
 int		deal_key(int id_key, t_info *w);
 int		free_window(t_info *w);
