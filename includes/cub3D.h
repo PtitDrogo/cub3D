@@ -63,11 +63,11 @@ typedef struct t_my_image
 	int		height;
 	int		x;
 	int		y;
-	void	*img_ptr;
-	char	*pix_addr;
-	int		bits_per_pixel;
-	int		size_line;
-	int		endian;
+	void	*img_ptr;		//Contains return value of mlx_xpm_file_to_image()
+	char	*pix_addr;		//Begining of the memory area where the image is stored
+	int		bits_per_pixel;	//Number of bits needed to represent a pixel color
+	int		size_line; 		//Number of bytes used to store one line of the image
+	int		endian;			//0 = Little endian, 1 = Big endian
 }				t_image;
 
 typedef struct t_m_vector
