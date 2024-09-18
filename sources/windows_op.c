@@ -21,6 +21,7 @@ int	free_window(t_info *w)
 	if (w->w_wall.img_ptr != NULL)
 		mlx_destroy_image(w->id_mlx, w->w_wall.img_ptr);
 	mlx_destroy_window(w->id_mlx, w->id_wind);
+	mlx_destroy_image(w->id_mlx, w->img_buffer.img_ptr); //This free the "buffer" we put pixels in
 	free_mlx_map(w);
 	return (0);
 }
