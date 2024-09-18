@@ -30,7 +30,7 @@ int	applyDDA(t_info *w, int	wallDist)
 	{
 		if(w->vectors.nextDistX < w->vectors.nextDistY)
 		{
-			printf("moving on x..\n");
+			// printf("moving on x..\n");
 			w->vectors.nextDistX += w->vectors.deltaX;
 			w->current_map_x += w->vectors.stepX;
 			w->side = 0;
@@ -38,7 +38,7 @@ int	applyDDA(t_info *w, int	wallDist)
 		}
 		else
 		{
-			printf("moving on y..\n");
+			// printf("moving on y..\n");
 			w->vectors.nextDistY += w->vectors.deltaY;
 			w->current_map_y += w->vectors.stepY;
 			w->side = 1;
@@ -46,8 +46,8 @@ int	applyDDA(t_info *w, int	wallDist)
 		}
 		if(w->actual_map[w->current_map_y][w->current_map_x] == '1')
 		{
-			print_map_current(w->actual_map, w->current_map_x, w->current_map_y);
-			printf("a wall was hit at x :%d, y:%d !\n\n", w->current_map_x, w->current_map_y);
+			// print_map_current(w->actual_map, w->current_map_x, w->current_map_y);
+			// printf("a wall was hit at x :%d, y:%d !\n\n", w->current_map_x, w->current_map_y);
 			break;
 		}
 	}
@@ -106,8 +106,8 @@ void	set_rays(t_info *w)
 		i = 0 ;
 		while (i < DEFAULT_LENGTH)
 		{
-			printf("xPos is %f\n", w->vectors.xPos);
-			printf("yPos is %f\n", w->vectors.yPos);
+			// printf("xPos is %f\n", w->vectors.xPos);
+			// printf("yPos is %f\n", w->vectors.yPos);
 			cameraX = 2 * i / (double)DEFAULT_LENGTH - 1;
 	  		rayDirX = w->vectors.xPos + w->vectors.xCam * cameraX;
 	  		rayDirY = w->vectors.yPos + w->vectors.yCam * cameraX;
@@ -117,14 +117,14 @@ void	set_rays(t_info *w)
 			///////////////
 			if (rayDirX == 0)
 			{
-				printf("RayDirX is 0.\n");
+				// printf("RayDirX is 0.\n");
 				w->vectors.deltaX = 1e30;
 			}
 			else
 				w->vectors.deltaX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
 			if (rayDirY == 0)
 			{
-				printf("RayDirY is 0.\n");
+				// printf("RayDirY is 0.\n");
 				w->vectors.deltaY = 1e30;
 			}
 			else

@@ -3,6 +3,9 @@
 int	no_events(t_info *w)
 {
 	(void)w;
+	//had to add this here for it to work, it wont be here in the final build
+	draw_floor_sky(DEFAULT_LENGTH, DEFAULT_HEIGHT, w);
+	mlx_put_image_to_window(w->id_mlx, w->id_wind, w->img_buffer.img_ptr, 0, 0);
 	return (0);
 }
 

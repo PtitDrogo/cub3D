@@ -97,6 +97,7 @@ typedef struct t_w_info
 	int				current_map_y;	//Current y on the map, int (mapY)
 	double			x_pl; 			//Player X (posX)
 	double			y_pl; 			//Player Y (posY)
+	t_image			img_buffer;     //The actual image we are changing pixel in before we call the function to show it on screen; 
 	t_image			m_door; 
 	t_image			n_wall;
 	t_image			s_wall;
@@ -137,5 +138,10 @@ void	set_rays(t_info *w); 	//Raytracing
 void	print_map_current(char **map, int x, int y);
 void	get_map_height(char **map, int *height, int *length);
 void	load_sprites(t_info *w, t_parse_data *d);
+
+//---------------------Render---------------------//
+void	pixel_fill(t_image *img, int x, int y, int color);
+int		rgb_squeeze(int r, int g, int b);
+void	draw_floor_sky(int x, int y, t_info *data);
 
 #endif

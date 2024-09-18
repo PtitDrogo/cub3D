@@ -5,6 +5,7 @@ static char		**get_map(const char *map_path_name);
 static void		map_parser(t_info *w, t_parse_data *data);
 static void		parser_init(t_info *w, t_parse_data *data, int argc, char const *argv[]);
 
+
 //TO delete
 static void debug_print_printed_parameters(t_parse_data *data);
 
