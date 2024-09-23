@@ -4,30 +4,30 @@ void	setMapVectors(t_vector *vec, char c)
 {
 	if (c == 'N')
 	{
-		vec->xPos = 0;
-		vec->yPos = -1;
+		vec->xPos = 0.0;
+		vec->yPos = -1.0;
 		vec->xCam = 0.66;
-		vec->yCam = 0;
+		vec->yCam = 0.0;
 	}
 	if (c == 'S')
 	{
-		vec->xPos = 0;
-		vec->yPos = 1;
+		vec->xPos = 0.0;
+		vec->yPos = 1.0;
 		vec->xCam = -0.66;
-		vec->yCam = 0;
+		vec->yCam = 0.0;
 	}
 	if (c == 'W')
 	{
-		vec->xPos = -1;
-		vec->yPos = 0;
-		vec->xCam = 0;
+		vec->xPos = -1.0;
+		vec->yPos = 0.0;
+		vec->xCam = 0.0;
 		vec->yCam = -0.66;
 	}
 	if (c == 'E')
 	{
-		vec->xPos = 1;
-		vec->yPos = 0;
-		vec->xCam = 0;
+		vec->xPos = 1.0;
+		vec->yPos = 0.0;
+		vec->xCam = 0.0;
 		vec->yCam = 0.66;
 	}
 }

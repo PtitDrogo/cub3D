@@ -24,7 +24,7 @@ void	movetoFirstXY(t_info *w, double rayX, double rayY)
 	}
 }
 
-int	applyDDA(t_info *w, double wall_dist)
+double	applyDDA(t_info *w, double wall_dist)
 {
 	while(42)
 	{
@@ -50,23 +50,33 @@ int	applyDDA(t_info *w, double wall_dist)
 		// 	w->current_map_x = w->map_length - 1;
 		if(w->actual_map[w->current_map_y][w->current_map_x] == '1')
 		{
-			// print_map_current(w->actual_map, w->current_map_x, w->current_map_y);
-			// printf("a wall was hit at x :%d, y:%d !\n\n", w->current_map_x, w->current_map_y);
 			break;
 		}
 	}
 	if(w->side == 0)
+	{	
 		wall_dist = (w->vectors.nextDistX - w->vectors.deltaX);
+		printf("w->vectors.nextDistX = %f and w->vectors.deltaX = %f \n", w->vectors.nextDistX, w->vectors.deltaX);
+		// while (1);
+	}
 	else
+	{
 		wall_dist = (w->vectors.nextDistY - w->vectors.deltaY);
+		printf("w->vectors.nextDistX = %f and w->vectors.deltaY = %f \n", w->vectors.nextDistX, w->vectors.deltaY);
+		printf("wall_dist %f \n", wall_dist);
+		// while (1);
+	}
+	
 	return (wall_dist);
 }
 
 void	getDrawLimits(t_info *w)
 {
-	w->line_height = (int)(DEFAULT_HEIGHT / w->distWall); //BUG Distwall can be 0 and it crashes stuff
+	w->line_height = (DEFAULT_HEIGHT / w->distWall); //BUG Distwall can be 0 and it crashes stuff
+	printf("distwall : %f\n",  w->distWall);
 	//calculate lowest and highest pixel to fill in current stripe
-	w->draw_start = -w->line_height / 2 + DEFAULT_HEIGHT / 2;
+	// w->draw_start = -w->line_height / 2 + DEFAULT_HEIGHT / 2;
+	w->draw_start = DEFAULT_HEIGHT / 2 - w->line_height / 2;
 	if(w->draw_start < 0)
 		w->draw_start = 0;
 	w->draw_end = w->line_height / 2 + DEFAULT_HEIGHT / 2;
@@ -74,6 +84,7 @@ void	getDrawLimits(t_info *w)
 		w->draw_end = DEFAULT_HEIGHT - 1;
 	//Idk this entire thing gets the limits of where to draw the cubes somehow man
 }
+<<<<<<< HEAD
 
 // //This function is now obsolete will delete soon;
 // void	set_rays(t_info *w)
@@ -120,3 +131,5 @@ void	getDrawLimits(t_info *w)
 // 	}
 // }
 
+=======
+>>>>>>> main

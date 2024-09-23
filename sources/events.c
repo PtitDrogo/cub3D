@@ -82,7 +82,8 @@ static void	apply_texture(t_info *w)
 		touched_wall = (w->distWall * w->rayDirX) + w->x_pl;
 	touched_wall -= floor(touched_wall);
 	w->texture_x = (int)(touched_wall * (double)w->n_wall.width); //It could be any texture i just want the standard width
-	if (((w->side == 0) && (w->rayDirX > 0)) || ((w->side == 1) && (w->rayDirY < 0)))
+	printf("texture x is = %i\n", w->texture_x);
+	if ((w->side == 0 && w->vectors.xPos > 0) || (w->side == 1 && w->vectors.yPos < 0))
 		w->texture_x = w->n_wall.width - w->texture_x - 1;
 	/*
 	The last condition checks if:
@@ -123,14 +124,15 @@ static	void dda_innit(t_info *w, int i)
 	if (w->rayDirX == 0)
 		w->vectors.deltaX = 1e30;
 	else
-		w->vectors.deltaX = sqrt(1 + (w->rayDirY * w->rayDirY) / (w->rayDirX * w->rayDirX));
+		w->vectors.deltaX = fabs(1 / w->rayDirX);
+		// w->vectors.deltaX = sqrt(1 + (w->rayDirY * w->rayDirY) / (w->rayDirX * w->rayDirX));
 	if (w->rayDirY == 0)
 		w->vectors.deltaY = 1e30;
 	else
-		w->vectors.deltaY = sqrt(1 + (w->rayDirX * w->rayDirX) / (w->rayDirY * w->rayDirY));
+		w->vectors.deltaY = fabs(1 / w->rayDirY);
+		// w->vectors.deltaY = sqrt(1 + (w->rayDirX * w->rayDirX) / (w->rayDirY * w->rayDirY));
 	return ;
 }
-
 
 
 
@@ -140,7 +142,7 @@ void	rotate_camera(t_info *w, int id)
 	double	saveDirX;
 	double	savePlaneX;
 
-	rotSpeed = 0.2; 
+	rotSpeed = 0.3; 
 	if (id == XK_Left)
 	{
 		saveDirX = w->vectors.xPos;
@@ -161,41 +163,41 @@ void	rotate_camera(t_info *w, int id)
 	}
 }
 
-void	moove_u_d(t_info *w, int id)
+  void    moove_u_d(t_info *w, int id)
 {
-	if (id == XK_w)
-	{
-		if(w->actual_map[(int)w->y_pl][(int)(w->x_pl + (w->vectors.xPos * 0.1))] == '0')
-			w->x_pl += w->vectors.xPos * 0.1;
-		if(w->actual_map[(int)(w->y_pl + (w->vectors.yPos * 0.1))][(int)w->x_pl] == '0')
-			w->y_pl += w->vectors.yPos * 0.1;
-	}
-	else
-	{
-		if(w->actual_map[(int)w->y_pl][(int)(w->x_pl - (w->vectors.xPos * 0.1))] == '0')
-			w->x_pl -= w->vectors.xPos * 0.1;
-		if(w->actual_map[(int)(w->y_pl - (w->vectors.yPos * 0.1))][(int)w->x_pl] == '0')
-			w->y_pl -= w->vectors.yPos * 0.1;
-	}
+    if (id == XK_w)
+    {
+        if(w->actual_map[(int)w->y_pl][(int)(w->x_pl + (w->vectors.xPos * 0.5))] == '0')
+            w->x_pl += w->vectors.xPos * 0.5;
+        if(w->actual_map[(int)(w->y_pl + (w->vectors.yPos * 0.5))][(int)w->x_pl] == '0')
+            w->y_pl += w->vectors.yPos * 0.5;
+    }
+    else
+    {
+        if(w->actual_map[(int)w->y_pl][(int)(w->x_pl - (w->vectors.xPos * 0.5))] == '0')
+            w->x_pl -= w->vectors.xPos * 0.5;
+        if(w->actual_map[(int)(w->y_pl - (w->vectors.yPos * 0.5))][(int)w->x_pl] == '0')
+            w->y_pl -= w->vectors.yPos * 0.5;
+    }
 }
 
-void	moove_l_r(t_info *w, int id)
+void    moove_l_r(t_info *w, int id)
 {
-	if (id == XK_d)
-	{
-		if(w->actual_map[(int)w->y_pl][(int)(w->x_pl + w->vectors.xCam * 0.1)] == '0')
-			w->x_pl += w->vectors.xCam * 0.1;
-		if(w->actual_map[(int)(w->y_pl + (w->vectors.yCam * 0.1))][(int)w->x_pl] == '0')
-			w->y_pl += w->vectors.yCam * 0.1;
-	}
-	else
-	{
-		if(w->actual_map[(int)w->y_pl][(int)(w->x_pl - (w->vectors.xCam * 0.1))] == '0')
-			w->x_pl -= w->vectors.xCam * 0.1;
-		if(w->actual_map[(int)(w->y_pl - (w->vectors.yCam * 0.1))][(int)w->x_pl] == '0')
-			w->y_pl -= w->vectors.yCam * 0.1;
-	}
-}
+    if (id == XK_d)
+    {
+        if(w->actual_map[(int)w->y_pl][(int)(w->x_pl + w->vectors.xCam * 0.5)] == '0')
+            w->x_pl += w->vectors.xCam * 0.5;
+        if(w->actual_map[(int)(w->y_pl + (w->vectors.yCam * 0.5))][(int)w->x_pl] == '0')
+            w->y_pl += w->vectors.yCam * 0.5;
+    }
+    else
+    {
+        if(w->actual_map[(int)w->y_pl][(int)(w->x_pl - (w->vectors.xCam * 0.5))] == '0')
+            w->x_pl -= w->vectors.xCam * 0.5;
+        if(w->actual_map[(int)(w->y_pl - (w->vectors.yCam * 0.5))][(int)w->x_pl] == '0')
+            w->y_pl -= w->vectors.yCam * 0.5;
+    }
+} 
 
 int	deal_key(int id_key, t_info *w)
 {
