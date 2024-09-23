@@ -42,12 +42,12 @@ void	find_player(t_info *w)
 	while (y < w->map_heigth - 1)
 	{
 		x = 1;
-		while (x < w->map_lenght - 1)
+		while (x < w->map_length - 1)
 		{
 			if (is_direction_c(w->actual_map[y][x]))
 			{
-				w->x_pl = x;
-				w->y_pl = y;
+				w->x_pl = x + 0.2; //adding an offset so its not perfectly ligned up
+				w->y_pl = y + 0.2; //adding an offset so its not perfectly ligned up
 				setMapVectors(&w->vectors, w->actual_map[y][x]);
 				return ;
 			}

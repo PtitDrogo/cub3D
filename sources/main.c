@@ -1,6 +1,6 @@
 # include "cub3D.h"
 
-static void		init_img(t_info *data);
+static void		init_img_buffer(t_info *data);
 
 int main(int argc, char const *argv[])
 {
@@ -8,12 +8,12 @@ int main(int argc, char const *argv[])
 	t_parse_data	data;
 
 	init_game(&w, &data, argc, argv);
-	set_rays(&w);
+	// set_rays(&w);
 	if (!load_window(&w))
 		return (1);
 	load_sprites(&w, &data);
 	//THEO addition (I need the mlx ptr for this so i cant put this in init game)
-	init_img(&w);
+	init_img_buffer(&w);
 
 	// draw_all(&w);
 	mlx_hook(w.id_wind, KeyPress, KeyPressMask, deal_key, &w);
@@ -23,7 +23,7 @@ int main(int argc, char const *argv[])
     return (0);
 }
 
-static void	init_img(t_info *data)
+static void	init_img_buffer(t_info *data)
 {
 	t_image *buffer;
 

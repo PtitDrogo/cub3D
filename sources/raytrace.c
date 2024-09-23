@@ -1,30 +1,30 @@
 #include "cub3D.h"
 
-void	moovetoFirstXY(t_info *w, double rayX, double rayY)
+void	movetoFirstXY(t_info *w, double rayX, double rayY)
 {
 	if(rayX < 0)
-	  {
+	{
 		w->vectors.stepX = -1;
 		w->vectors.nextDistX = (w->x_pl - w->current_map_x) * w->vectors.deltaX;
-	  }
-	  else
-	  {
+	}
+	else
+	{
 		w->vectors.stepX = 1;
 		w->vectors.nextDistX = (w->current_map_x + 1.0 - w->x_pl) * w->vectors.deltaX;
-	  }
-	  if(rayY < 0)
-	  {
+	}
+	if(rayY < 0)
+	{
 		w->vectors.stepY = -1;
 		w->vectors.nextDistY = (w->y_pl - w->current_map_y) * w->vectors.deltaY;
-	  }
-	  else
-	  {
+	}
+	else
+	{
 		w->vectors.stepY = 1;
 		w->vectors.nextDistY = (w->current_map_y + 1.0 - w->y_pl) * w->vectors.deltaY;
-	  }
+	}
 }
 
-int	applyDDA(t_info *w, int	wallDist)
+int	applyDDA(t_info *w, int	wall_dist)
 {
 	while(42)
 	{
@@ -51,27 +51,24 @@ int	applyDDA(t_info *w, int	wallDist)
 			break;
 		}
 	}
-	if(w->side == 0) 
-		wallDist = (w->vectors.nextDistX - w->vectors.deltaX);
+	if(w->side == 0)
+		wall_dist = (w->vectors.nextDistX - w->vectors.deltaX);
 	else
-		wallDist = (w->vectors.nextDistY - w->vectors.deltaY);
-	return (wallDist);
+		wall_dist = (w->vectors.nextDistY - w->vectors.deltaY);
+	return (wall_dist);
 }
 
-void	getDrawLimits(double wallDist)
+void	getDrawLimits(t_info *w)
 {
-	int	lineHeight;
-	int	drawStart;
-	int	drawEnd;
-
-	lineHeight = (int)(DEFAULT_HEIGHT / wallDist);
+	w->line_height = (int)(DEFAULT_HEIGHT / w->distWall); //BUG Distwall can be 0 and it crashes stuff
 	//calculate lowest and highest pixel to fill in current stripe
-	drawStart = -lineHeight / 2 + DEFAULT_HEIGHT / 2;
-	if(drawStart < 0)
-		drawStart = 0;
-	drawEnd = lineHeight / 2 + DEFAULT_HEIGHT / 2;
-	if(drawEnd >= DEFAULT_HEIGHT)
-		drawEnd = DEFAULT_HEIGHT - 1;
+	w->draw_start = -w->line_height / 2 + DEFAULT_HEIGHT / 2;
+	if(w->draw_start < 0)
+		w->draw_start = 0;
+	w->draw_end = w->line_height / 2 + DEFAULT_HEIGHT / 2;
+	if(w->draw_end >= DEFAULT_HEIGHT)
+		w->draw_end = DEFAULT_HEIGHT - 1;
+	//Idk this entire thing gets the limits of where to draw the cubes somehow man
 }
 
 int	getX_CoordTexture(t_info *w, int rayDirX, int rayDirY, int distWall)
@@ -93,6 +90,7 @@ int	getX_CoordTexture(t_info *w, int rayDirX, int rayDirY, int distWall)
 	return (texX);
 }
 
+//This function is now obsolete will delete soon;
 void	set_rays(t_info *w)
 {
 	double	rayDirX;
@@ -130,9 +128,9 @@ void	set_rays(t_info *w)
 			else
 				w->vectors.deltaY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
 			//////////////
-			moovetoFirstXY(w, rayDirX, rayDirY);
+			movetoFirstXY(w, rayDirX, rayDirY);
 			distWall = applyDDA(w, 0);
-			getDrawLimits(distWall);
+			// getDrawLimits(distWall);
 			i++;
 		}
 		break ;
