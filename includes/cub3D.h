@@ -13,8 +13,8 @@
 
 # define MAX_HEIGHT 2100 // bruteforce, recuperable ailleurs
 # define MAX_LENGTH 3905 // taille max pour ecran mac
-# define DEFAULT_LENGTH 1000
-# define DEFAULT_HEIGHT 800
+# define DEFAULT_LENGTH 1920
+# define DEFAULT_HEIGHT 1080
 # define SPRITE_HEIGHT 64
 # define SPRITE_LENGTH 64
 
@@ -112,11 +112,11 @@ typedef struct t_w_info
 	double			rayDirX;  //w->vectors.xPos + w->vectors.xCam * cameraX;
 	double			rayDirY;  //w->vectors.yPos + w->vectors.yCam * cameraX;
 	double			cameraX;  //2 * i / (double)DEFAULT_LENGTH - 1;
-	int				distWall; // = applyDDA(w, 0);
-	int				texture_x; //position of the texture I think ?
-	int				line_height;
-	int				draw_start;
-	int				draw_end;
+	double				distWall; // = applyDDA(w, 0);
+	int					texture_x; //position of the texture I think ?
+	int					line_height;
+	int					draw_start;
+	int					draw_end;
 
 }				t_info;
 
@@ -157,7 +157,7 @@ int		rgb_squeeze(int r, int g, int b);
 void	draw_floor_sky(int x, int y, t_info *data);
 
 //---------------------DDA---------------------//
-int		applyDDA(t_info *w, int	wallDist);
+double		applyDDA(t_info *w, double	wallDist);
 void	movetoFirstXY(t_info *w, double rayX, double rayY);
 void	getDrawLimits(t_info *w);
 
