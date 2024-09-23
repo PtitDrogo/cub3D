@@ -63,7 +63,7 @@ static void	draw_line(t_info *w, int x)
 
 static int	pixel_color(t_info *w, int texture_y)
 {
-	char	*color;
+	char			*color;
 	t_image			*texture;
 
 	texture = w->in_use_texture;
@@ -83,6 +83,7 @@ static void	apply_texture(t_info *w)
 		touched_wall = (w->distWall * w->rayDirX) + w->x_pl;
 	touched_wall -= floor(touched_wall);
 	w->texture_x = (int)(touched_wall * (double)w->n_wall.width); //It could be any texture i just want the standard width
+	printf("texture x is = %i\n", w->texture_x);
 	if ((w->side == 0 && w->vectors.xPos > 0) || (w->side == 1 && w->vectors.yPos < 0))
 		w->texture_x = w->n_wall.width - w->texture_x - 1;
 	/*
@@ -124,14 +125,15 @@ static	void dda_innit(t_info *w, int i)
 	if (w->rayDirX == 0)
 		w->vectors.deltaX = 1e30;
 	else
-		w->vectors.deltaX = sqrt(1 + (w->rayDirY * w->rayDirY) / (w->rayDirX * w->rayDirX));
+		w->vectors.deltaX = fabs(1 / w->rayDirX);
+		// w->vectors.deltaX = sqrt(1 + (w->rayDirY * w->rayDirY) / (w->rayDirX * w->rayDirX));
 	if (w->rayDirY == 0)
 		w->vectors.deltaY = 1e30;
 	else
-		w->vectors.deltaY = sqrt(1 + (w->rayDirX * w->rayDirX) / (w->rayDirY * w->rayDirY));
+		w->vectors.deltaY = fabs(1 / w->rayDirY);
+		// w->vectors.deltaY = sqrt(1 + (w->rayDirX * w->rayDirX) / (w->rayDirY * w->rayDirY));
 	return ;
 }
-
 
 
 
@@ -141,8 +143,8 @@ void	rotate_camera(t_info *w, int id)
 	double	saveDirX;
 	double	savePlaneX;
 
-	rotSpeed = 3.3; 
-	if (id == XK_Right)
+	rotSpeed = 0.3; 
+	if (id == XK_Left)
 	{
 		saveDirX = w->vectors.xPos;
 		w->vectors.xPos = w->vectors.xPos * cos(-rotSpeed) - w->vectors.yPos * sin(-rotSpeed);
@@ -162,41 +164,41 @@ void	rotate_camera(t_info *w, int id)
 	}
 }
 
-void	moove_u_d(t_info *w, int id)
+  void    moove_u_d(t_info *w, int id)
 {
-	if (id == XK_w)
-	{
-		if(w->actual_map[(int)w->x_pl + (int)w->vectors.xPos * 2][(int)w->y_pl] == false)
-			w->x_pl += w->vectors.xPos * 2;
-		if(w->actual_map[(int)w->x_pl][(int)w->y_pl + (int)w->vectors.yPos * 2] == false)
-			w->y_pl += w->vectors.yPos * 2;
-	}
-	else
-	{
-		if(w->actual_map[(int)w->x_pl - (int)w->vectors.xPos * 2][(int)w->y_pl] == false)
-			w->x_pl -= w->vectors.xPos * 2;
-		if(w->actual_map[(int)w->x_pl][(int)w->y_pl - (int)w->vectors.yPos * 2] == false)
-			w->y_pl -= w->vectors.yPos * 2;
-	}
+    if (id == XK_w)
+    {
+        if(w->actual_map[(int)w->y_pl][(int)(w->x_pl + (w->vectors.xPos * 0.5))] == '0')
+            w->x_pl += w->vectors.xPos * 0.5;
+        if(w->actual_map[(int)(w->y_pl + (w->vectors.yPos * 0.5))][(int)w->x_pl] == '0')
+            w->y_pl += w->vectors.yPos * 0.5;
+    }
+    else
+    {
+        if(w->actual_map[(int)w->y_pl][(int)(w->x_pl - (w->vectors.xPos * 0.5))] == '0')
+            w->x_pl -= w->vectors.xPos * 0.5;
+        if(w->actual_map[(int)(w->y_pl - (w->vectors.yPos * 0.5))][(int)w->x_pl] == '0')
+            w->y_pl -= w->vectors.yPos * 0.5;
+    }
 }
 
-void	moove_l_r(t_info *w, int id)
+void    moove_l_r(t_info *w, int id)
 {
-	if (id == XK_d)
-	{
-		if(w->actual_map[(int)w->x_pl + (int)w->vectors.xCam * 2][(int)w->y_pl] == false)
-			w->x_pl += w->vectors.xCam * 2;
-		if(w->actual_map[(int)w->x_pl][(int)w->y_pl + (int)w->vectors.yCam * 2] == false)
-			w->y_pl += w->vectors.yCam * 2;
-	}
-	else
-	{
-		if(w->actual_map[(int)w->x_pl - (int)w->vectors.xCam * 2][(int)w->y_pl] == false)
-			w->x_pl -= w->vectors.xCam * 2;
-		if(w->actual_map[(int)w->x_pl][(int)w->y_pl - (int)w->vectors.yCam * 2] == false)
-			w->y_pl -= w->vectors.yCam * 2;
-	}
-}
+    if (id == XK_d)
+    {
+        if(w->actual_map[(int)w->y_pl][(int)(w->x_pl + w->vectors.xCam * 0.5)] == '0')
+            w->x_pl += w->vectors.xCam * 0.5;
+        if(w->actual_map[(int)(w->y_pl + (w->vectors.yCam * 0.5))][(int)w->x_pl] == '0')
+            w->y_pl += w->vectors.yCam * 0.5;
+    }
+    else
+    {
+        if(w->actual_map[(int)w->y_pl][(int)(w->x_pl - (w->vectors.xCam * 0.5))] == '0')
+            w->x_pl -= w->vectors.xCam * 0.5;
+        if(w->actual_map[(int)(w->y_pl - (w->vectors.yCam * 0.5))][(int)w->x_pl] == '0')
+            w->y_pl -= w->vectors.yCam * 0.5;
+    }
+} 
 
 int	deal_key(int id_key, t_info *w)
 {
