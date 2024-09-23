@@ -69,7 +69,6 @@ void	getDrawLimits(t_info *w)
 	if(w->draw_end >= DEFAULT_HEIGHT)
 		w->draw_end = DEFAULT_HEIGHT - 1;
 	//Idk this entire thing gets the limits of where to draw the cubes somehow man
-
 }
 
 int	getX_CoordTexture(t_info *w, int rayDirX, int rayDirY, int distWall)

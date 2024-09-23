@@ -31,7 +31,6 @@ int	no_events(t_info *w)
 		apply_texture(w);
 		getDrawLimits(w);
 		draw_line(w, i);
-		//Add function here to draw the actual line
 		i++;
 	}
 	mlx_put_image_to_window(w->id_mlx, w->id_wind, w->img_buffer.img_ptr, 0, 0);
@@ -49,7 +48,8 @@ static void	draw_line(t_info *w, int x)
 	//We are going through every pixel of the vertical line and putting it in our buffer img;
 	while (y <= w->draw_end)
 	{
-		scaling = (y * 256) - DEFAULT_HEIGHT * 128 + w->line_height * 128;
+		scaling = (y * 256) - DEFAULT_HEIGHT * 128 + w->line_height * 128; //Tres utile !
+		// scaling = 1;
 		texture_y = ((scaling * w->n_wall.height) / w->line_height) / 256;
 		if (texture_y < 0)
 			texture_y = 0; //Pour les segfaults dans les coins
@@ -69,7 +69,7 @@ static int	pixel_color(t_info *w, int texture_y)
 	texture = w->in_use_texture;
 
 	color = texture->pix_addr + (texture_y * texture->size_line + w->texture_x * (texture->bits_per_pixel / 8));
-	return (*color); //why are we casting this to unsigned int ? Very good question;
+	return (*(unsigned int *)color); //casting very important
 }
 
 static void	apply_texture(t_info *w)
@@ -102,12 +102,12 @@ static t_image	*get_texture(t_info *w)
 		if (w->rayDirX > 0)
 			return (&w->e_wall);
 		else
-			return (&w->s_wall);
+			return (&w->w_wall);
 	}
 	else
 	{
 		if (w->rayDirY > 0)
-			return (&w->w_wall);
+			return (&w->s_wall);
 		else
 			return (&w->n_wall);
 	}
