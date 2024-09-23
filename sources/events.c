@@ -63,12 +63,11 @@ static void	draw_line(t_info *w, int x)
 
 static int	pixel_color(t_info *w, int texture_y)
 {
-	char	*color;
+	char			*color;
 	t_image			*texture;
 
 	texture = w->in_use_texture;
-
-	color = texture->pix_addr + (texture_y * texture->size_line + w->texture_x * (texture->bits_per_pixel / 8));
+	color = texture->pix_addr + (texture_y * texture->size_line) + (w->texture_x * (texture->bits_per_pixel / 8));
 	return (*(unsigned int *)color); //casting very important
 }
 
@@ -83,7 +82,7 @@ static void	apply_texture(t_info *w)
 		touched_wall = (w->distWall * w->rayDirX) + w->x_pl;
 	touched_wall -= floor(touched_wall);
 	w->texture_x = (int)(touched_wall * (double)w->n_wall.width); //It could be any texture i just want the standard width
-	if ((w->side == 0 && w->vectors.xPos > 0) || (w->side == 1 && w->vectors.yPos < 0))
+	if (((w->side == 0) && (w->rayDirX > 0)) || ((w->side == 1) && (w->rayDirY < 0)))
 		w->texture_x = w->n_wall.width - w->texture_x - 1;
 	/*
 	The last condition checks if:
@@ -141,8 +140,8 @@ void	rotate_camera(t_info *w, int id)
 	double	saveDirX;
 	double	savePlaneX;
 
-	rotSpeed = 3.3; 
-	if (id == XK_Right)
+	rotSpeed = 0.2; 
+	if (id == XK_Left)
 	{
 		saveDirX = w->vectors.xPos;
 		w->vectors.xPos = w->vectors.xPos * cos(-rotSpeed) - w->vectors.yPos * sin(-rotSpeed);
@@ -166,17 +165,17 @@ void	moove_u_d(t_info *w, int id)
 {
 	if (id == XK_w)
 	{
-		if(w->actual_map[(int)w->x_pl + (int)w->vectors.xPos * 2][(int)w->y_pl] == false)
-			w->x_pl += w->vectors.xPos * 2;
-		if(w->actual_map[(int)w->x_pl][(int)w->y_pl + (int)w->vectors.yPos * 2] == false)
-			w->y_pl += w->vectors.yPos * 2;
+		if(w->actual_map[(int)w->y_pl][(int)(w->x_pl + (w->vectors.xPos * 0.1))] == '0')
+			w->x_pl += w->vectors.xPos * 0.1;
+		if(w->actual_map[(int)(w->y_pl + (w->vectors.yPos * 0.1))][(int)w->x_pl] == '0')
+			w->y_pl += w->vectors.yPos * 0.1;
 	}
 	else
 	{
-		if(w->actual_map[(int)w->x_pl - (int)w->vectors.xPos * 2][(int)w->y_pl] == false)
-			w->x_pl -= w->vectors.xPos * 2;
-		if(w->actual_map[(int)w->x_pl][(int)w->y_pl - (int)w->vectors.yPos * 2] == false)
-			w->y_pl -= w->vectors.yPos * 2;
+		if(w->actual_map[(int)w->y_pl][(int)(w->x_pl - (w->vectors.xPos * 0.1))] == '0')
+			w->x_pl -= w->vectors.xPos * 0.1;
+		if(w->actual_map[(int)(w->y_pl - (w->vectors.yPos * 0.1))][(int)w->x_pl] == '0')
+			w->y_pl -= w->vectors.yPos * 0.1;
 	}
 }
 
@@ -184,17 +183,17 @@ void	moove_l_r(t_info *w, int id)
 {
 	if (id == XK_d)
 	{
-		if(w->actual_map[(int)w->x_pl + (int)w->vectors.xCam * 2][(int)w->y_pl] == false)
-			w->x_pl += w->vectors.xCam * 2;
-		if(w->actual_map[(int)w->x_pl][(int)w->y_pl + (int)w->vectors.yCam * 2] == false)
-			w->y_pl += w->vectors.yCam * 2;
+		if(w->actual_map[(int)w->y_pl][(int)(w->x_pl + w->vectors.xCam * 0.1)] == '0')
+			w->x_pl += w->vectors.xCam * 0.1;
+		if(w->actual_map[(int)(w->y_pl + (w->vectors.yCam * 0.1))][(int)w->x_pl] == '0')
+			w->y_pl += w->vectors.yCam * 0.1;
 	}
 	else
 	{
-		if(w->actual_map[(int)w->x_pl - (int)w->vectors.xCam * 2][(int)w->y_pl] == false)
-			w->x_pl -= w->vectors.xCam * 2;
-		if(w->actual_map[(int)w->x_pl][(int)w->y_pl - (int)w->vectors.yCam * 2] == false)
-			w->y_pl -= w->vectors.yCam * 2;
+		if(w->actual_map[(int)w->y_pl][(int)(w->x_pl - (w->vectors.xCam * 0.1))] == '0')
+			w->x_pl -= w->vectors.xCam * 0.1;
+		if(w->actual_map[(int)(w->y_pl - (w->vectors.yCam * 0.1))][(int)w->x_pl] == '0')
+			w->y_pl -= w->vectors.yCam * 0.1;
 	}
 }
 

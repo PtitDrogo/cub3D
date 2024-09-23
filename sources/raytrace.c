@@ -4,7 +4,7 @@ void	movetoFirstXY(t_info *w, double rayX, double rayY)
 {
 	if(rayX < 0)
 	{
-		w->vectors.stepX = -1;
+		w->vectors.stepX = 1;
 		w->vectors.nextDistX = (w->x_pl - w->current_map_x) * w->vectors.deltaX;
 	}
 	else
@@ -24,7 +24,7 @@ void	movetoFirstXY(t_info *w, double rayX, double rayY)
 	}
 }
 
-int	applyDDA(t_info *w, int	wall_dist)
+int	applyDDA(t_info *w, double wall_dist)
 {
 	while(42)
 	{
@@ -44,6 +44,10 @@ int	applyDDA(t_info *w, int	wall_dist)
 			w->side = 1;
 			// print_map_current(w->actual_map, w->current_map_x, w->current_map_y);
 		}
+		// if (w->current_map_y >= w->map_heigth)
+		// 	w->current_map_y = w->map_heigth - 1;
+		// if (w->current_map_x >= w->map_length)
+		// 	w->current_map_x = w->map_length - 1;
 		if(w->actual_map[w->current_map_y][w->current_map_x] == '1')
 		{
 			// print_map_current(w->actual_map, w->current_map_x, w->current_map_y);
@@ -71,69 +75,48 @@ void	getDrawLimits(t_info *w)
 	//Idk this entire thing gets the limits of where to draw the cubes somehow man
 }
 
-int	getX_CoordTexture(t_info *w, int rayDirX, int rayDirY, int distWall)
-{
-	double	wallX; //where exactly the wall was hit
-	int		texX;
+// //This function is now obsolete will delete soon;
+// void	set_rays(t_info *w)
+// {
+// 	double	rayDirX;
+// 	double	rayDirY;
+// 	double	cameraX;
+// 	int		i;
+// 	int		distWall;
 
-	if(w->side == 0)
-	  	wallX = w->y_pl + distWall * rayDirY;
-	else
-	  	wallX = w->x_pl + distWall * rayDirX;
-	wallX -= floor((wallX));
-		
-	texX = wallX * (double)SPRITE_LENGTH; //x coordinate on the texture
-	if(w->side == 0 && rayDirX > 0)
-	  	texX = SPRITE_LENGTH - texX - 1;
-	if(w->side == 1 && rayDirY < 0)
-	  	texX = SPRITE_LENGTH - texX - 1;
-	return (texX);
-}
-
-//This function is now obsolete will delete soon;
-void	set_rays(t_info *w)
-{
-	double	rayDirX;
-	double	rayDirY;
-	double	cameraX;
-	int		i;
-	int		distWall;
-
-	while(42)// to change ?
-	{
-		i = 0 ;
-		while (i < DEFAULT_LENGTH)
-		{
-			// printf("xPos is %f\n", w->vectors.xPos);
-			// printf("yPos is %f\n", w->vectors.yPos);
-			cameraX = 2 * i / (double)DEFAULT_LENGTH - 1;
-	  		rayDirX = w->vectors.xPos + w->vectors.xCam * cameraX;
-	  		rayDirY = w->vectors.yPos + w->vectors.yCam * cameraX;
-			///////////////
-			w->current_map_x = (int)w->x_pl; // cast float into int
-			w->current_map_y = (int)w->y_pl;
-			///////////////
-			if (rayDirX == 0)
-			{
-				// printf("RayDirX is 0.\n");
-				w->vectors.deltaX = 1e30;
-			}
-			else
-				w->vectors.deltaX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
-			if (rayDirY == 0)
-			{
-				// printf("RayDirY is 0.\n");
-				w->vectors.deltaY = 1e30;
-			}
-			else
-				w->vectors.deltaY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
-			//////////////
-			movetoFirstXY(w, rayDirX, rayDirY);
-			distWall = applyDDA(w, 0);
-			// getDrawLimits(distWall);
-			i++;
-		}
-		break ;
-	}
-}
+// 	while(42)// to change ?
+// 	{
+// 		i = 0 ;
+// 		while (i < DEFAULT_LENGTH)
+// 		{
+// 			cameraX = 2 * i / (double)DEFAULT_LENGTH - 1;
+// 	  		rayDirX = w->vectors.xPos + w->vectors.xCam * cameraX;
+// 	  		rayDirY = w->vectors.yPos + w->vectors.yCam * cameraX;
+// 			///////////////
+// 			w->current_map_x = (int)w->x_pl; // cast float into int
+// 			w->current_map_y = (int)w->y_pl;
+// 			///////////////
+// 			if (rayDirX == 0)
+// 			{
+// 				// printf("RayDirX is 0.\n");
+// 				w->vectors.deltaX = 1e30;
+// 			}
+// 			else
+// 				w->vectors.deltaX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
+// 			if (rayDirY == 0)
+// 			{
+// 				// printf("RayDirY is 0.\n");
+// 				w->vectors.deltaY = 1e30;
+// 			}
+// 			else
+// 				w->vectors.deltaY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
+// 			//////////////
+// 			movetoFirstXY(w, rayDirX, rayDirY);
+// 			distWall = applyDDA(w, 0);
+// 			// getDrawLimits(distWall);
+// 			i++;
+// 		}
+// 		break ;
+// 	}
+// }
 
