@@ -92,11 +92,13 @@ typedef struct t_w_info
 	char			**actual_map;	//Map[][] only
 	int				side;			//side hit by ray
 	int				map_heigth;		//Number of rows
-	int				map_lenght;		//Size of longest line
+	int				map_length;		//Size of longest line
 	int				current_map_x;	//Current x on the map, int (mapX)
 	int				current_map_y;	//Current y on the map, int (mapY)
 	double			x_pl; 			//Player X (posX)
 	double			y_pl; 			//Player Y (posY)
+	t_image			img_buffer;     //The actual image we are changing pixel in before we call the function to show it on screen; 
+	t_image			*in_use_texture; //added this to store which texture to use for a ray hit
 	t_image			m_door; 
 	t_image			n_wall;
 	t_image			s_wall;
@@ -105,6 +107,17 @@ typedef struct t_w_info
 	t_rgb			floor_v;
 	t_rgb			ceiling_v;
 	t_vector		vectors;
+
+	//Tfreydie variables Im adding here for convenience.
+	double			rayDirX;  //w->vectors.xPos + w->vectors.xCam * cameraX;
+	double			rayDirY;  //w->vectors.yPos + w->vectors.yCam * cameraX;
+	double			cameraX;  //2 * i / (double)DEFAULT_LENGTH - 1;
+	int				distWall; // = applyDDA(w, 0);
+	int				texture_x; //position of the texture I think ?
+	int				line_height;
+	int				draw_start;
+	int				draw_end;
+
 }				t_info;
 
 //---------------------Functions---------------------//
@@ -137,5 +150,15 @@ void	set_rays(t_info *w); 	//Raytracing
 void	print_map_current(char **map, int x, int y);
 void	get_map_height(char **map, int *height, int *length);
 void	load_sprites(t_info *w, t_parse_data *d);
+
+//---------------------Render---------------------//
+void	pixel_fill(t_image *img, int x, int y, int color);
+int		rgb_squeeze(int r, int g, int b);
+void	draw_floor_sky(int x, int y, t_info *data);
+
+//---------------------DDA---------------------//
+int		applyDDA(t_info *w, int	wallDist);
+void	movetoFirstXY(t_info *w, double rayX, double rayY);
+void	getDrawLimits(t_info *w);
 
 #endif

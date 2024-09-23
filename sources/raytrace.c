@@ -1,36 +1,36 @@
 #include "cub3D.h"
 
-void	moovetoFirstXY(t_info *w, double rayX, double rayY)
+void	movetoFirstXY(t_info *w, double rayX, double rayY)
 {
 	if(rayX < 0)
-	  {
+	{
 		w->vectors.stepX = -1;
 		w->vectors.nextDistX = (w->x_pl - w->current_map_x) * w->vectors.deltaX;
-	  }
-	  else
-	  {
+	}
+	else
+	{
 		w->vectors.stepX = 1;
 		w->vectors.nextDistX = (w->current_map_x + 1.0 - w->x_pl) * w->vectors.deltaX;
-	  }
-	  if(rayY < 0)
-	  {
+	}
+	if(rayY < 0)
+	{
 		w->vectors.stepY = -1;
 		w->vectors.nextDistY = (w->y_pl - w->current_map_y) * w->vectors.deltaY;
-	  }
-	  else
-	  {
+	}
+	else
+	{
 		w->vectors.stepY = 1;
 		w->vectors.nextDistY = (w->current_map_y + 1.0 - w->y_pl) * w->vectors.deltaY;
-	  }
+	}
 }
 
-int	applyDDA(t_info *w, int	wallDist)
+int	applyDDA(t_info *w, int	wall_dist)
 {
 	while(42)
 	{
 		if(w->vectors.nextDistX < w->vectors.nextDistY)
 		{
-			printf("moving on x..\n");
+			// printf("moving on x..\n");
 			w->vectors.nextDistX += w->vectors.deltaX;
 			w->current_map_x += w->vectors.stepX;
 			w->side = 0;
@@ -38,7 +38,7 @@ int	applyDDA(t_info *w, int	wallDist)
 		}
 		else
 		{
-			printf("moving on y..\n");
+			// printf("moving on y..\n");
 			w->vectors.nextDistY += w->vectors.deltaY;
 			w->current_map_y += w->vectors.stepY;
 			w->side = 1;
@@ -46,32 +46,29 @@ int	applyDDA(t_info *w, int	wallDist)
 		}
 		if(w->actual_map[w->current_map_y][w->current_map_x] == '1')
 		{
-			print_map_current(w->actual_map, w->current_map_x, w->current_map_y);
-			printf("a wall was hit at x :%d, y:%d !\n\n", w->current_map_x, w->current_map_y);
+			// print_map_current(w->actual_map, w->current_map_x, w->current_map_y);
+			// printf("a wall was hit at x :%d, y:%d !\n\n", w->current_map_x, w->current_map_y);
 			break;
 		}
 	}
-	if(w->side == 0) 
-		wallDist = (w->vectors.nextDistX - w->vectors.deltaX);
+	if(w->side == 0)
+		wall_dist = (w->vectors.nextDistX - w->vectors.deltaX);
 	else
-		wallDist = (w->vectors.nextDistY - w->vectors.deltaY);
-	return (wallDist);
+		wall_dist = (w->vectors.nextDistY - w->vectors.deltaY);
+	return (wall_dist);
 }
 
-void	getDrawLimits(double wallDist)
+void	getDrawLimits(t_info *w)
 {
-	int	lineHeight;
-	int	drawStart;
-	int	drawEnd;
-
-	lineHeight = (int)(DEFAULT_HEIGHT / wallDist);
+	w->line_height = (int)(DEFAULT_HEIGHT / w->distWall); //BUG Distwall can be 0 and it crashes stuff
 	//calculate lowest and highest pixel to fill in current stripe
-	drawStart = -lineHeight / 2 + DEFAULT_HEIGHT / 2;
-	if(drawStart < 0)
-		drawStart = 0;
-	drawEnd = lineHeight / 2 + DEFAULT_HEIGHT / 2;
-	if(drawEnd >= DEFAULT_HEIGHT)
-		drawEnd = DEFAULT_HEIGHT - 1;
+	w->draw_start = -w->line_height / 2 + DEFAULT_HEIGHT / 2;
+	if(w->draw_start < 0)
+		w->draw_start = 0;
+	w->draw_end = w->line_height / 2 + DEFAULT_HEIGHT / 2;
+	if(w->draw_end >= DEFAULT_HEIGHT)
+		w->draw_end = DEFAULT_HEIGHT - 1;
+	//Idk this entire thing gets the limits of where to draw the cubes somehow man
 }
 
 int	getX_CoordTexture(t_info *w, int rayDirX, int rayDirY, int distWall)
@@ -93,6 +90,7 @@ int	getX_CoordTexture(t_info *w, int rayDirX, int rayDirY, int distWall)
 	return (texX);
 }
 
+//This function is now obsolete will delete soon;
 void	set_rays(t_info *w)
 {
 	double	rayDirX;
@@ -106,8 +104,8 @@ void	set_rays(t_info *w)
 		i = 0 ;
 		while (i < DEFAULT_LENGTH)
 		{
-			printf("xPos is %f\n", w->vectors.xPos);
-			printf("yPos is %f\n", w->vectors.yPos);
+			// printf("xPos is %f\n", w->vectors.xPos);
+			// printf("yPos is %f\n", w->vectors.yPos);
 			cameraX = 2 * i / (double)DEFAULT_LENGTH - 1;
 	  		rayDirX = w->vectors.xPos + w->vectors.xCam * cameraX;
 	  		rayDirY = w->vectors.yPos + w->vectors.yCam * cameraX;
@@ -117,22 +115,22 @@ void	set_rays(t_info *w)
 			///////////////
 			if (rayDirX == 0)
 			{
-				printf("RayDirX is 0.\n");
+				// printf("RayDirX is 0.\n");
 				w->vectors.deltaX = 1e30;
 			}
 			else
 				w->vectors.deltaX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
 			if (rayDirY == 0)
 			{
-				printf("RayDirY is 0.\n");
+				// printf("RayDirY is 0.\n");
 				w->vectors.deltaY = 1e30;
 			}
 			else
 				w->vectors.deltaY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
 			//////////////
-			moovetoFirstXY(w, rayDirX, rayDirY);
+			movetoFirstXY(w, rayDirX, rayDirY);
 			distWall = applyDDA(w, 0);
-			getDrawLimits(distWall);
+			// getDrawLimits(distWall);
 			i++;
 		}
 		break ;
