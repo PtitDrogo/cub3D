@@ -161,4 +161,10 @@ double		applyDDA(t_info *w, double	wallDist);
 void	movetoFirstXY(t_info *w, double rayX, double rayY);
 void	getDrawLimits(t_info *w);
 
+
+//---------------------BONUSES---------------------//
+int mouse_movement(int x, int y, t_info *w);
+//tmp;
+void	rotate_camera(t_info *w, int id);
+
 #endif

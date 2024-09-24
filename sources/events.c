@@ -46,6 +46,8 @@ static void	draw_line(t_info *w, int x)
 
 	y = w->draw_start;
 	//We are going through every pixel of the vertical line and putting it in our buffer img;
+	
+	//y the same the entire time
 	while (y <= w->draw_end)
 	{
 		scaling = (y * 256) - DEFAULT_HEIGHT * 128 + w->line_height * 128; //Tres utile !

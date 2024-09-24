@@ -1,4 +1,5 @@
 # include "cub3D.h"
+# include <X11/extensions/Xfixes.h>
 
 static void		init_img_buffer(t_info *data);
 
@@ -16,6 +17,8 @@ int main(int argc, char const *argv[])
 	init_img_buffer(&w);
 
 	// draw_all(&w);
+	// mlx_mouse_hide(w.id_mlx, w.id_wind);
+	mlx_hook(w.id_wind, MotionNotify, PointerMotionMask, mouse_movement, &w);
 	mlx_hook(w.id_wind, KeyPress, KeyPressMask, deal_key, &w);
 	mlx_hook(w.id_wind, DestroyNotify, StructureNotifyMask, free_window, &w);
 	mlx_loop_hook(w.id_mlx, no_events, &w);
