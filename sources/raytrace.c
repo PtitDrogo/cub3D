@@ -4,7 +4,7 @@ void	movetoFirstXY(t_info *w, double rayX, double rayY)
 {
 	if(rayX < 0)
 	{
-		w->vectors.stepX = 1;
+		w->vectors.stepX = -1;
 		w->vectors.nextDistX = (w->x_pl - w->current_map_x) * w->vectors.deltaX;
 	}
 	else
@@ -56,14 +56,14 @@ double	applyDDA(t_info *w, double wall_dist)
 	if(w->side == 0)
 	{	
 		wall_dist = (w->vectors.nextDistX - w->vectors.deltaX);
-		printf("w->vectors.nextDistX = %f and w->vectors.deltaX = %f \n", w->vectors.nextDistX, w->vectors.deltaX);
+		// printf("w->vectors.nextDistX = %f and w->vectors.deltaX = %f \n", w->vectors.nextDistX, w->vectors.deltaX);
 		// while (1);
 	}
 	else
 	{
 		wall_dist = (w->vectors.nextDistY - w->vectors.deltaY);
-		printf("w->vectors.nextDistX = %f and w->vectors.deltaY = %f \n", w->vectors.nextDistX, w->vectors.deltaY);
-		printf("wall_dist %f \n", wall_dist);
+		// printf("w->vectors.nextDistX = %f and w->vectors.deltaY = %f \n", w->vectors.nextDistX, w->vectors.deltaY);
+		// printf("wall_dist %f \n", wall_dist);
 		// while (1);
 	}
 	
@@ -73,7 +73,7 @@ double	applyDDA(t_info *w, double wall_dist)
 void	getDrawLimits(t_info *w)
 {
 	w->line_height = (DEFAULT_HEIGHT / w->distWall); //BUG Distwall can be 0 and it crashes stuff
-	printf("distwall : %f\n",  w->distWall);
+	// printf("distwall : %f\n",  w->distWall);
 	//calculate lowest and highest pixel to fill in current stripe
 	// w->draw_start = -w->line_height / 2 + DEFAULT_HEIGHT / 2;
 	w->draw_start = DEFAULT_HEIGHT / 2 - w->line_height / 2;
@@ -84,52 +84,3 @@ void	getDrawLimits(t_info *w)
 		w->draw_end = DEFAULT_HEIGHT - 1;
 	//Idk this entire thing gets the limits of where to draw the cubes somehow man
 }
-<<<<<<< HEAD
-
-// //This function is now obsolete will delete soon;
-// void	set_rays(t_info *w)
-// {
-// 	double	rayDirX;
-// 	double	rayDirY;
-// 	double	cameraX;
-// 	int		i;
-// 	int		distWall;
-
-// 	while(42)// to change ?
-// 	{
-// 		i = 0 ;
-// 		while (i < DEFAULT_LENGTH)
-// 		{
-// 			cameraX = 2 * i / (double)DEFAULT_LENGTH - 1;
-// 	  		rayDirX = w->vectors.xPos + w->vectors.xCam * cameraX;
-// 	  		rayDirY = w->vectors.yPos + w->vectors.yCam * cameraX;
-// 			///////////////
-// 			w->current_map_x = (int)w->x_pl; // cast float into int
-// 			w->current_map_y = (int)w->y_pl;
-// 			///////////////
-// 			if (rayDirX == 0)
-// 			{
-// 				// printf("RayDirX is 0.\n");
-// 				w->vectors.deltaX = 1e30;
-// 			}
-// 			else
-// 				w->vectors.deltaX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
-// 			if (rayDirY == 0)
-// 			{
-// 				// printf("RayDirY is 0.\n");
-// 				w->vectors.deltaY = 1e30;
-// 			}
-// 			else
-// 				w->vectors.deltaY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
-// 			//////////////
-// 			movetoFirstXY(w, rayDirX, rayDirY);
-// 			distWall = applyDDA(w, 0);
-// 			// getDrawLimits(distWall);
-// 			i++;
-// 		}
-// 		break ;
-// 	}
-// }
-
-=======
->>>>>>> main

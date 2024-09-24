@@ -2,6 +2,25 @@
 
 static void		init_img_buffer(t_info *data);
 
+int	release_countermesures(int id_key, t_info *w)
+{
+	if (id_key == XK_w && w->p_inputs.going_up == true)
+		w->p_inputs.going_up = false;
+	if (id_key == XK_s && w->p_inputs.going_down == true)
+		w->p_inputs.going_down = false;
+	if (id_key == XK_a && w->p_inputs.going_left == true)
+		w->p_inputs.going_left = false;
+	if (id_key == XK_d && w->p_inputs.going_right == true)
+		w->p_inputs.going_right = false;
+	if (id_key == XK_Left && w->p_inputs.rotate_cam <= 1)
+		w->p_inputs.rotate_cam = 0;
+	if (id_key == XK_Right && w->p_inputs.rotate_cam >= -1)
+		w->p_inputs.rotate_cam = 0;
+	if (id_key == XK_Shift_L)
+		w->player_speed /= 2;
+	return (0);
+}
+
 int main(int argc, char const *argv[])
 {
 	t_info 			w;
@@ -17,6 +36,7 @@ int main(int argc, char const *argv[])
 
 	// draw_all(&w);
 	mlx_hook(w.id_wind, KeyPress, KeyPressMask, deal_key, &w);
+	mlx_hook(w.id_wind, KeyRelease, KeyReleaseMask, release_countermesures, &w);
 	mlx_hook(w.id_wind, DestroyNotify, StructureNotifyMask, free_window, &w);
 	mlx_loop_hook(w.id_mlx, no_events, &w);
 	mlx_loop(w.id_mlx);

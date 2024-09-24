@@ -17,6 +17,8 @@
 # define DEFAULT_HEIGHT 1080
 # define SPRITE_HEIGHT 64
 # define SPRITE_LENGTH 64
+# define CAM_SPEED 0.030
+# define PLAYER_SPEED 0.090
 
 # define INVALID_MAP -1
 
@@ -42,8 +44,16 @@ typedef struct s_rgb
 	int 	g;
 	int		b;
 	bool 	is_defined;
-} t_rgb;
+} 			t_rgb;
 
+typedef struct s_input
+{
+	bool		going_up;
+	bool		going_down;
+	bool		going_left;
+	bool		going_right;
+	int			rotate_cam;
+} 			t_input;
 
 typedef struct s_parse_data
 {
@@ -97,6 +107,8 @@ typedef struct t_w_info
 	int				current_map_y;	//Current y on the map, int (mapY)
 	double			x_pl; 			//Player X (posX)
 	double			y_pl; 			//Player Y (posY)
+	double			player_speed;
+	t_input			p_inputs;
 	t_image			img_buffer;     //The actual image we are changing pixel in before we call the function to show it on screen; 
 	t_image			*in_use_texture; //added this to store which texture to use for a ray hit
 	t_image			m_door; 
@@ -160,5 +172,7 @@ void	draw_floor_sky(int x, int y, t_info *data);
 double		applyDDA(t_info *w, double	wallDist);
 void	movetoFirstXY(t_info *w, double rayX, double rayY);
 void	getDrawLimits(t_info *w);
+
+void	move_player(t_info *w);
 
 #endif

@@ -27,6 +27,8 @@ static void    parser_init(t_info *w, t_parse_data *data, int argc, char const *
 	}
 	ft_bzero(w, sizeof(*w));
 	ft_bzero(data, sizeof(*data));
+	w->p_inputs.rotate_cam = 0; //temporary
+	w->player_speed = PLAYER_SPEED;//temp
 	w->map_file = get_map(argv[1]);
 }
 
