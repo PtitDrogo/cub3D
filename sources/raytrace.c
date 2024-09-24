@@ -52,14 +52,14 @@ double	applyDDA(t_info *w, double wall_dist)
 	if(w->side == 0)
 	{	
 		wall_dist = (w->vectors.nextDistX - w->vectors.deltaX);
-		printf("w->vectors.nextDistX = %f and w->vectors.deltaX = %f \n", w->vectors.nextDistX, w->vectors.deltaX);
+		// printf("w->vectors.nextDistX = %f and w->vectors.deltaX = %f \n", w->vectors.nextDistX, w->vectors.deltaX);
 		// while (1);
 	}
 	else
 	{
 		wall_dist = (w->vectors.nextDistY - w->vectors.deltaY);
-		printf("w->vectors.nextDistX = %f and w->vectors.deltaY = %f \n", w->vectors.nextDistX, w->vectors.deltaY);
-		printf("wall_dist %f \n", wall_dist);
+		// printf("w->vectors.nextDistX = %f and w->vectors.deltaY = %f \n", w->vectors.nextDistX, w->vectors.deltaY);
+		// printf("wall_dist %f \n", wall_dist);
 		// while (1);
 	}
 	
@@ -69,7 +69,7 @@ double	applyDDA(t_info *w, double wall_dist)
 void	getDrawLimits(t_info *w)
 {
 	w->line_height = (DEFAULT_HEIGHT / w->distWall); //BUG Distwall can be 0 and it crashes stuff
-	printf("distwall : %f\n",  w->distWall);
+	// printf("distwall : %f\n",  w->distWall);
 	//calculate lowest and highest pixel to fill in current stripe
 	// w->draw_start = -w->line_height / 2 + DEFAULT_HEIGHT / 2;
 	w->draw_start = DEFAULT_HEIGHT / 2 - w->line_height / 2;

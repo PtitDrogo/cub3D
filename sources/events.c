@@ -22,17 +22,17 @@ int	no_events(t_info *w)
 	int	i;
 
 	i = 0;
-	draw_floor_sky(DEFAULT_LENGTH, DEFAULT_HEIGHT, w);
-	while (i < DEFAULT_LENGTH)
-	{
-		dda_innit(w, i);
-		movetoFirstXY(w, w->rayDirX, w->rayDirY);
-		w->distWall = applyDDA(w, 0);
-		apply_texture(w);
-		getDrawLimits(w);
-		draw_line(w, i);
-		i++;
-	}
+	// draw_floor_sky(DEFAULT_LENGTH, DEFAULT_HEIGHT, w);
+	// while (i < DEFAULT_LENGTH)
+	// {
+	// 	dda_innit(w, i);
+	// 	movetoFirstXY(w, w->rayDirX, w->rayDirY);
+	// 	w->distWall = applyDDA(w, 0);
+	// 	apply_texture(w);
+	// 	getDrawLimits(w);
+	// 	draw_line(w, i);
+	// 	i++;
+	// }
 	display_minimap(w);
 	mlx_put_image_to_window(w->id_mlx, w->id_wind, w->img_buffer.img_ptr, 0, 0);
 	return (0);
@@ -86,7 +86,7 @@ static void	apply_texture(t_info *w)
 		touched_wall = (w->distWall * w->rayDirX) + w->x_pl;
 	touched_wall -= floor(touched_wall);
 	w->texture_x = (int)(touched_wall * (double)w->n_wall.width); //It could be any texture i just want the standard width
-	printf("texture x is = %i\n", w->texture_x);
+	// printf("texture x is = %i\n", w->texture_x);
 	if ((w->side == 0 && w->vectors.xPos > 0) || (w->side == 1 && w->vectors.yPos < 0))
 		w->texture_x = w->n_wall.width - w->texture_x - 1;
 	/*

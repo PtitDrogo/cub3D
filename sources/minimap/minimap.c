@@ -18,14 +18,18 @@ int display_minimap(t_info *w)
 	int x;
 	int y;
 
+	printf("map height is %i\n", w->map_height);
+	printf("map length is %i\n", w->map_length);
+
 	y = 0;
 	while (y < w->map_height)
 	{
 		x = 0;
 		while (x < w->map_length)
 		{
+			pixel_fill(&w->img_buffer, DEFAULT_LENGTH / 2 + x, DEFAULT_HEIGHT / 2 + y, 0xFF0000);
 			//generate square; from position x/y until size x of cube and size y of cube;
-			generate_square(w, x, y, get_color(w, x, y));
+			// generate_square(w, x, y, get_color(w, x, y));
 			x++;
 		}      
 		y++;
