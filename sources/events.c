@@ -33,6 +33,7 @@ int	no_events(t_info *w)
 		draw_line(w, i);
 		i++;
 	}
+	display_minimap(w);
 	mlx_put_image_to_window(w->id_mlx, w->id_wind, w->img_buffer.img_ptr, 0, 0);
 	return (0);
 }

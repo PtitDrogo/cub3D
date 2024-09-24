@@ -172,7 +172,7 @@ bool	is_map_valid(t_info *w, char **m_map)
 	int	err_code;
 
 	get_map_height(m_map, &m_height, &m_length);
-	w->map_heigth = m_height;
+	w->map_height = m_height;
 	w->map_length = m_length;
 	expand_map(m_map, m_length);
 	err_code = invalid_player(m_map);
