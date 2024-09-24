@@ -158,6 +158,8 @@ static void	apply_texture(t_info *w)
 
 static t_image	*get_texture(t_info *w)
 {
+	if (w->is_door)
+		return (&w->m_door);
 	if (w->side == 0)
 	{
 		if (w->rayDirX > 0)
@@ -218,33 +220,37 @@ void	rotate_camera(t_info *w, int coef)
 
   void	moove_up(t_info *w)
 {
-	if(w->actual_map[(int)(w->y_pl)][(int)(w->x_pl + (w->vectors.xPos * w->player_speed))] == '0')
+	char c;
+	
+	c = w->actual_map[(int)(w->y_pl)][(int)(w->x_pl + (w->vectors.xPos * w->player_speed))];
+	if(c != '1' && c != 'D')
 		w->x_pl += w->vectors.xPos * w->player_speed;
-	if(w->actual_map[(int)(w->y_pl + (w->vectors.yPos * w->player_speed))][(int)(w->x_pl)] == '0')
+	c = w->actual_map[(int)(w->y_pl + (w->vectors.yPos * w->player_speed))][(int)(w->x_pl)];
+	if(c != '1' && c != 'D')
 		w->y_pl += w->vectors.yPos * w->player_speed;
 }
 
   void	moove_down(t_info *w)
 {
-	if(w->actual_map[(int)(w->y_pl) ][(int)(w->x_pl - (w->vectors.xPos * w->player_speed))] == '0')
+	if(w->actual_map[(int)(w->y_pl) ][(int)(w->x_pl - (w->vectors.xPos * w->player_speed))] != '1')
 		w->x_pl -= w->vectors.xPos * w->player_speed;
-	if(w->actual_map[(int)(w->y_pl - (w->vectors.yPos * w->player_speed))][(int)(w->x_pl)] == '0')
+	if(w->actual_map[(int)(w->y_pl - (w->vectors.yPos * w->player_speed))][(int)(w->x_pl)] != '1')
 		w->y_pl -= w->vectors.yPos * w->player_speed;
 }
 
 void    moove_right(t_info *w)
 {
-	if(w->actual_map[(int)w->y_pl][(int)(w->x_pl + w->vectors.xCam * w->player_speed)] == '0')
+	if(w->actual_map[(int)w->y_pl][(int)(w->x_pl + w->vectors.xCam * w->player_speed)] != '1')
 		w->x_pl += w->vectors.xCam * w->player_speed;
-	if(w->actual_map[(int)(w->y_pl + (w->vectors.yCam * w->player_speed))][(int)w->x_pl] == '0')
+	if(w->actual_map[(int)(w->y_pl + (w->vectors.yCam * w->player_speed))][(int)w->x_pl] != '1')
 		w->y_pl += w->vectors.yCam * w->player_speed;
 }
 
 void	moove_left(t_info *w)
 {
-	if(w->actual_map[(int)w->y_pl][(int)(w->x_pl - (w->vectors.xCam * w->player_speed))] == '0')
+	if(w->actual_map[(int)w->y_pl][(int)(w->x_pl - (w->vectors.xCam * w->player_speed))] != '1')
 		w->x_pl -= w->vectors.xCam * w->player_speed;
-	if(w->actual_map[(int)(w->y_pl - (w->vectors.yCam * w->player_speed))][(int)w->x_pl] == '0')
+	if(w->actual_map[(int)(w->y_pl - (w->vectors.yCam * w->player_speed))][(int)w->x_pl] != '1')
 		w->y_pl -= w->vectors.yCam * w->player_speed;
 }
 

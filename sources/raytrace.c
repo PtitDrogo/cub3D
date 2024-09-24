@@ -26,6 +26,7 @@ void	movetoFirstXY(t_info *w, double rayX, double rayY)
 
 double	applyDDA(t_info *w, double wall_dist)
 {
+	w->is_door = false;
 	while(42)
 	{
 		if(w->vectors.nextDistX < w->vectors.nextDistY)
@@ -50,6 +51,11 @@ double	applyDDA(t_info *w, double wall_dist)
 		// 	w->current_map_x = w->map_length - 1;
 		if(w->actual_map[w->current_map_y][w->current_map_x] == '1')
 		{
+			break;
+		}
+		if(w->actual_map[w->current_map_y][w->current_map_x] == 'D')
+		{
+			w->is_door = true;
 			break;
 		}
 	}

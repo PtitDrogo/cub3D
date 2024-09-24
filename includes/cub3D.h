@@ -61,6 +61,7 @@ typedef struct s_parse_data
 	char			SO_texts[PATH_MAX];
 	char			WE_texts[PATH_MAX];
 	char			EA_texts[PATH_MAX];
+	char			DO_texts[PATH_MAX];
 	t_rgb 			floor_colors;
 	t_rgb 			ceiling_colors;
 	int				status;
@@ -108,10 +109,11 @@ typedef struct t_w_info
 	double			x_pl; 			//Player X (posX)
 	double			y_pl; 			//Player Y (posY)
 	double			player_speed;
+	bool			is_door;
 	t_input			p_inputs;
 	t_image			img_buffer;     //The actual image we are changing pixel in before we call the function to show it on screen; 
 	t_image			*in_use_texture; //added this to store which texture to use for a ray hit
-	t_image			m_door; 
+	t_image			m_door; // ADDED DOOR 2
 	t_image			n_wall;
 	t_image			s_wall;
 	t_image			e_wall;

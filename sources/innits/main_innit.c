@@ -90,6 +90,7 @@ static void debug_print_printed_parameters(t_parse_data *data)
 		- SO_texts = %s\n\
 		- WE_texts = %s\n\
 		- EA_texts = %s\n\
+		- DO_texts = %s\n\
 		- FLOOR_r = %i\n\
 		- FLOOR_g = %i\n\
 		- FLOOR_b = %i\n\
@@ -100,6 +101,7 @@ static void debug_print_printed_parameters(t_parse_data *data)
 		, data->SO_texts
 		, data->WE_texts
 		, data->EA_texts
+		, data->DO_texts
 		, data->floor_colors.r
 		, data->floor_colors.g
 		, data->floor_colors.b
