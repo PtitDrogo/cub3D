@@ -39,7 +39,7 @@ void	find_player(t_info *w)
 
 	x = 1;
 	y = 1;
-	while (y < w->map_heigth - 1)
+	while (y < w->map_height - 1)
 	{
 		x = 1;
 		while (x < w->map_length - 1)

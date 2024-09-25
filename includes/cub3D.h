@@ -103,7 +103,7 @@ typedef struct t_w_info
 	char			**map_file;		//Map[][] with NO, SE, RGB...
 	char			**actual_map;	//Map[][] only
 	int				side;			//side hit by ray
-	int				map_heigth;		//Number of rows
+	int				map_height;		//Number of rows
 	int				map_length;		//Size of longest line
 	int				current_map_x;	//Current x on the map, int (mapX)
 	int				current_map_y;	//Current y on the map, int (mapY)
@@ -181,6 +181,14 @@ double		applyDDA(t_info *w, double	wallDist, int i);
 void	movetoFirstXY(t_info *w, double rayX, double rayY);
 void	getDrawLimits(t_info *w);
 
+
+//---------------------BONUSES---------------------//
+int mouse_movement(int x, int y, t_info *w);
+//tmp;
+//camera
+void	rotate_camera(t_info *w, int id);
+//minimap
+int 	display_minimap(t_info *w);
 void	move_player(t_info *w);
 
 #endif

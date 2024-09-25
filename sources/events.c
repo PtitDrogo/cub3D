@@ -43,6 +43,7 @@ int	no_events(t_info *w)
 		draw_line(w, i);
 		i++;
 	}
+	display_minimap(w);
 	mlx_put_image_to_window(w->id_mlx, w->id_wind, w->img_buffer.img_ptr, 0, 0);
 	return (0);
 }
@@ -56,6 +57,8 @@ static void	draw_line(t_info *w, int x)
 
 	y = w->draw_start;
 	//We are going through every pixel of the vertical line and putting it in our buffer img;
+	
+	//y the same the entire time
 	while (y <= w->draw_end)
 	{
 		scaling = (y * 256) - DEFAULT_HEIGHT * 128 + w->line_height * 128; //Tres utile !

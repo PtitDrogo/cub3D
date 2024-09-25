@@ -27,6 +27,8 @@ SRCS =		$(SRCS_DIR)/parsing/get_map.c \
 			$(SRCS_DIR)/innits/main_innit.c \
 			$(SRCS_DIR)/Errors/errors.c \
 			$(SRCS_DIR)/render/pre_render.c \
+			$(SRCS_DIR)/mouse_bonus/mouse_move.c \
+			$(SRCS_DIR)/minimap/minimap.c \
 			
 #------------------------------------------------------------------------#
 
@@ -34,9 +36,9 @@ SRCS =		$(SRCS_DIR)/parsing/get_map.c \
 CC		=	cc
 RM		=	rm -f
 
-CFLAGS	=	-g3 -Wall -Wextra -Werror
+CFLAGS	=	-g3 #-Wall -Wextra -Werror
 LINKLIBS = -L minilibx-linux/ -lmlx_Linux -L libft/ -lft -lm
-INCLUDES = -I $(HEADER_DIR) -I minilibx-linux -I libft -MMD -MP
+INCLUDES = -I $(HEADER_DIR) -I minilibx-linux -I libft -MMD -MP 
 
 #------------------------------------------------------------------------#
 
