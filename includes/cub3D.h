@@ -19,6 +19,7 @@
 # define SPRITE_LENGTH 64
 # define CAM_SPEED 0.030
 # define PLAYER_SPEED 0.090
+# define MAX_ZOOM 0.2
 
 # define INVALID_MAP -1
 
@@ -110,6 +111,7 @@ typedef struct t_w_info
 	double			y_pl; 			//Player Y (posY)
 	double			player_speed;
 	bool			is_door;
+	bool			OpDoorFound ; //NEW
 	int				x_strip; //NEW
 	int				y_strip; //NEW
 	int				x_strip2; //NEW

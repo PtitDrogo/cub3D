@@ -27,6 +27,7 @@ void	movetoFirstXY(t_info *w, double rayX, double rayY)
 double	applyDDA(t_info *w, double wall_dist, int i)
 {
 	w->is_door = false;
+	w->OpDoorFound  = false; 
 	while(42)
 	{
 		if(w->vectors.nextDistX < w->vectors.nextDistY)
@@ -54,10 +55,11 @@ double	applyDDA(t_info *w, double wall_dist, int i)
 		}
 		if(w->actual_map[w->current_map_y][w->current_map_x] == 'O')
 		{
-			if (i == DEFAULT_LENGTH / 2)
+			if (!w->OpDoorFound && i == DEFAULT_LENGTH / 2)
 			{
 				w->x_strip2 = w->current_map_x;
 				w->y_strip2 = w->current_map_y;
+				w->OpDoorFound = true;
 			}
 		}
 	}

@@ -170,6 +170,16 @@ void	check_doors(t_info *w)
 	}
 }
 
+double	get_WallCoef(double m_vector)
+{
+	double	coef;
+	if (m_vector > 0)
+		coef = MAX_ZOOM;
+	else
+		coef = -MAX_ZOOM;
+	return(coef);
+}
+
 void	rotate_camera(t_info *w, int coef)
 {
 	double	saveDirX;
@@ -185,93 +195,157 @@ void	rotate_camera(t_info *w, int coef)
 	w->vectors.yCam = savePlaneX * sin(camMultiplier) + w->vectors.yCam * cos(camMultiplier);
 }
 
-void	moove_horizontaly(t_info *w, int direction)
+// void	move_horizontaly(t_info *w, int direction)
+// {
+// 	double	stepX;
+// 	double	stepY;
+// 	char	c;
+	
+// 	stepX = w->vectors.xCam * w->player_speed * direction;
+// 	stepY = w->vectors.yCam * w->player_speed * direction;
+// 	c = w->actual_map[(int)(w->y_pl)][(int)(w->x_pl + stepX)];
+// 	if(c != '1' && c != 'D')
+// 		w->x_pl += stepX;
+// 	c = w->actual_map[(int)(w->y_pl + (stepY))][(int)(w->x_pl)];
+// 	if(c != '1' && c != 'D')
+// 		w->y_pl += stepY;
+// }
+
+// void	move_verticaly(t_info *w, int direction)
+// {
+// 	double	stepX;
+// 	double	stepY;
+// 	char	c;
+	
+// 	stepX = w->vectors.xPos * w->player_speed * direction;
+// 	stepY = w->vectors.yPos * w->player_speed * direction;
+// 	c = w->actual_map[(int)(w->y_pl)][(int)(w->x_pl + stepX)];
+// 	if(c != '1' && c != 'D')
+// 		w->x_pl += stepX;
+// 	c = w->actual_map[(int)(w->y_pl + (stepY))][(int)(w->x_pl)];
+// 	if(c != '1' && c != 'D')
+// 		w->y_pl += stepY;
+// }
+
+void	move_up(t_info *w, int dir)
 {
+	double	coef;
 	double	stepX;
 	double	stepY;
 	char	c;
 	
-	stepX = w->vectors.xCam * w->player_speed * direction;
-	stepY = w->vectors.yCam * w->player_speed * direction;
-	c = w->actual_map[(int)(w->y_pl)][(int)(w->x_pl + stepX)];
+	stepX = w->vectors.xPos * w->player_speed * dir;
+	stepY = w->vectors.yPos * w->player_speed * dir;
+	coef = get_WallCoef(w->vectors.xPos) * dir;
+	c = w->actual_map[(int)(w->y_pl)][(int)(w->x_pl +coef + stepX)];
 	if(c != '1' && c != 'D')
-		w->x_pl += stepX;
-	c = w->actual_map[(int)(w->y_pl + (stepY))][(int)(w->x_pl)];
-	if(c != '1' && c != 'D')
-		w->y_pl += stepY;
-}
-
-void	moove_verticaly(t_info *w, int direction)
-{
-	double	stepX;
-	double	stepY;
-	char	c;
-	
-	stepX = w->vectors.xPos * w->player_speed * direction;
-	stepY = w->vectors.yPos * w->player_speed * direction;
-	c = w->actual_map[(int)(w->y_pl)][(int)(w->x_pl + stepX)];
-	if(c != '1' && c != 'D')
-		w->x_pl += stepX;
-	c = w->actual_map[(int)(w->y_pl + (stepY))][(int)(w->x_pl)];
-	if(c != '1' && c != 'D')
-		w->y_pl += stepY;
-}
-
-void	moove_up(t_info *w)
-{
-	char c;
-	
-	c = w->actual_map[(int)(w->y_pl)][(int)(w->x_pl + (w->vectors.xPos * w->player_speed))];
-	if(c != '1' && c != 'D')
-		w->x_pl += w->vectors.xPos * w->player_speed;
-	c = w->actual_map[(int)(w->y_pl  + (w->vectors.yPos * w->player_speed))][(int)(w->x_pl)];
-	if(c != '1' && c != 'D')
-		w->y_pl += w->vectors.yPos * w->player_speed;
-}
-
-  void	moove_down(t_info *w)
-{
-	if(w->actual_map[(int)(w->y_pl ) ][(int)(w->x_pl - (w->vectors.xPos * w->player_speed))] != '1')
 	{
-		w->x_pl -= w->vectors.xPos * w->player_speed;
+		w->x_pl += stepX;
 	}
-	if(w->actual_map[(int)(w->y_pl - (w->vectors.yPos * w->player_speed))][(int)(w->x_pl )] != '1')
-		w->y_pl -= w->vectors.yPos * w->player_speed;
+	coef = get_WallCoef(w->vectors.yPos) * dir;
+	c = w->actual_map[(int)(w->y_pl +coef + stepY)][(int)(w->x_pl)];
+	if(c != '1' && c != 'D')
+	{
+		w->y_pl += stepY;
+	}
 }
 
-void    moove_right(t_info *w)
-{
-	if(w->actual_map[(int)(w->y_pl)][(int)(w->x_pl  + w->vectors.xCam * w->player_speed)] != '1')
-		w->x_pl += w->vectors.xCam * w->player_speed;
-	if(w->actual_map[(int)(w->y_pl  + (w->vectors.yCam * w->player_speed))][(int)(w->x_pl)] != '1')
-		w->y_pl += w->vectors.yCam * w->player_speed;
+  void	move_down(t_info *w)
+{	
+	double	stepX;
+	double	stepY;
+	double	coef;
+	char	c;
+
+	stepX = w->vectors.xPos * w->player_speed;
+	stepY = w->vectors.yPos * w->player_speed;
+	coef = get_WallCoef(w->vectors.xPos);
+	c = w->actual_map[(int)(w->y_pl ) ][(int)(w->x_pl -coef - stepX)];
+	if(c != '1' && c != 'D')
+	{
+		w->x_pl -= stepX;
+	}
+	coef = get_WallCoef(w->vectors.yPos);
+	c = w->actual_map[(int)(w->y_pl -coef - stepY)][(int)(w->x_pl)];
+	if(c != '1' && c!= 'D')
+	{
+		w->y_pl -= stepY;
+	}
 }
 
-void	moove_left(t_info *w)
+void    move_right(t_info *w, int dir)
 {
-	if(w->actual_map[(int)(w->y_pl )][(int)(w->x_pl - (w->vectors.xCam * w->player_speed))] != '1')
-		w->x_pl -= w->vectors.xCam * w->player_speed;
-	if(w->actual_map[(int)(w->y_pl  - (w->vectors.yCam * w->player_speed))][(int)(w->x_pl )] != '1')
-		w->y_pl -= w->vectors.yCam * w->player_speed;
+	double	stepX;
+	double	stepY;
+	double	coef;
+	char	c;
+
+	stepX = w->vectors.xCam * w->player_speed * dir;
+	stepY = w->vectors.yCam * w->player_speed * dir;
+	coef = get_WallCoef(w->vectors.xCam) * dir;
+	c = w->actual_map[(int)(w->y_pl)][(int)(w->x_pl +coef +stepX)];
+	if(c != '1' && c != 'D')
+	{
+		w->x_pl += stepX;
+	}
+	coef = get_WallCoef(w->vectors.yCam) * dir;
+	c = w->actual_map[(int)(w->y_pl +coef + stepY)][(int)(w->x_pl)];
+	if( c != '1' && c != 'D')
+	{
+		w->y_pl += stepY;
+	}
+}
+
+void	move_left(t_info *w)
+{
+	double	stepX;
+	double	stepY;
+	double	coef;
+	char	c;
+
+	stepX = w->vectors.xCam * w->player_speed;
+	stepY = w->vectors.yCam * w->player_speed;
+	coef = get_WallCoef(w->vectors.xCam);
+	c = w->actual_map[(int)(w->y_pl)][(int)(w->x_pl -coef -stepX)];
+	if(c != '1' && c != 'D')
+	{
+		w->x_pl -= stepX;
+	}
+	coef = get_WallCoef(w->vectors.yCam);
+	c = w->actual_map[(int)(w->y_pl -coef - stepY)][(int)(w->x_pl )];
+	if( c != '1' && c!= 'D')
+	{
+		w->y_pl -= stepY;
+	}
 }
 
 void	move_player(t_info *w)
 {
 	if (w->p_inputs.going_up == true)
-		// moove_verticaly(w, 1);
-		moove_up(w);
+		move_up(w, 1);
 	if (w->p_inputs.going_down == true)
-		moove_down(w);
-		// moove_verticaly(w, -1);
+		move_up(w, -1);
 	if (w->p_inputs.going_left == true)
-		// moove_horizontaly(w, -1);
-		moove_left(w);
+		move_right(w, -1);
 	if (w->p_inputs.going_right == true)
-		// moove_horizontaly(w, 1);
-		moove_right(w);
+		move_right(w, 1);
 	if (w->p_inputs.rotate_cam != 0)
 		rotate_camera(w, w->p_inputs.rotate_cam);
 }
+
+// void	move_player(t_info *w)
+// {
+// 	if (w->p_inputs.going_up == true)
+// 		move_verticaly(w, 1);
+// 	if (w->p_inputs.going_down == true)
+// 		move_verticaly(w, -1);
+// 	if (w->p_inputs.going_left == true)
+// 		move_horizontaly(w, -1);
+// 	if (w->p_inputs.going_right == true)
+// 		move_horizontaly(w, 1);
+// 	if (w->p_inputs.rotate_cam != 0)
+// 		rotate_camera(w, w->p_inputs.rotate_cam);
+// }
 
 int	deal_key(int id_key, t_info *w)
 {
