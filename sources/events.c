@@ -5,6 +5,7 @@ static void		apply_texture(t_info *w);
 static t_image	*get_texture(t_info *w);
 static void		draw_line(t_info *w, int x);
 static int		pixel_color(t_info *data, int texture_y);
+static void		play_animation(t_info *w);
 
 // void	reprint_screen(t_info *w)
 // {
@@ -44,9 +45,101 @@ int	no_events(t_info *w)
 		i++;
 	}
 	display_minimap(w);
+	play_animation(w);
+	//bool here to display the animation
 	mlx_put_image_to_window(w->id_mlx, w->id_wind, w->img_buffer.img_ptr, 0, 0);
 	return (0);
 }
+int	anim_pixel_color(t_info *w, int texture_y)
+{
+	char			*color;
+	t_image			*texture;
+
+	texture = w->in_use_texture;
+	color = texture->pix_addr + (texture_y * texture->size_line) + (w->texture_x * (texture->bits_per_pixel / 8));
+	return (*(unsigned int *)color); //casting very important
+}
+static void play_animation(t_info *w)
+{
+	if (w->anim_playing == false)
+		return ;
+	static bool did_print = false;
+
+	if (did_print == false)
+	{
+		printf("gun1 = %p\n", &w->gun1);
+		printf("gun2 = %p\n", &w->gun2);
+		printf("gun1.bits_per_pixel = %i\n", w->gun1.bits_per_pixel);
+		printf("gun2.size_line = %i\n", w->gun2.size_line);
+		did_print = true;
+	}
+	if (w->anim_frames >= 20 && w->anim_frames <= 30)
+	{
+		int x;
+		int y;
+
+		y = 0;
+		while (y < 194)
+		{
+			x = 0;
+			while (x < 259)
+			{
+				char * color;
+				color = w->gun1.pix_addr + (y * w->gun1.size_line) + (x * (w->gun1.bits_per_pixel / 8));
+				if (*(unsigned int *)color != 0x00000000)	
+					generate_square(w, (DEFAULT_LENGTH / 2) + x, (DEFAULT_HEIGHT / 2) + y, *(unsigned int *)color);
+				x++;
+			}      
+			y++;
+		}
+	}
+	else if (w->anim_frames >= 10 && w->anim_frames <= 20)
+	{
+		int x;
+		int y;
+
+		y = 0;
+		while (y < 194)
+		{
+			x = 0;
+			while (x < 259)
+			{
+				char *color;
+
+				color = w->gun2.pix_addr + (y * w->gun2.size_line) + (x * (w->gun2.bits_per_pixel / 8));
+				if (*(unsigned int *)color != 0x00000000)
+					generate_square(w, (DEFAULT_LENGTH / 2) + x, (DEFAULT_HEIGHT / 2) + y, *(unsigned int *)color);
+				x++;
+			}      
+			y++;
+		}
+	}
+	else if (w->anim_frames >= 0 && w->anim_frames <= 10)
+	{
+		int x;
+		int y;
+
+		y = 0;
+		while (y < 194)
+		{
+			x = 0;
+			while (x < 259)
+			{
+				char * color;
+				
+				color = w->gun1.pix_addr + (y * w->gun1.size_line) + (x * (w->gun1.bits_per_pixel / 8));
+				if (*(unsigned int *)color != 0x00000000)
+					generate_square(w, (DEFAULT_LENGTH / 2) + x, (DEFAULT_HEIGHT / 2) + y, *(unsigned int *)color);
+				x++;
+			}      
+			y++;
+		}
+	}
+	w->anim_frames--;
+	if (w->anim_frames == 0)
+		w->anim_playing = false;
+}
+
 
 static void	draw_line(t_info *w, int x)
 {
@@ -170,6 +263,11 @@ void	check_doors(t_info *w)
 	{
 		if (abs(w->y_strip - (int)w->y_pl) <= 1 && abs(w->x_strip - (int)w->x_pl) <= 1)
 			w->actual_map[w->y_strip][w->x_strip] = 'O';
+	}
+	if (w->anim_playing == false)
+	{
+		w->anim_playing = true;
+		w->anim_frames = 30; //this can change;
 	}
 }
 
