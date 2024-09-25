@@ -21,13 +21,17 @@ void	load_sprites(t_info *w, t_parse_data *d)
 			d->EA_texts, &w->e_wall.height, &w->e_wall.width);
 	w->w_wall.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
 			d->WE_texts, &w->w_wall.height, &w->w_wall.width);
+	w->m_door.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
+			d->DO_texts, &w->w_wall.height, &w->w_wall.width);
 	err = load_addr_sprites(&w->n_wall);
 	err += load_addr_sprites(&w->s_wall);
 	err += load_addr_sprites(&w->e_wall);
 	err += load_addr_sprites(&w->w_wall);
+	err += load_addr_sprites(&w->m_door);
 	if (w->n_wall.img_ptr == NULL
 		|| w->s_wall.img_ptr == NULL || w->e_wall.img_ptr == NULL
-		|| w->w_wall.img_ptr == NULL || err != 0)
+		|| w->w_wall.img_ptr == NULL || w->m_door.img_ptr == NULL
+		|| err != 0)
 	{
 		ft_printf("Error!\nCouldn't load sprites!");
 		free_window(w);

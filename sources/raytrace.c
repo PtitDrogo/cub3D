@@ -24,13 +24,14 @@ void	movetoFirstXY(t_info *w, double rayX, double rayY)
 	}
 }
 
-double	applyDDA(t_info *w, double wall_dist)
+double	applyDDA(t_info *w, double wall_dist, int i)
 {
+	w->is_door = false;
+	w->OpDoorFound  = false; 
 	while(42)
 	{
 		if(w->vectors.nextDistX < w->vectors.nextDistY)
 		{
-			// printf("moving on x..\n");
 			w->vectors.nextDistX += w->vectors.deltaX;
 			w->current_map_x += w->vectors.stepX;
 			w->side = 0;
@@ -38,7 +39,6 @@ double	applyDDA(t_info *w, double wall_dist)
 		}
 		else
 		{
-			// printf("moving on y..\n");
 			w->vectors.nextDistY += w->vectors.deltaY;
 			w->current_map_y += w->vectors.stepY;
 			w->side = 1;
@@ -48,28 +48,37 @@ double	applyDDA(t_info *w, double wall_dist)
 		{
 			break;
 		}
+		if(w->actual_map[w->current_map_y][w->current_map_x] == 'D')
+		{
+			w->is_door = true;
+			break;
+		}
+		if(w->actual_map[w->current_map_y][w->current_map_x] == 'O')
+		{
+			if (!w->OpDoorFound && i == DEFAULT_LENGTH / 2)
+			{
+				w->x_strip2 = w->current_map_x;
+				w->y_strip2 = w->current_map_y;
+				w->OpDoorFound = true;
+			}
+		}
+	}
+	if (i == DEFAULT_LENGTH / 2)
+	{
+		w->x_strip = w->current_map_x;
+		w->y_strip = w->current_map_y;
 	}
 	if(w->side == 0)
-	{	
 		wall_dist = (w->vectors.nextDistX - w->vectors.deltaX);
-		printf("w->vectors.nextDistX = %f and w->vectors.deltaX = %f \n", w->vectors.nextDistX, w->vectors.deltaX);
-		// while (1);
-	}
 	else
-	{
 		wall_dist = (w->vectors.nextDistY - w->vectors.deltaY);
-		printf("w->vectors.nextDistX = %f and w->vectors.deltaY = %f \n", w->vectors.nextDistX, w->vectors.deltaY);
-		printf("wall_dist %f \n", wall_dist);
-		// while (1);
-	}
-	
 	return (wall_dist);
 }
 
 void	getDrawLimits(t_info *w)
 {
 	w->line_height = (DEFAULT_HEIGHT / w->distWall); //BUG Distwall can be 0 and it crashes stuff
-	printf("distwall : %f\n",  w->distWall);
+	// printf("distwall : %f\n",  w->distWall);
 	//calculate lowest and highest pixel to fill in current stripe
 	// w->draw_start = -w->line_height / 2 + DEFAULT_HEIGHT / 2;
 	w->draw_start = DEFAULT_HEIGHT / 2 - w->line_height / 2;
