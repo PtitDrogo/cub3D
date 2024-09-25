@@ -71,6 +71,8 @@ static void play_animation(t_info *w)
 		printf("gun2 = %p\n", &w->gun2);
 		printf("gun1.bits_per_pixel = %i\n", w->gun1.bits_per_pixel);
 		printf("gun2.size_line = %i\n", w->gun2.size_line);
+		printf("gun2 width = %i\n", w->gun2.width);
+		printf("gun2 heigth = %i\n", w->gun2.height);
 		did_print = true;
 	}
 	if (w->anim_frames >= 20 && w->anim_frames <= 30)
@@ -79,10 +81,10 @@ static void play_animation(t_info *w)
 		int y;
 
 		y = 0;
-		while (y < 194)
+		while (y < w->gun1.height)
 		{
 			x = 0;
-			while (x < 259)
+			while (x < w->gun1.width)
 			{
 				char * color;
 				color = w->gun1.pix_addr + (y * w->gun1.size_line) + (x * (w->gun1.bits_per_pixel / 8));
@@ -99,10 +101,10 @@ static void play_animation(t_info *w)
 		int y;
 
 		y = 0;
-		while (y < 194)
+		while (y < w->gun2.height)
 		{
 			x = 0;
-			while (x < 259)
+			while (x < w->gun2.width)
 			{
 				char *color;
 
@@ -120,10 +122,10 @@ static void play_animation(t_info *w)
 		int y;
 
 		y = 0;
-		while (y < 194)
+		while (y < w->gun1.height)
 		{
 			x = 0;
-			while (x < 259)
+			while (x < w->gun1.width)
 			{
 				char * color;
 				

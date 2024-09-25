@@ -23,11 +23,11 @@ void	load_sprites(t_info *w, t_parse_data *d)
 			d->WE_texts, &w->w_wall.height, &w->w_wall.width);
 	w->m_door.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
 			d->DO_texts, &w->w_wall.height, &w->w_wall.width);
-	//Added for animation
+	//Added for animation (proper w and h attribution)
 	w->gun1.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
-			"./sprites/gun.xpm", &w->w_wall.height, &w->w_wall.width);
+			"./sprites/gun.xpm",  &w->gun1.width, &w->gun1.height);
 	w->gun2.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
-			"./sprites/gun-2.xpm", &w->w_wall.height, &w->w_wall.width);
+			"./sprites/gun-2.xpm", &w->gun2.width, &w->gun2.height);
 	err = load_addr_sprites(&w->n_wall);
 	err += load_addr_sprites(&w->s_wall);
 	err += load_addr_sprites(&w->e_wall);
