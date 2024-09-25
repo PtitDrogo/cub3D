@@ -1,7 +1,8 @@
 #include "cub3D.h"
 
-#define PIXEL 7
-//IDEA : I want to use the 2d map and just go through it and paint little cubes everytime theres a symbol;
+#define PIXEL 10
+#define SCALE 0.001
+//IDEA : what if I just do a calculation and if there isnt enough space i just dont show the minimap;
 
 int		get_color(t_info *w, int x, int y);
 int		generate_square(t_info *w, int x, int y, int color);
@@ -18,7 +19,7 @@ int display_minimap(t_info *w)
 		x = 0;
 		while (x < w->map_length)
 		{
-			generate_square(w, (DEFAULT_LENGTH / 10) + x * PIXEL, (DEFAULT_HEIGHT * 0.9) + y * PIXEL, get_color(w, x, y));
+			generate_square(w, (DEFAULT_LENGTH * SCALE) + x * PIXEL, (DEFAULT_HEIGHT * SCALE) + y * PIXEL, get_color(w, x, y));
 			x++;
 		}      
 		y++;
@@ -64,6 +65,6 @@ void show_player(t_info *w)
 	int x = (int)w->x_pl;
 	int y = (int)w->y_pl;
 
-	generate_square(w, (DEFAULT_LENGTH / 10) + x * PIXEL, (DEFAULT_HEIGHT * 0.9) + y * PIXEL, 0xFFFFFFF);
+	generate_square(w, (DEFAULT_LENGTH * SCALE) + x * PIXEL, (DEFAULT_HEIGHT * SCALE) + y * PIXEL, 0xFFFFFFF);
 
 }
