@@ -13,8 +13,8 @@
 
 # define MAX_HEIGHT 2100 // bruteforce, recuperable ailleurs
 # define MAX_LENGTH 3905 // taille max pour ecran mac
-# define DEFAULT_LENGTH 1920
-# define DEFAULT_HEIGHT 1080
+# define DEFAULT_LENGTH 1200
+# define DEFAULT_HEIGHT 800
 # define SPRITE_HEIGHT 64
 # define SPRITE_LENGTH 64
 # define CAM_SPEED 0.030
@@ -110,6 +110,10 @@ typedef struct t_w_info
 	double			y_pl; 			//Player Y (posY)
 	double			player_speed;
 	bool			is_door;
+	int				x_strip; //NEW
+	int				y_strip; //NEW
+	int				x_strip2; //NEW
+	int				y_strip2; //NEW
 	t_input			p_inputs;
 	t_image			img_buffer;     //The actual image we are changing pixel in before we call the function to show it on screen; 
 	t_image			*in_use_texture; //added this to store which texture to use for a ray hit
@@ -171,7 +175,7 @@ int		rgb_squeeze(int r, int g, int b);
 void	draw_floor_sky(int x, int y, t_info *data);
 
 //---------------------DDA---------------------//
-double		applyDDA(t_info *w, double	wallDist);
+double		applyDDA(t_info *w, double	wallDist, int i);
 void	movetoFirstXY(t_info *w, double rayX, double rayY);
 void	getDrawLimits(t_info *w);
 

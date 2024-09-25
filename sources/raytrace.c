@@ -24,14 +24,13 @@ void	movetoFirstXY(t_info *w, double rayX, double rayY)
 	}
 }
 
-double	applyDDA(t_info *w, double wall_dist)
+double	applyDDA(t_info *w, double wall_dist, int i)
 {
 	w->is_door = false;
 	while(42)
 	{
 		if(w->vectors.nextDistX < w->vectors.nextDistY)
 		{
-			// printf("moving on x..\n");
 			w->vectors.nextDistX += w->vectors.deltaX;
 			w->current_map_x += w->vectors.stepX;
 			w->side = 0;
@@ -39,16 +38,11 @@ double	applyDDA(t_info *w, double wall_dist)
 		}
 		else
 		{
-			// printf("moving on y..\n");
 			w->vectors.nextDistY += w->vectors.deltaY;
 			w->current_map_y += w->vectors.stepY;
 			w->side = 1;
 			// print_map_current(w->actual_map, w->current_map_x, w->current_map_y);
 		}
-		// if (w->current_map_y >= w->map_heigth)
-		// 	w->current_map_y = w->map_heigth - 1;
-		// if (w->current_map_x >= w->map_length)
-		// 	w->current_map_x = w->map_length - 1;
 		if(w->actual_map[w->current_map_y][w->current_map_x] == '1')
 		{
 			break;
@@ -58,21 +52,24 @@ double	applyDDA(t_info *w, double wall_dist)
 			w->is_door = true;
 			break;
 		}
+		if(w->actual_map[w->current_map_y][w->current_map_x] == 'O')
+		{
+			if (i == DEFAULT_LENGTH / 2)
+			{
+				w->x_strip2 = w->current_map_x;
+				w->y_strip2 = w->current_map_y;
+			}
+		}
+	}
+	if (i == DEFAULT_LENGTH / 2)
+	{
+		w->x_strip = w->current_map_x;
+		w->y_strip = w->current_map_y;
 	}
 	if(w->side == 0)
-	{	
 		wall_dist = (w->vectors.nextDistX - w->vectors.deltaX);
-		// printf("w->vectors.nextDistX = %f and w->vectors.deltaX = %f \n", w->vectors.nextDistX, w->vectors.deltaX);
-		// while (1);
-	}
 	else
-	{
 		wall_dist = (w->vectors.nextDistY - w->vectors.deltaY);
-		// printf("w->vectors.nextDistX = %f and w->vectors.deltaY = %f \n", w->vectors.nextDistX, w->vectors.deltaY);
-		// printf("wall_dist %f \n", wall_dist);
-		// while (1);
-	}
-	
 	return (wall_dist);
 }
 
