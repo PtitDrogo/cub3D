@@ -56,6 +56,10 @@ int	get_color(t_info *w, int x, int y)
 		return (0x694F8E);
 	else if (c == 'N' || c == 'E' || c == 'S' || c == 'W')
 		return (0x71);
+	else if (c == 'D')
+		return (0x582900);
+	else if (c == 'O')
+		return (0xd16100);
 	else
 		return (0xE3A5C7); //modify these colors later
 }
