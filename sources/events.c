@@ -22,17 +22,17 @@ int	no_events(t_info *w)
 	int	i;
 
 	i = 0;
-	// draw_floor_sky(DEFAULT_LENGTH, DEFAULT_HEIGHT, w);
-	// while (i < DEFAULT_LENGTH)
-	// {
-	// 	dda_innit(w, i);
-	// 	movetoFirstXY(w, w->rayDirX, w->rayDirY);
-	// 	w->distWall = applyDDA(w, 0);
-	// 	apply_texture(w);
-	// 	getDrawLimits(w);
-	// 	draw_line(w, i);
-	// 	i++;
-	// }
+	draw_floor_sky(DEFAULT_LENGTH, DEFAULT_HEIGHT, w);
+	while (i < DEFAULT_LENGTH)
+	{
+		dda_innit(w, i);
+		movetoFirstXY(w, w->rayDirX, w->rayDirY);
+		w->distWall = applyDDA(w, 0);
+		apply_texture(w);
+		getDrawLimits(w);
+		draw_line(w, i);
+		i++;
+	}
 	display_minimap(w);
 	mlx_put_image_to_window(w->id_mlx, w->id_wind, w->img_buffer.img_ptr, 0, 0);
 	return (0);
