@@ -13,10 +13,13 @@
 
 # define MAX_HEIGHT 2100 // bruteforce, recuperable ailleurs
 # define MAX_LENGTH 3905 // taille max pour ecran mac
-# define DEFAULT_LENGTH 1920
-# define DEFAULT_HEIGHT 1080
+# define DEFAULT_LENGTH 1200
+# define DEFAULT_HEIGHT 800
 # define SPRITE_HEIGHT 64
 # define SPRITE_LENGTH 64
+# define CAM_SPEED 0.030
+# define PLAYER_SPEED 0.090
+# define MAX_ZOOM 0.2
 
 # define INVALID_MAP -1
 
@@ -42,8 +45,16 @@ typedef struct s_rgb
 	int 	g;
 	int		b;
 	bool 	is_defined;
-} t_rgb;
+} 			t_rgb;
 
+typedef struct s_input
+{
+	bool		going_up;
+	bool		going_down;
+	bool		going_left;
+	bool		going_right;
+	int			rotate_cam;
+} 			t_input;
 
 typedef struct s_parse_data
 {
@@ -51,6 +62,7 @@ typedef struct s_parse_data
 	char			SO_texts[PATH_MAX];
 	char			WE_texts[PATH_MAX];
 	char			EA_texts[PATH_MAX];
+	char			DO_texts[PATH_MAX];
 	t_rgb 			floor_colors;
 	t_rgb 			ceiling_colors;
 	int				status;
@@ -97,9 +109,17 @@ typedef struct t_w_info
 	int				current_map_y;	//Current y on the map, int (mapY)
 	double			x_pl; 			//Player X (posX)
 	double			y_pl; 			//Player Y (posY)
+	double			player_speed;
+	bool			is_door;
+	bool			OpDoorFound ; //NEW
+	int				x_strip; //NEW
+	int				y_strip; //NEW
+	int				x_strip2; //NEW
+	int				y_strip2; //NEW
+	t_input			p_inputs;
 	t_image			img_buffer;     //The actual image we are changing pixel in before we call the function to show it on screen; 
 	t_image			*in_use_texture; //added this to store which texture to use for a ray hit
-	t_image			m_door; 
+	t_image			m_door; // ADDED DOOR 2
 	t_image			n_wall;
 	t_image			s_wall;
 	t_image			e_wall;
@@ -157,7 +177,7 @@ int		rgb_squeeze(int r, int g, int b);
 void	draw_floor_sky(int x, int y, t_info *data);
 
 //---------------------DDA---------------------//
-double		applyDDA(t_info *w, double	wallDist);
+double		applyDDA(t_info *w, double	wallDist, int i);
 void	movetoFirstXY(t_info *w, double rayX, double rayY);
 void	getDrawLimits(t_info *w);
 
@@ -168,6 +188,7 @@ int mouse_movement(int x, int y, t_info *w);
 //camera
 void	rotate_camera(t_info *w, int id);
 //minimap
-int display_minimap(t_info *w);
+int 	display_minimap(t_info *w);
+void	move_player(t_info *w);
 
 #endif

@@ -48,6 +48,7 @@ bool	is_direction_c(char c)
 bool	is_map_char(char c)
 {
 	return (c == '0' || c == '1'
+		|| c == 'D'
 		|| is_direction_c(c)
 		|| c == '\v' || c == '\f'
 		|| c == '\r' || c == ' '

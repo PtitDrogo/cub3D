@@ -6,28 +6,38 @@ static t_image	*get_texture(t_info *w);
 static void		draw_line(t_info *w, int x);
 static int		pixel_color(t_info *data, int texture_y);
 
-/*
-	x = 0;
-	while (x < SCREENWIDTH)
-	{
-		pre_dda(data->cast, player, x);
-		dda(data->cast, data);
-		apply_texture(data);
-		draw_line(data->cast, data, x);
-		x++;
-	}
-*/
+// void	reprint_screen(t_info *w)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	draw_floor_sky(DEFAULT_LENGTH, DEFAULT_HEIGHT, w);
+// 	while (i < DEFAULT_LENGTH)
+// 	{
+// 		dda_innit(w, i);
+// 		movetoFirstXY(w, w->rayDirX, w->rayDirY);
+// 		w->distWall = applyDDA(w, 0);
+// 		apply_texture(w);
+// 		getDrawLimits(w);
+// 		draw_line(w, i);
+// 		i++;
+// 	}
+// 	mlx_put_image_to_window(w->id_mlx, w->id_wind, w->img_buffer.img_ptr, 0, 0);
+// }
+
+
 int	no_events(t_info *w)
 {
 	int	i;
 
 	i = 0;
+	move_player(w);
 	draw_floor_sky(DEFAULT_LENGTH, DEFAULT_HEIGHT, w);
 	while (i < DEFAULT_LENGTH)
 	{
 		dda_innit(w, i);
 		movetoFirstXY(w, w->rayDirX, w->rayDirY);
-		w->distWall = applyDDA(w, 0);
+		w->distWall = applyDDA(w, 0, i);
 		apply_texture(w);
 		getDrawLimits(w);
 		draw_line(w, i);
@@ -59,6 +69,7 @@ static void	draw_line(t_info *w, int x)
 		if (texture_y >= w->n_wall.height) //IMAGE TROP GROSSE LOL OU TROP PETITE QUI SAIT
 			texture_y = w->n_wall.height - 1;
 		color = pixel_color(w, texture_y);
+		// color = apply_fog(color);
 		pixel_fill(&w->img_buffer, x, y, color);
 		y++;
 	}
@@ -70,8 +81,7 @@ static int	pixel_color(t_info *w, int texture_y)
 	t_image			*texture;
 
 	texture = w->in_use_texture;
-
-	color = texture->pix_addr + (texture_y * texture->size_line + w->texture_x * (texture->bits_per_pixel / 8));
+	color = texture->pix_addr + (texture_y * texture->size_line) + (w->texture_x * (texture->bits_per_pixel / 8));
 	return (*(unsigned int *)color); //casting very important
 }
 
@@ -86,8 +96,7 @@ static void	apply_texture(t_info *w)
 		touched_wall = (w->distWall * w->rayDirX) + w->x_pl;
 	touched_wall -= floor(touched_wall);
 	w->texture_x = (int)(touched_wall * (double)w->n_wall.width); //It could be any texture i just want the standard width
-	// printf("texture x is = %i\n", w->texture_x);
-	if ((w->side == 0 && w->vectors.xPos > 0) || (w->side == 1 && w->vectors.yPos < 0))
+	if ((w->side == 0 && w->rayDirX > 0) || (w->side == 1 && w->rayDirY < 0))
 		w->texture_x = w->n_wall.width - w->texture_x - 1;
 	/*
 	The last condition checks if:
@@ -101,6 +110,8 @@ static void	apply_texture(t_info *w)
 
 static t_image	*get_texture(t_info *w)
 {
+	if (w->is_door)
+		return (&w->m_door);
 	if (w->side == 0)
 	{
 		if (w->rayDirX > 0)
@@ -129,90 +140,144 @@ static	void dda_innit(t_info *w, int i)
 		w->vectors.deltaX = 1e30;
 	else
 		w->vectors.deltaX = fabs(1 / w->rayDirX);
-		// w->vectors.deltaX = sqrt(1 + (w->rayDirY * w->rayDirY) / (w->rayDirX * w->rayDirX));
 	if (w->rayDirY == 0)
 		w->vectors.deltaY = 1e30;
 	else
 		w->vectors.deltaY = fabs(1 / w->rayDirY);
-		// w->vectors.deltaY = sqrt(1 + (w->rayDirX * w->rayDirX) / (w->rayDirY * w->rayDirY));
 	return ;
 }
 
-
-
-void	rotate_camera(t_info *w, int id)
+void	check_doors(t_info *w)
 {
-	double	rotSpeed;// to change
+	int	abs1;
+	int	abs2;
+	// printf("xPos id %f, yPos is %f\n", w->vectors.xPos, w->vectors.yPos);
+	// printf("central ray on x:%d y:%d = %c\n", w->x_strip, w->y_strip,
+	// w->actual_map[w->y_strip][w->x_strip]);
+	// printf("central ray2 on x:%d y:%d = %c\n", w->x_strip2, w->y_strip2,
+	// w->actual_map[w->y_strip2][w->x_strip2]);
+	// printf("xPlayer is %f, yPlayer is %f\n", w->x_pl, w->y_pl);
+	if (w->actual_map[w->y_strip2][w->x_strip2] == 'O')
+	{
+		// printf("\nabs(y_strip2 - y_pl) = %d\n", abs(w->y_strip2 - (int)w->y_pl));
+		// printf("\nabs(x_strip2 - x_pl) = %d\n", abs(w->x_strip2 - (int)w->x_pl));
+		abs1 = abs(w->y_strip2 - (int)w->y_pl);
+		abs2 = abs(w->x_strip2 - (int)w->x_pl);
+		if (( abs1 <= 1) && (abs2 <= 1) && (abs1 + abs2 > 0))
+			w->actual_map[w->y_strip2][w->x_strip2] = 'D';
+	}
+	if (w->actual_map[w->y_strip][w->x_strip] == 'D')
+	{
+		if (abs(w->y_strip - (int)w->y_pl) <= 1 && abs(w->x_strip - (int)w->x_pl) <= 1)
+			w->actual_map[w->y_strip][w->x_strip] = 'O';
+	}
+}
+
+double	get_WallCoef(double m_vector)
+{
+	double	coef;
+	if (m_vector > 0)
+		coef = MAX_ZOOM;
+	else
+		coef = -MAX_ZOOM;
+	return(coef);
+}
+
+void	rotate_camera(t_info *w, int coef)
+{
 	double	saveDirX;
 	double	savePlaneX;
+	double	camMultiplier;
 
-	rotSpeed = 0.3; 
-	if (id == XK_Left)
+	camMultiplier = coef * CAM_SPEED;
+	saveDirX = w->vectors.xPos;
+	w->vectors.xPos = w->vectors.xPos * cos(camMultiplier) - w->vectors.yPos * sin(camMultiplier);
+	w->vectors.yPos = saveDirX * sin(camMultiplier) + w->vectors.yPos * cos(camMultiplier);
+	savePlaneX = w->vectors.xCam;
+	w->vectors.xCam = w->vectors.xCam * cos(camMultiplier) - w->vectors.yCam * sin(camMultiplier);
+	w->vectors.yCam = savePlaneX * sin(camMultiplier) + w->vectors.yCam * cos(camMultiplier);
+}
+
+void	move_verticaly(t_info *w, int dir)
+{
+	double	coef;
+	double	stepX;
+	double	stepY;
+	char	c;
+	
+	stepX = w->vectors.xPos * w->player_speed * dir;
+	stepY = w->vectors.yPos * w->player_speed * dir;
+	coef = get_WallCoef(w->vectors.xPos) * dir;
+	c = w->actual_map[(int)(w->y_pl)][(int)(w->x_pl +coef + stepX)];
+	if(c != '1' && c != 'D')
 	{
-		saveDirX = w->vectors.xPos;
-		w->vectors.xPos = w->vectors.xPos * cos(-rotSpeed) - w->vectors.yPos * sin(-rotSpeed);
-		w->vectors.yPos = saveDirX * sin(-rotSpeed) + w->vectors.yPos * cos(-rotSpeed);
-		savePlaneX = w->vectors.xCam;
-		w->vectors.xCam = w->vectors.xCam * cos(-rotSpeed) - w->vectors.yCam * sin(-rotSpeed);
-		w->vectors.yCam = savePlaneX * sin(-rotSpeed) + w->vectors.yCam * cos(-rotSpeed);
+		w->x_pl += stepX;
 	}
-	else
+	coef = get_WallCoef(w->vectors.yPos) * dir;
+	c = w->actual_map[(int)(w->y_pl +coef + stepY)][(int)(w->x_pl)];
+	if(c != '1' && c != 'D')
 	{
-		saveDirX = w->vectors.xPos;
-		w->vectors.xPos = w->vectors.xPos * cos(rotSpeed) - w->vectors.yPos * sin(rotSpeed);
-		w->vectors.yPos = saveDirX * sin(rotSpeed) + w->vectors.yPos * cos(rotSpeed);
-		savePlaneX = w->vectors.xCam;
-		w->vectors.xCam = w->vectors.xCam * cos(rotSpeed) - w->vectors.yCam * sin(rotSpeed);
-		w->vectors.yCam = savePlaneX * sin(rotSpeed) + w->vectors.yCam * cos(rotSpeed);
+		w->y_pl += stepY;
 	}
 }
 
-  void    moove_u_d(t_info *w, int id)
+void    move_horizontaly(t_info *w, int dir)
 {
-    if (id == XK_w)
-    {
-        if(w->actual_map[(int)w->y_pl][(int)(w->x_pl + (w->vectors.xPos * 0.5))] == '0')
-            w->x_pl += w->vectors.xPos * 0.5;
-        if(w->actual_map[(int)(w->y_pl + (w->vectors.yPos * 0.5))][(int)w->x_pl] == '0')
-            w->y_pl += w->vectors.yPos * 0.5;
-    }
-    else
-    {
-        if(w->actual_map[(int)w->y_pl][(int)(w->x_pl - (w->vectors.xPos * 0.5))] == '0')
-            w->x_pl -= w->vectors.xPos * 0.5;
-        if(w->actual_map[(int)(w->y_pl - (w->vectors.yPos * 0.5))][(int)w->x_pl] == '0')
-            w->y_pl -= w->vectors.yPos * 0.5;
-    }
+	double	stepX;
+	double	stepY;
+	double	coef;
+	char	c;
+
+	stepX = w->vectors.xCam * w->player_speed * dir;
+	stepY = w->vectors.yCam * w->player_speed * dir;
+	coef = get_WallCoef(w->vectors.xCam) * dir;
+	c = w->actual_map[(int)(w->y_pl)][(int)(w->x_pl +coef +stepX)];
+	if(c != '1' && c != 'D')
+	{
+		w->x_pl += stepX;
+	}
+	coef = get_WallCoef(w->vectors.yCam) * dir;
+	c = w->actual_map[(int)(w->y_pl +coef + stepY)][(int)(w->x_pl)];
+	if( c != '1' && c != 'D')
+	{
+		w->y_pl += stepY;
+	}
 }
 
-void    moove_l_r(t_info *w, int id)
+void	move_player(t_info *w)
 {
-    if (id == XK_d)
-    {
-        if(w->actual_map[(int)w->y_pl][(int)(w->x_pl + w->vectors.xCam * 0.5)] == '0')
-            w->x_pl += w->vectors.xCam * 0.5;
-        if(w->actual_map[(int)(w->y_pl + (w->vectors.yCam * 0.5))][(int)w->x_pl] == '0')
-            w->y_pl += w->vectors.yCam * 0.5;
-    }
-    else
-    {
-        if(w->actual_map[(int)w->y_pl][(int)(w->x_pl - (w->vectors.xCam * 0.5))] == '0')
-            w->x_pl -= w->vectors.xCam * 0.5;
-        if(w->actual_map[(int)(w->y_pl - (w->vectors.yCam * 0.5))][(int)w->x_pl] == '0')
-            w->y_pl -= w->vectors.yCam * 0.5;
-    }
-} 
+	if (w->p_inputs.going_up == true)
+		move_verticaly(w, 1);
+	if (w->p_inputs.going_down == true)
+		move_verticaly(w, -1);
+	if (w->p_inputs.going_left == true)
+		move_horizontaly(w, -1);
+	if (w->p_inputs.going_right == true)
+		move_horizontaly(w, 1);
+	if (w->p_inputs.rotate_cam != 0)
+		rotate_camera(w, w->p_inputs.rotate_cam);
+}
 
 int	deal_key(int id_key, t_info *w)
 {
 	if (id_key == XK_Escape)
 		free_window(w);
-	if (id_key == XK_s || id_key == XK_w)
-		moove_u_d(w, id_key); // avant arriere
-	if (id_key == XK_d || id_key == XK_a)
-		moove_l_r(w, id_key); // droite gauche
-	if (id_key == XK_Left || id_key == XK_Right)
-		rotate_camera(w, id_key); // droite gauche
+	if (id_key == XK_e)
+		check_doors(w);
+	if (id_key == XK_s)
+		w->p_inputs.going_down = true;
+	if (id_key == XK_w)
+		w->p_inputs.going_up = true;
+	if (id_key == XK_d)
+		w->p_inputs.going_right = true;
+	if (id_key == XK_a)
+		w->p_inputs.going_left = true;
+	if (id_key == XK_Left)
+		w->p_inputs.rotate_cam -= 1;
+	if (id_key == XK_Right)
+		w->p_inputs.rotate_cam += 1;
+	if (id_key == XK_Shift_L)
+		w->player_speed *= 2;
 	return (0);
 }
 
