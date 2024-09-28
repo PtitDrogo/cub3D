@@ -52,5 +52,5 @@ bool	is_map_char(char c)
 		|| is_direction_c(c)
 		|| c == '\v' || c == '\f'
 		|| c == '\r' || c == ' '
-		|| c == '\n');
+		|| c == '\n' || c == '	'); //I AM ADDING TAB AGAIN I AM WEAK BUT IT MAKES THINGS SIMPLER
 }

@@ -1,5 +1,8 @@
 #include "cub3D.h"
 
+bool	is_map_over(char **map, int index_past_line);
+bool	is_there_invalid_empty_line(char **map);
+
 bool	contains_invalid_char(char *str, int *cpt)
 {
 	int	i;
@@ -171,6 +174,12 @@ bool	is_map_valid(t_info *w, char **m_map)
 	int	m_length;
 	int	err_code;
 
+	//tfreydie check
+	if (is_there_invalid_empty_line(m_map) == true)
+	{
+		printf("Im a genius\n");
+		exit(1); //fix
+	}
 	get_map_height(m_map, &m_height, &m_length);
 	w->map_height = m_height;
 	w->map_length = m_length;
@@ -186,5 +195,46 @@ bool	is_map_valid(t_info *w, char **m_map)
 	}
 	printf("Everything is valid ! Leaving ...\n");
 	printf("\n\n\n###########\n\n\n");
+	return (true);
+}
+
+//Tfreydie function for checking empty line
+
+bool	is_there_invalid_empty_line(char **map)
+{
+	int i;
+	int j;
+
+	j = 0;
+	while (map[j])
+	{
+		i = 0;
+		while (is_white_space(map[j][i]))
+			i++;
+		if (map[j][i] == '\0')
+		{	
+			if (is_map_over(map, j + 1) == false)
+				return (true);
+		}
+		j++;
+	}
+	return (false);
+}
+
+bool	is_map_over(char **map, int index_past_line)
+{
+	int i;
+
+	i = 0;	
+	while (map[index_past_line])
+	{
+		while (map[index_past_line][i])
+		{
+			if (is_white_space(map[index_past_line][i]) == false)
+				return(false);
+			i++;
+		}
+		index_past_line++;
+	}
 	return (true);
 }
