@@ -4,6 +4,7 @@ static void		transfer_parsing_data(t_info *w, t_parse_data *data);
 static char		**get_map(const char *map_path_name);
 static void		map_parser(t_info *w, t_parse_data *data);
 static void		parser_init(t_info *w, t_parse_data *data, int argc, char const *argv[]);
+int				count_lines(int cub_fd);
 
 
 //TO delete
@@ -45,9 +46,26 @@ static char **get_map(const char *map_path_name)
 	if (map_fd == -1)
 	{
 		perror("Error\nFailed to open map file");
-		exit (1);
+		exit (1); //TODO I think its ok but double check at the end
 	}
-    map = get_map_file2d(map_fd);
+	int line_count = count_lines(map_fd);
+	if (line_count == -1)
+	{
+		ft_printf2(MALLOC_FAILED_MSG);
+        exit (EXIT_FAILURE);
+	}
+	if (close (map_fd) == -1)
+	{
+		perror("Error\nFailed to close map file");
+		exit (1); //TODO I think its ok but double check at the end
+	}
+	map_fd = open(map_path_name, O_RDONLY);
+	if (map_fd == -1)
+	{
+		perror("Error\nFailed to open map file");
+		exit (1); //TODO I think its ok but double check at the end
+	}
+    map = get_map_file2d(map_fd, line_count);
     print_map(map); //TODELETE
 	if (map == NULL)
 	{	
@@ -112,4 +130,25 @@ static void debug_print_printed_parameters(t_parse_data *data)
 		, data->ceiling_colors.r
 		, data->ceiling_colors.g
 		, data->ceiling_colors.b);	
+}
+
+int	count_lines(int cub_fd)
+{
+	char	*line;
+	int		gnl_status;
+	int		line_count;
+
+	gnl_status = 0;
+	line_count = 0;
+	line = get_next_line_safe(cub_fd, &gnl_status);
+	while (line)
+	{
+		line_count++;
+		free(line);
+		line = get_next_line_safe(cub_fd, &gnl_status);
+	}
+	// free(line); is this necessary
+	if (gnl_status == 1)
+		return (-1);
+	return (line_count);
 }

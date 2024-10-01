@@ -1,5 +1,4 @@
 # include "cub3D.h"
-# include <X11/extensions/Xfixes.h>
 
 static void		init_img_buffer(t_info *data);
 
@@ -28,10 +27,10 @@ int main(int argc, char const *argv[])
 	t_parse_data	data;
 
 	init_game(&w, &data, argc, argv);
-	// set_rays(&w);
 	if (!load_window(&w))
 		return (1);
 	load_sprites(&w, &data);
+	
 	//THEO addition (I need the mlx ptr for this so i cant put this in init game)
 	init_img_buffer(&w);
 
