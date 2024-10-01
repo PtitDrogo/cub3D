@@ -177,8 +177,8 @@ bool	is_map_valid(t_info *w, char **m_map)
 	//tfreydie check
 	if (is_there_invalid_empty_line(m_map) == true)
 	{
-		printf("Im a genius\n");
-		exit(1); //fix
+		printf("Empty line in map\n");
+		return(false); //fix
 	}
 	get_map_height(m_map, &m_height, &m_length);
 	w->map_height = m_height;
