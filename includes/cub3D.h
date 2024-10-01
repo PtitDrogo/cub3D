@@ -13,8 +13,8 @@
 
 # define MAX_HEIGHT 2100 // bruteforce, recuperable ailleurs
 # define MAX_LENGTH 3905 // taille max pour ecran mac
-# define DEFAULT_LENGTH 1200
-# define DEFAULT_HEIGHT 800
+# define DEFAULT_LENGTH 1700
+# define DEFAULT_HEIGHT 1200
 # define SPRITE_HEIGHT 64
 # define SPRITE_LENGTH 64
 # define CAM_SPEED 0.030
@@ -127,6 +127,9 @@ typedef struct t_w_info
 	t_rgb			floor_v;
 	t_rgb			ceiling_v;
 	t_vector		vectors;
+	//animation
+	t_image			gun1;
+	t_image			gun2;
 
 	//Tfreydie variables Im adding here for convenience.
 	double			rayDirX;  //w->vectors.xPos + w->vectors.xCam * cameraX;
@@ -138,10 +141,15 @@ typedef struct t_w_info
 	int					draw_start;
 	int					draw_end;
 
+	bool			anim_playing;
+	int				anim_frames;
+	//E = bool = true.
+	//int frame = 30; for example;
+
 }				t_info;
 
 //---------------------Functions---------------------//
-char 	**get_map_file2d(int cub_fd);
+char 	**get_map_file2d(int cub_fd, int line_count);
 int		no_events(t_info *w);
 int		deal_key(int id_key, t_info *w);
 int		free_window(t_info *w);
@@ -190,5 +198,6 @@ void	rotate_camera(t_info *w, int id);
 //minimap
 int 	display_minimap(t_info *w);
 void	move_player(t_info *w);
+int		generate_square(t_info *w, float x, float y, int color); //Changed this to float for the minimap but gotta double check for animation
 
 #endif
