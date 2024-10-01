@@ -29,13 +29,12 @@ int main(int argc, char const *argv[])
 	init_game(&w, &data, argc, argv);
 	if (!load_window(&w))
 		return (1);
-	load_sprites(&w, &data);
+	if (load_sprites(&w, &data, 0) == 1)
+		return (1);
 	
 	//THEO addition (I need the mlx ptr for this so i cant put this in init game)
 	init_img_buffer(&w);
 
-	// draw_all(&w);
-	// mlx_mouse_hide(w.id_mlx, w.id_wind);
 	mlx_hook(w.id_wind, MotionNotify, PointerMotionMask, mouse_movement, &w);
 	mlx_hook(w.id_wind, KeyPress, KeyPressMask, deal_key, &w);
 	mlx_hook(w.id_wind, KeyRelease, KeyReleaseMask, release_countermesures, &w);

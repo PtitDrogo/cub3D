@@ -38,7 +38,7 @@ int	no_events(t_info *w)
 	{
 		dda_innit(w, i);
 		movetoFirstXY(w, w->rayDirX, w->rayDirY);
-		w->distWall = applyDDA(w, 0, i);
+		w->distWall = applyDDA(w, 0);
 		apply_texture(w);
 		getDrawLimits(w);
 		draw_line(w, i);
@@ -59,79 +59,82 @@ int	anim_pixel_color(t_info *w, int texture_y)
 	color = texture->pix_addr + (texture_y * texture->size_line) + (w->texture_x * (texture->bits_per_pixel / 8));
 	return (*(unsigned int *)color); //casting very important
 }
+
+void	draw_on_screen(t_image *img_buffer, t_image	*current_sprite)
+{
+	char	*color;
+	int		x;
+	int		y;
+
+	y = 0;
+	while (y < current_sprite->height)
+	{
+		x = 0;
+		while (x < current_sprite->width)
+		{
+			
+			color = current_sprite->pix_addr + (y * current_sprite->size_line) + (x * (current_sprite->bits_per_pixel / 8));
+			if (*(unsigned int *)color != 0xFF000000)	
+			pixel_fill(img_buffer, x + 450, y + 140, *(unsigned int *)color);
+			x++;
+		}      
+		y++;
+	}
+}
+
 static void play_animation(t_info *w)
 {
 	if (w->anim_playing == false)
 		return ;
-	static bool did_print = false;
-
-	if (did_print == false)
+	if (w->anim_frames >= 8 && w->anim_frames <= 10)
 	{
-		printf("gun1 = %p\n", &w->gun1);
-		printf("gun2 = %p\n", &w->gun2);
-		printf("gun1.bits_per_pixel = %i\n", w->gun1.bits_per_pixel);
-		printf("gun2.size_line = %i\n", w->gun2.size_line);
-		printf("gun2 width = %i\n", w->gun2.width);
-		printf("gun2 heigth = %i\n", w->gun2.height);
-		did_print = true;
+		draw_on_screen(&w->img_buffer, &w->boom1);
 	}
-	if (w->anim_frames >= 20 && w->anim_frames <= 30)
+	else if (w->anim_frames >= 6 && w->anim_frames < 8)
+	{
+		draw_on_screen(&w->img_buffer, &w->boom2);
+	}
+	else if (w->anim_frames >= 4 && w->anim_frames < 6)
+	{
+		draw_on_screen(&w->img_buffer, &w->boom3);
+	}
+	else if (w->anim_frames >= 2 && w->anim_frames < 4)
 	{
 		int x;
-		int y;
+		int y;	
 
 		y = 0;
-		while (y < w->gun1.height)
+		while (y < w->boom4.height)
 		{
 			x = 0;
-			while (x < w->gun1.width)
-			{
-				char * color;
-				color = w->gun1.pix_addr + (y * w->gun1.size_line) + (x * (w->gun1.bits_per_pixel / 8));
-				if (*(unsigned int *)color != 0x00000000)	
-					generate_square(w, (DEFAULT_LENGTH / 2) + x, (DEFAULT_HEIGHT / 2) + y, *(unsigned int *)color);
-				x++;
-			}      
-			y++;
-		}
-	}
-	else if (w->anim_frames >= 10 && w->anim_frames <= 20)
-	{
-		int x;
-		int y;
-
-		y = 0;
-		while (y < w->gun2.height)
-		{
-			x = 0;
-			while (x < w->gun2.width)
-			{
-				char *color;
-
-				color = w->gun2.pix_addr + (y * w->gun2.size_line) + (x * (w->gun2.bits_per_pixel / 8));
-				if (*(unsigned int *)color != 0x00000000)
-					generate_square(w, (DEFAULT_LENGTH / 2) + x, (DEFAULT_HEIGHT / 2) + y, *(unsigned int *)color);
-				x++;
-			}      
-			y++;
-		}
-	}
-	else if (w->anim_frames >= 0 && w->anim_frames <= 10)
-	{
-		int x;
-		int y;
-
-		y = 0;
-		while (y < w->gun1.height)
-		{
-			x = 0;
-			while (x < w->gun1.width)
+			while (x < w->boom4.width)
 			{
 				char * color;
 				
-				color = w->gun1.pix_addr + (y * w->gun1.size_line) + (x * (w->gun1.bits_per_pixel / 8));
-				if (*(unsigned int *)color != 0x00000000)
-					generate_square(w, (DEFAULT_LENGTH / 2) + x, (DEFAULT_HEIGHT / 2) + y, *(unsigned int *)color);
+				color = w->boom4.pix_addr + (y * w->boom4.size_line) + (x * (w->boom4.bits_per_pixel / 8));
+				if (*(unsigned int *)color != 0xFF000000)
+					pixel_fill(&w->img_buffer, x  + 450, y + 140, *(unsigned int *)color);
+				x++;
+			}      
+			y++;
+		}
+	}
+	else if (w->anim_frames >= 0 && w->anim_frames < 2)
+	{
+		int x;
+		int y;	
+
+		y = 0;
+		while (y < w->boom5.height)
+		{
+			x = 0;
+			while (x < w->boom5.width)
+			{
+				char * color;
+				
+				color = w->boom5.pix_addr + (y * w->boom5.size_line) + (x * (w->boom5.bits_per_pixel / 8));
+				if (*(unsigned int *)color != 0xFF000000)
+					pixel_fill(&w->img_buffer, x  + 450, y + 140, *(unsigned int *)color);
 				x++;
 			}      
 			y++;
@@ -242,26 +245,59 @@ static	void dda_innit(t_info *w, int i)
 	return ;
 }
 
+
+void	checkMidRay(t_info *w)
+{
+	while(42)
+	{
+		if(w->vectors.nextDistX < w->vectors.nextDistY)
+		{
+			w->vectors.nextDistX += w->vectors.deltaX;
+			w->current_map_x += w->vectors.stepX;
+		}
+		else
+		{
+			w->vectors.nextDistY += w->vectors.deltaY;
+			w->current_map_y += w->vectors.stepY;
+		}
+		if(w->actual_map[w->current_map_y][w->current_map_x] == '1')
+		{
+			break;
+		}
+		if(w->actual_map[w->current_map_y][w->current_map_x] == 'D')
+		{
+			break;
+		}
+		else if(w->actual_map[w->current_map_y][w->current_map_x] == 'O')
+		{
+			break ;
+		}
+	}
+	w->x_strip = w->current_map_x;
+	w->y_strip = w->current_map_y;
+}
+
 void	check_doors(t_info *w)
 {
 	int	abs1;
 	int	abs2;
 	// printf("xPos id %f, yPos is %f\n", w->vectors.xPos, w->vectors.yPos);
-	// printf("central ray on x:%d y:%d = %c\n", w->x_strip, w->y_strip,
+	// printf("central ray2 on x:%d y:%d = %c\n", w->x_strip, w->y_strip,
 	// w->actual_map[w->y_strip][w->x_strip]);
-	// printf("central ray2 on x:%d y:%d = %c\n", w->x_strip2, w->y_strip2,
-	// w->actual_map[w->y_strip2][w->x_strip2]);
 	// printf("xPlayer is %f, yPlayer is %f\n", w->x_pl, w->y_pl);
-	if (w->actual_map[w->y_strip2][w->x_strip2] == 'O')
+
+	dda_innit(w, DEFAULT_LENGTH / 2);
+	movetoFirstXY(w, w->rayDirX, w->rayDirY);
+	checkMidRay(w);
+
+	if (w->actual_map[w->y_strip][w->x_strip] == 'O')
 	{
-		// printf("\nabs(y_strip2 - y_pl) = %d\n", abs(w->y_strip2 - (int)w->y_pl));
-		// printf("\nabs(x_strip2 - x_pl) = %d\n", abs(w->x_strip2 - (int)w->x_pl));
-		abs1 = abs(w->y_strip2 - (int)w->y_pl);
-		abs2 = abs(w->x_strip2 - (int)w->x_pl);
+		abs1 = abs(w->y_strip - (int)w->y_pl);
+		abs2 = abs(w->x_strip - (int)w->x_pl);
 		if (( abs1 <= 1) && (abs2 <= 1) && (abs1 + abs2 > 0))
-			w->actual_map[w->y_strip2][w->x_strip2] = 'D';
+			w->actual_map[w->y_strip][w->x_strip] = 'D';
 	}
-	if (w->actual_map[w->y_strip][w->x_strip] == 'D')
+	else if (w->actual_map[w->y_strip][w->x_strip] == 'D')
 	{
 		if (abs(w->y_strip - (int)w->y_pl) <= 1 && abs(w->x_strip - (int)w->x_pl) <= 1)
 			w->actual_map[w->y_strip][w->x_strip] = 'O';
@@ -269,7 +305,7 @@ void	check_doors(t_info *w)
 	if (w->anim_playing == false)
 	{
 		w->anim_playing = true;
-		w->anim_frames = 30; //this can change;
+		w->anim_frames = 10; //this can change;
 	}
 }
 

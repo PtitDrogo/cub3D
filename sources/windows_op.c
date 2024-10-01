@@ -20,13 +20,19 @@ int	free_window(t_info *w)
 		mlx_destroy_image(w->id_mlx, w->e_wall.img_ptr);
 	if (w->w_wall.img_ptr != NULL)
 		mlx_destroy_image(w->id_mlx, w->w_wall.img_ptr);
-	//Destroying animation frames this will change in the futur if i have a more complex animation
-	if (w->gun1.img_ptr != NULL)
-		mlx_destroy_image(w->id_mlx, w->gun1.img_ptr);
-	if (w->gun2.img_ptr != NULL)
-		mlx_destroy_image(w->id_mlx, w->gun2.img_ptr);
+	if (w->boom1.img_ptr != NULL)
+		mlx_destroy_image(w->id_mlx, w->boom1.img_ptr);
+	if (w->boom2.img_ptr != NULL)
+		mlx_destroy_image(w->id_mlx, w->boom2.img_ptr);
+	if (w->boom3.img_ptr != NULL)
+		mlx_destroy_image(w->id_mlx, w->boom3.img_ptr);
+	if (w->boom4.img_ptr != NULL)
+		mlx_destroy_image(w->id_mlx, w->boom4.img_ptr);
+	if (w->boom5.img_ptr != NULL)
+		mlx_destroy_image(w->id_mlx, w->boom5.img_ptr);
+	if (w->img_buffer.img_ptr != NULL)
+		mlx_destroy_image(w->id_mlx, w->img_buffer.img_ptr);
 	mlx_destroy_window(w->id_mlx, w->id_wind);
-	mlx_destroy_image(w->id_mlx, w->img_buffer.img_ptr); //This free the "buffer" we put pixels in
 	free_mlx_map(w);
 	return (0);
 }

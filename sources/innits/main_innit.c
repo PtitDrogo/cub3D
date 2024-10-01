@@ -30,10 +30,8 @@ static void    parser_init(t_info *w, t_parse_data *data, int argc, char const *
 	ft_bzero(data, sizeof(*data));
 	w->p_inputs.rotate_cam = 0; //temporary
 	w->player_speed = PLAYER_SPEED;//temp
-	w->x_strip = 0; //experimental
+	w->x_strip = 0; //goatesque
 	w->y_strip = 0;
-	w->x_strip2 = 0; //experimental
-	w->y_strip2 = 0;
 	w->map_file = get_map(argv[1]);
 }
 
