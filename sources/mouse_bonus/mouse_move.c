@@ -10,9 +10,9 @@ int	mouse_movement(int x, int y, t_info *w)
 	if (x == prev_x)
 		return (0);
 	if (x < prev_x)
-		rotate_camera(w, XK_Left);
+		rotate_camera(w, -1);
 	else if (x > prev_x)
-		rotate_camera(w, XK_Right);
+		rotate_camera(w, 1);
 	re_center_mouse(w, x, y);
 	prev_x = x;
 	return (0);
