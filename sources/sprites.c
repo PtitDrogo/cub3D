@@ -47,7 +47,7 @@ void	load_sprites(t_info *w, t_parse_data *d)
 	if (w->n_wall.img_ptr == NULL
 		|| w->s_wall.img_ptr == NULL || w->e_wall.img_ptr == NULL
 		|| w->w_wall.img_ptr == NULL || w->m_door.img_ptr == NULL
-		|| w->gun1.img_ptr || w->gun2.img_ptr || err != 0)
+		|| w->gun1.img_ptr == NULL || w->gun2.img_ptr == NULL || err != 0)
 	{
 		ft_printf("Error!\nCouldn't load sprites!");
 		free_window(w);
