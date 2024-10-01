@@ -13,8 +13,8 @@
 
 # define MAX_HEIGHT 2100 // bruteforce, recuperable ailleurs
 # define MAX_LENGTH 3905 // taille max pour ecran mac
-# define DEFAULT_LENGTH 1700
-# define DEFAULT_HEIGHT 1200
+# define DEFAULT_LENGTH 1440
+# define DEFAULT_HEIGHT 810
 # define SPRITE_HEIGHT 64
 # define SPRITE_LENGTH 64
 # define CAM_SPEED 0.030
@@ -111,11 +111,8 @@ typedef struct t_w_info
 	double			y_pl; 			//Player Y (posY)
 	double			player_speed;
 	bool			is_door;
-	bool			OpDoorFound ; //NEW
 	int				x_strip; //NEW
 	int				y_strip; //NEW
-	int				x_strip2; //NEW
-	int				y_strip2; //NEW
 	t_input			p_inputs;
 	t_image			img_buffer;     //The actual image we are changing pixel in before we call the function to show it on screen; 
 	t_image			*in_use_texture; //added this to store which texture to use for a ray hit
@@ -128,8 +125,11 @@ typedef struct t_w_info
 	t_rgb			ceiling_v;
 	t_vector		vectors;
 	//animation
-	t_image			gun1;
-	t_image			gun2;
+	t_image			boom1;
+	t_image			boom2;
+	t_image			boom3;
+	t_image			boom4;
+	t_image			boom5;
 
 	//Tfreydie variables Im adding here for convenience.
 	double			rayDirX;  //w->vectors.xPos + w->vectors.xCam * cameraX;
@@ -177,7 +177,7 @@ void	find_player(t_info *w); //Set player x | y
 void	set_rays(t_info *w); 	//Raytracing
 void	print_map_current(char **map, int x, int y);
 void	get_map_height(char **map, int *height, int *length);
-void	load_sprites(t_info *w, t_parse_data *d);
+int		load_sprites(t_info *w, t_parse_data *d, int err);
 
 //---------------------Render---------------------//
 void	pixel_fill(t_image *img, int x, int y, int color);
@@ -185,7 +185,7 @@ int		rgb_squeeze(int r, int g, int b);
 void	draw_floor_sky(int x, int y, t_info *data);
 
 //---------------------DDA---------------------//
-double		applyDDA(t_info *w, double	wallDist, int i);
+double		applyDDA(t_info *w, double	wallDist);
 void	movetoFirstXY(t_info *w, double rayX, double rayY);
 void	getDrawLimits(t_info *w);
 
