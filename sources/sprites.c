@@ -76,7 +76,7 @@ int	load_sprites(t_info *w, t_parse_data *d, int err)
 		|| w->e_wall.img_ptr == NULL || w->w_wall.img_ptr == NULL
 		|| w->m_door.img_ptr == NULL || err != 0)
 	{
-		ft_printf("Error!\nCouldn't load sprites!");
+		ft_printf("Error!\nCouldn't load sprites!\n");
 		free_window(w);
 		return (1);
 	}
@@ -84,7 +84,7 @@ int	load_sprites(t_info *w, t_parse_data *d, int err)
 	err += set_addr_sprites_bonus(w);
 	if (err)
 	{
-		ft_printf("Error!\nCouldn't set sprite adress!");
+		ft_printf("Error!\nCouldn't set sprite adress!\n");
 		free_window(w);
 		return (1);
 	}

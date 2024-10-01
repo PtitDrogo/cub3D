@@ -1,25 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/01 19:05:03 by tfreydie          #+#    #+#             */
+/*   Updated: 2024/10/01 19:05:24 by tfreydie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 int		get_color(t_info *w, int x, int y);
 int		generate_square(t_info *w, float x, float y, int color);
 void	show_player(t_info *w, float pixel_x, float pixel_y);
 
-int display_minimap(t_info *w)
+int	display_minimap(t_info *w)
 {
-	int x;
-	int y;
-	float pixel_x = DEFAULT_LENGTH / w->map_length * 0.20;
-	float pixel_y = DEFAULT_HEIGHT / w->map_height * 0.20;
+	int		x;
+	int		y;
+	float	pixel_x;
+	float	pixel_y;
 
+	pixel_x = DEFAULT_LENGTH / w->map_length * 0.20;
+	pixel_y = DEFAULT_HEIGHT / w->map_height * 0.20;
 	y = 0;
 	while (y < w->map_height)
 	{
 		x = 0;
 		while (x < w->map_length)
 		{
-			generate_square(w, x * pixel_x, y * pixel_y, get_color(w, x, y));
+			generate_square(w, (x + MINIMAP_MARGIN) * pixel_x,
+				(y + MINIMAP_MARGIN) * pixel_y, get_color(w, x, y));
 			x++;
-		}      
+		}
 		y++;
 	}
 	show_player(w, pixel_x, pixel_y);
@@ -28,11 +43,14 @@ int display_minimap(t_info *w)
 
 int	generate_square(t_info *w, float x, float y, int color)
 {
-	int i = 0;
-	int j = 0;
-	float pixel_x = DEFAULT_LENGTH / w->map_length * 0.20;
-	float pixel_y = DEFAULT_HEIGHT / w->map_height * 0.20;
-	
+	int		i;
+	int		j;
+	float	pixel_x;
+	float	pixel_y;
+
+	pixel_x = DEFAULT_LENGTH / w->map_length * 0.20;
+	pixel_y = DEFAULT_HEIGHT / w->map_height * 0.20;
+	j = 0;
 	while (j < pixel_y)
 	{
 		i = 0;
@@ -48,7 +66,7 @@ int	generate_square(t_info *w, float x, float y, int color)
 
 int	get_color(t_info *w, int x, int y)
 {
-	char c;
+	char	c;
 
 	c = w->actual_map[y][x];
 	if (c == '0')
@@ -62,13 +80,15 @@ int	get_color(t_info *w, int x, int y)
 	else if (c == 'O')
 		return (0xd16100);
 	else
-		return (0xE3A5C7); //modify these colors later
+		return (0xE3A5C7);
 }
 
-void show_player(t_info *w, float pixel_x, float pixel_y)
+void	show_player(t_info *w, float pixel_x, float pixel_y)
 {
-	int x = (int)w->x_pl;
-	int y = (int)w->y_pl;
+	int	x;
+	int	y;
 
+	x = (int)w->x_pl + MINIMAP_MARGIN;
+	y = (int)w->y_pl + MINIMAP_MARGIN;
 	generate_square(w, x * pixel_x, y * pixel_y, 0xFFFFFFF);
 }

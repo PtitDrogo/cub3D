@@ -20,6 +20,7 @@
 # define CAM_SPEED 0.030
 # define PLAYER_SPEED 0.090
 # define MAX_ZOOM 0.2
+# define MINIMAP_MARGIN 2
 
 # define INVALID_MAP -1
 
@@ -181,7 +182,6 @@ int		load_sprites(t_info *w, t_parse_data *d, int err);
 
 //---------------------Render---------------------//
 void	pixel_fill(t_image *img, int x, int y, int color);
-int		rgb_squeeze(int r, int g, int b);
 void	draw_floor_sky(int x, int y, t_info *data);
 
 //---------------------DDA---------------------//
@@ -192,12 +192,12 @@ void	getDrawLimits(t_info *w);
 
 //---------------------BONUSES---------------------//
 int mouse_movement(int x, int y, t_info *w);
-//tmp;
 //camera
 void	rotate_camera(t_info *w, int id);
 //minimap
 int 	display_minimap(t_info *w);
 void	move_player(t_info *w);
 int		generate_square(t_info *w, float x, float y, int color); //Changed this to float for the minimap but gotta double check for animation
+void    remove_spaces(t_info *w);
 
 #endif

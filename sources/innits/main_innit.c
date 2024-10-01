@@ -89,6 +89,7 @@ static void	map_parser(t_info *w, t_parse_data *data)
 		exit(0);
 	}
 	find_player(w);
+	remove_spaces(w);
 	return ;
 }
 static void	transfer_parsing_data(t_info *w, t_parse_data *data)

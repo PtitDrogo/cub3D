@@ -1,24 +1,13 @@
 #include "cub3D.h"
 
+static	int	rgb_squeeze(int r, int g, int b);
+
 void	pixel_fill(t_image *img, int x, int y, int color)
 {
 	char	*real_pixel_coor;
 
 	real_pixel_coor = img->pix_addr + (y * img->size_line) + (x * (img->bits_per_pixel / 8));
 	*(unsigned int *)real_pixel_coor = color;
-	// printf("size_line = %i, bits per pixel = %i, y = %i x = %i\n", img->size_line, img->bits_per_pixel, y, x);
-	// static int i = 0;
-	// i++;
-	// if (i == 100)
-	// 	while (1);
-}
-
-int	rgb_squeeze(int r, int g, int b)
-{
-	int	color;
-
-	color = r << 16 | g << 8 | b;
-	return (color);
 }
 
 void	draw_floor_sky(int x, int y, t_info *w)
@@ -44,4 +33,11 @@ void	draw_floor_sky(int x, int y, t_info *w)
 		}
 		i++;
 	}
+}
+static	int	rgb_squeeze(int r, int g, int b)
+{
+	int	color;
+
+	color = r << 16 | g << 8 | b;
+	return (color);
 }

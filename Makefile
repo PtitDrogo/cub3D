@@ -29,6 +29,7 @@ SRCS =		$(SRCS_DIR)/parsing/get_map.c \
 			$(SRCS_DIR)/render/pre_render.c \
 			$(SRCS_DIR)/mouse_bonus/mouse_move.c \
 			$(SRCS_DIR)/minimap/minimap.c \
+			$(SRCS_DIR)/minimap/remove_spaces.c \
 			
 #------------------------------------------------------------------------#
 
