@@ -17,7 +17,10 @@ bool	contains_invalid_char(char *str, int *cpt)
 			i++;
 		}
 		else
+		{
+			printf("Invalid char is |%c|\n", str[i]);
 			return (true);
+		}
 	}
 	return (false);
 }
@@ -117,7 +120,7 @@ int	check_inner_map(char **map, int height, int length)
 		x = 1;
 		while (x < length - 1)
 		{
-			if (map[y][x] == '0' || is_direction_c(map[y][x]))
+			if (map[y][x] == '0' || is_direction_c(map[y][x]) || map[y][x] == 'D') //added door here I think that makes sense
 			{
 				if (invalid_neighbour(map, x, y))
 					return (1);
@@ -132,9 +135,15 @@ int	check_inner_map(char **map, int height, int length)
 int	unclosed_map(char **map, int height, int length)
 {
 	if (check_outer_line(map, height, length))
+	{	
+		printf("outer line bad\n");
 		return (ERR_INVALID_CHAR_MAP);
+	}
 	if (check_inner_map(map, height, length))
+	{	
+		printf("inner map bad\n");
 		return (ERR_INVALID_CHAR_MAP);
+	}
 	return (0);
 }
 

@@ -32,10 +32,7 @@ static void    parser_init(t_info *w, t_parse_data *data, int argc, char const *
 	}
 	ft_bzero(w, sizeof(*w));
 	ft_bzero(data, sizeof(*data));
-	w->p_inputs.rotate_cam = 0; //temporary
 	w->player_speed = PLAYER_SPEED;//temp
-	w->x_strip = 0; //goatesque
-	w->y_strip = 0;
 	w->map_file = get_map(argv[1]);
 }
 
@@ -141,7 +138,7 @@ static void	init_img_buffer(t_info *w)
 	//Saw some people update a "map ready" bool here
 	buffer->pix_addr = mlx_get_data_addr(buffer->img_ptr,
 			&buffer->bits_per_pixel, &buffer->size_line,
-			&buffer->endian); //Get start of picture and size info so we can change pixel colors (THIS DOESNT NEED TO BE FREED)
+			&buffer->endian);
 	if (!buffer->pix_addr)
 		printf("The function (and not malloc) failed ! I will put the proper cleanup here later !\n");
 }
