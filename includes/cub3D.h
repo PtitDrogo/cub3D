@@ -109,6 +109,21 @@ typedef struct s_w_assets
 	t_image			boom3;
 	t_image			boom4;
 	t_image			boom5;
+	t_image			boom6;
+	t_image			boom7;
+	t_image			boom8;
+	t_image			boom9;
+	t_image			boom10;
+	t_image			cloud1;
+	t_image			cloud2;
+	t_image			cloud3;
+	t_image			cloud4;
+	t_image			cloud5;
+	t_image			cloud6;
+	t_image			cloud7;
+	t_image			cloud8;
+	t_image			cloud9;
+	t_image			cloud10;
 }	t_assets;
 
 typedef struct t_w_info
@@ -147,8 +162,7 @@ typedef struct t_w_info
 
 	bool			anim_playing;
 	int				anim_frames;
-	//E = bool = true.
-	//int frame = 30; for example;
+	char			anim_type;
 
 }				t_info;
 
@@ -196,7 +210,7 @@ void		getDrawLimits(t_info *w);
 void		move_player(t_info *w);
 
 //---------------------Keys---------------------//
-int	release_countermesures(int id_key, t_info *w);
+int	release_countermeasures(int id_key, t_info *w);
 int	deal_key(int id_key, t_info *w);
 
 

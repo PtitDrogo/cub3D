@@ -73,7 +73,7 @@ static void	apply_texture(t_info *w)
 		touched_wall = (w->distWall * w->rayDirX) + w->x_pl;
 	touched_wall -= floor(touched_wall);
 	w->texture_x = (int)(touched_wall * (double)w->assets.n_wall.width); //It could be any texture i just want the standard width
-	if ((w->side == 0 && w->rayDirX > 0) || (w->side == 1 && w->rayDirY < 0))
+	if ((w->side == 0 && w->rayDirX < 0) || (w->side == 1 && w->rayDirY > 0))
 		w->texture_x = w->assets.n_wall.width - w->texture_x - 1;
 	/*
 	The last condition checks if:

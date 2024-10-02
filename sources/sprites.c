@@ -24,9 +24,55 @@ int	load_bonus_sprites(t_info *w)
 		"./sprites/boom4.xpm", &w->assets.boom4.width, &w->assets.boom4.height);
 	w->assets.boom5.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
 		"./sprites/boom5.xpm", &w->assets.boom5.width, &w->assets.boom5.height);
+	w->assets.boom6.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
+		"./sprites/boom6.xpm", &w->assets.boom6.width, &w->assets.boom6.height);
+	w->assets.boom7.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
+		"./sprites/boom7.xpm", &w->assets.boom7.width, &w->assets.boom7.height);
+	w->assets.boom8.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
+		"./sprites/boom8.xpm", &w->assets.boom8.width, &w->assets.boom8.height);
+	w->assets.boom9.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
+		"./sprites/boom9.xpm", &w->assets.boom9.width, &w->assets.boom9.height);
+	w->assets.boom10.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
+		"./sprites/boom10.xpm", &w->assets.boom10.width, &w->assets.boom10.height);
 	if (w->assets.boom1.img_ptr == NULL || w->assets.boom2.img_ptr == NULL 
 		|| w->assets.boom3.img_ptr == NULL || w->assets.boom4.img_ptr == NULL
-		|| w->assets.boom5.img_ptr == NULL)
+		|| w->assets.boom5.img_ptr == NULL || w->assets.boom6.img_ptr == NULL
+		|| w->assets.boom7.img_ptr == NULL || w->assets.boom8.img_ptr == NULL
+		|| w->assets.boom9.img_ptr == NULL || w->assets.boom10.img_ptr == NULL)
+	{
+		return (1);
+	}
+	return (0);
+}
+
+int	load_bonus_sprites2(t_info *w)
+{
+	//Added for animation (proper w and h attribution)
+	w->assets.cloud1.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
+		"./sprites/cloud1.xpm",  &w->assets.cloud1.width, &w->assets.cloud1.height);
+	w->assets.cloud2.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
+		"./sprites/cloud2.xpm", &w->assets.cloud2.width, &w->assets.cloud2.height);
+	w->assets.cloud3.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
+		"./sprites/cloud3.xpm", &w->assets.cloud3.width, &w->assets.cloud3.height);
+	w->assets.cloud4.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
+		"./sprites/cloud4.xpm", &w->assets.cloud4.width, &w->assets.cloud4.height);
+	w->assets.cloud5.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
+		"./sprites/cloud5.xpm", &w->assets.cloud5.width, &w->assets.cloud5.height);
+	w->assets.cloud6.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
+		"./sprites/cloud6.xpm",  &w->assets.cloud6.width, &w->assets.cloud6.height);
+	w->assets.cloud7.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
+		"./sprites/cloud7.xpm", &w->assets.cloud7.width, &w->assets.cloud7.height);
+	w->assets.cloud8.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
+		"./sprites/cloud8.xpm", &w->assets.cloud8.width, &w->assets.cloud8.height);
+	w->assets.cloud9.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
+		"./sprites/cloud9.xpm", &w->assets.cloud9.width, &w->assets.cloud9.height);
+	w->assets.cloud10.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
+		"./sprites/cloud10.xpm", &w->assets.cloud10.width, &w->assets.cloud10.height);
+	if (w->assets.cloud1.img_ptr == NULL || w->assets.cloud2.img_ptr == NULL 
+		|| w->assets.cloud3.img_ptr == NULL || w->assets.cloud4.img_ptr == NULL
+		|| w->assets.cloud5.img_ptr == NULL || w->assets.cloud6.img_ptr == NULL
+		|| w->assets.cloud7.img_ptr == NULL || w->assets.cloud8.img_ptr == NULL
+		|| w->assets.cloud9.img_ptr == NULL || w->assets.cloud10.img_ptr == NULL)
 	{
 		return (1);
 	}
@@ -46,6 +92,7 @@ int	load_sprites(t_info *w, t_parse_data *d, int err)
 	w->assets.m_door.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
 		d->DO_texts, &w->assets.m_door.height, &w->assets.m_door.width);
 	err = load_bonus_sprites(w);
+	err += load_bonus_sprites2(w);
 	if (w->assets.n_wall.img_ptr == NULL || w->assets.s_wall.img_ptr == NULL
 		|| w->assets.e_wall.img_ptr == NULL || w->assets.w_wall.img_ptr == NULL
 		|| w->assets.m_door.img_ptr == NULL || err != 0)
