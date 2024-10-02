@@ -19,7 +19,7 @@ void	draw_on_screen(t_image *img_buffer, t_image	*current_sprite)
 			color = current_sprite->pix_addr + (y * current_sprite->size_line) + (x * x_bits_pixel);
 			if (*(unsigned int *)color != 0xFF000000)	
 				pixel_fill(img_buffer, x + (DEFAULT_LENGTH/2) - current_sprite->width/2,
-						y + (DEFAULT_HEIGHT/2) - current_sprite->height/2, *(unsigned int *)color);
+					y + (DEFAULT_HEIGHT/2) - current_sprite->height/2, *(unsigned int *)color);
 			x++;
 		}      
 		y++;
