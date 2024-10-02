@@ -18,7 +18,6 @@ bool	contains_invalid_char(char *str, int *cpt)
 		}
 		else
 		{
-			printf("Invalid char is |%c|\n", str[i]);
 			return (true);
 		}
 	}
@@ -76,18 +75,18 @@ int	check_outer_line(char **map, int height, int length)
 	y = 0;
 	while (y < height)
 	{
-		if ((map[y][0] == '0') || (map[y][0] == 'E') ||
+		if ((map[y][0] == '0') || (map[y][0] == 'D') ||
 				(map[y][length - 1] == '0') ||
-				(map[y][length - 1] == 'E'))
+				(map[y][length - 1] == 'D'))
 			return (1);
 		else
 			y++;
 	}
 	while (x < length - 1)
 	{
-		if ((map[0][x] == '0') || (map[0][x] == 'E') ||
+		if ((map[0][x] == '0') || (map[0][x] == 'D') ||
 				(map[height - 1][x] == '0') ||
-				(map[height - 1][x] == 'E'))
+				(map[height - 1][x] == 'D'))
 			return (1);
 		else
 			x++;
@@ -136,12 +135,12 @@ int	unclosed_map(char **map, int height, int length)
 {
 	if (check_outer_line(map, height, length))
 	{	
-		printf("outer line bad\n");
+		// printf("outer line bad\n");
 		return (ERR_INVALID_CHAR_MAP);
 	}
 	if (check_inner_map(map, height, length))
 	{	
-		printf("inner map bad\n");
+		// printf("inner map bad\n");
 		return (ERR_INVALID_CHAR_MAP);
 	}
 	return (0);
@@ -173,8 +172,8 @@ void	expand_map(char **map, int max_len)
 			map[i] = add_spaces_to_str(map[i], max_len, len);
 		i++;
 	}
-	printf("the map that map parser sees is : \n");
-	print_map(map);
+	// printf("the map that map parser sees is : \n");
+	// print_map(map);
 }
 
 bool	is_map_valid(t_info *w, char **m_map)
@@ -183,11 +182,10 @@ bool	is_map_valid(t_info *w, char **m_map)
 	int	m_length;
 	int	err_code;
 
-	//tfreydie check
 	if (is_there_invalid_empty_line(m_map) == true)
 	{
-		printf("Empty line in map\n");
-		return(false); //fix
+		ft_printf2("Error\nEmpty line in map\n");
+		return(false);
 	}
 	get_map_height(m_map, &m_height, &m_length);
 	w->map_height = m_height;

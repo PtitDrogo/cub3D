@@ -26,13 +26,10 @@ void	init_game(t_info *w, t_parse_data *data, int argc, char const *argv[])
 static void    parser_init(t_info *w, t_parse_data *data, int argc, char const *argv[])
 {
 	if (argc != 2)
-	{
-		ft_printf2("Error\nInvalid number of arguments\n");
-		exit (EXIT_FAILURE);
-	}
+		printf_exit("Error\nInvalid number of arguments\n");
 	ft_bzero(w, sizeof(*w));
 	ft_bzero(data, sizeof(*data));
-	w->player_speed = PLAYER_SPEED;//temp
+	w->player_speed = PLAYER_SPEED;
 	w->map_file = get_map(argv[1]);
 }
 
@@ -121,11 +118,15 @@ static void	init_img_buffer(t_info *w)
 	buffer->img_ptr = mlx_new_image(w->id_mlx, DEFAULT_LENGTH, DEFAULT_HEIGHT);
 	if (!buffer->img_ptr)
 	{
+		ft_printf2("Error\nCouldn't load mlx_image buffer\n");
 		free_window(w);
 	}
-	buffer->pix_addr = mlx_get_data_addr(buffer->img_ptr,
-			&buffer->bits_per_pixel, &buffer->size_line,
-			&buffer->endian);
+	buffer->pix_addr = NULL;//mlx_get_data_addr(buffer->img_ptr,
+			//&buffer->bits_per_pixel, &buffer->size_line,
+			//&buffer->endian);
 	if (!buffer->pix_addr)
-		printf("The function (and not malloc) failed ! I will put the proper cleanup here later !\n");
+	{
+		ft_printf2("Error\nCouldn't load mlx_image buffer address\n");
+		free_window(w);
+	}
 }
