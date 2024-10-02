@@ -1,16 +1,16 @@
-NO ./sprites/chocbarre.xpm      
+WE ./sprites/TongueClose64.xpm      
 
-SO     ./sprites/cowskt2.xpm
+EA    ./sprites/TongueOpen64.xpm
 
-WE          ./sprites/trees.xpm
+NO          ./sprites/BrickWall64.xpm
 
-EA ./sprites/crate64.xpm    
+SO ./sprites/BrickWall64.xpm    
 
-DO          ./sprites/cdoor21.xpm
+DO          ./sprites/stolendoor64.xpm
 
-F       1, 50, 32     
+F       33, 12, 12    
 
-C   135, 206, 235
+C   0, 0, 0
 
 
 111111111111111111111111111111111111111         
