@@ -7,7 +7,7 @@ int	load_window(t_info *w)
 	w->id_mlx = mlx_init();
 	if (w->id_mlx == NULL)
 	{
-		ft_printf(" Error \n/!\\ mlx init failed!\n");
+		ft_printf("Error\n/!\\ mlx init failed!\n");
 		ft_free_array((void *)w->map_file);
 		exit(0);
 	}
@@ -16,7 +16,7 @@ int	load_window(t_info *w)
 	if (w->id_wind == NULL)
 	{
 		free_mlx_map(w);
-		ft_printf(" Error \n/!\\ couldn't open window!\n");
+		ft_printf("Error\n/!\\ couldn't open window!\n");
 		exit(0);
 	}
 	return (0);

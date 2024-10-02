@@ -26,3 +26,15 @@ void	print_error_msg(int err_code)
 	else if (err_code == ERR_INVALID_CHAR)
 		ft_printf2("Character isnt valid code for value !\n");
 }
+
+void	perror_exit(const char *err_msg)
+{
+	perror(err_msg);
+	exit (1);
+}
+
+void	printf_exit(const char *err_msg)
+{
+	ft_printf2(err_msg);
+	exit (1);
+}

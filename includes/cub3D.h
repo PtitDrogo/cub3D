@@ -158,8 +158,12 @@ int		no_events(t_info *w);
 int		deal_key(int id_key, t_info *w);
 int		free_window(t_info *w);
 int		load_window(t_info *w);
-void	print_error_msg(int err_code);
 
+
+//---------------------Errors---------------------//
+void	print_error_msg(int err_code);
+void	perror_exit(const char *err_msg);
+void	printf_exit(const char *err_msg);
 
 
 //---------------------Innit---------------------//
