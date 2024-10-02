@@ -44,10 +44,10 @@ int	load_sprites(t_info *w, t_parse_data *d, int err)
 	w->assets.w_wall.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
 		d->WE_texts, &w->assets.w_wall.height, &w->assets.w_wall.width);
 	w->assets.m_door.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
-		d->DO_texts, &w->assets.m_door.height, &w->assets.m_door.width);
+		"./sprites/cdoor21.xpm", &w->assets.m_door.height, &w->assets.m_door.width);
 	err = load_bonus_sprites(w);
 	if (w->assets.n_wall.img_ptr == NULL || w->assets.s_wall.img_ptr == NULL
-		|| w->assets.e_wall.img_ptr == NULL || w->assets.w_wall.img_ptr == NULL
+		|| w->assets.e_wall.img_ptr == NULL || w->assets.w_wall.img_ptr == NULL 
 		|| w->assets.m_door.img_ptr == NULL || err != 0)
 	{
 		ft_printf("Error!\nCouldn't load sprites!\n");

@@ -200,8 +200,8 @@ bool	is_map_valid(t_info *w, char **m_map)
 		printf("Leaving errcode was %i...\n\n\n", err_code);
 		return (false);
 	}
-	printf("Everything is valid ! Leaving ...\n");
-	printf("\n\n\n###########\n\n\n");
+	// printf("Everything is valid ! Leaving ...\n");
+	// printf("\n\n\n###########\n\n\n");
 	return (true);
 }
 

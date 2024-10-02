@@ -1,12 +1,12 @@
 NO ./sprites/chocbarre.xpm      
 
-SO     ./sprites/chocbarre.xpm 
+SO     ./sprites/cowskt2.xpm
 
-WE          ./sprites/chocbarre.xpm 
+WE          ./sprites/trees.xpm
 
-EA ./sprites/chocbarre.xpm 
+EA ./sprites/crate64.xpm    
 
-DO          ./sprites/chocbarre.xpm 
+DO          ./sprites/cdoor21.xpm
 
 F       1, 50, 32     
 
@@ -17,8 +17,7 @@ C   135, 206, 235
 
 
 
-
-
+																			
 111111111111111111111111111111111111111
 10000000000000000000000000000000001
 10000000000000011111111111111000001111

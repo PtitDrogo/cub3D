@@ -121,9 +121,9 @@ static void	init_img_buffer(t_info *w)
 		ft_printf2("Error\nCouldn't load mlx_image buffer\n");
 		free_window(w);
 	}
-	buffer->pix_addr = NULL;//mlx_get_data_addr(buffer->img_ptr,
-			//&buffer->bits_per_pixel, &buffer->size_line,
-			//&buffer->endian);
+	buffer->pix_addr = mlx_get_data_addr(buffer->img_ptr,
+			&buffer->bits_per_pixel, &buffer->size_line,
+			&buffer->endian);
 	if (!buffer->pix_addr)
 	{
 		ft_printf2("Error\nCouldn't load mlx_image buffer address\n");
