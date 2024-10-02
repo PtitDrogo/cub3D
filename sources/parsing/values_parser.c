@@ -23,12 +23,13 @@ void	values_parser(char **file, t_parse_data *data)
 			i++;
 		if (char_process(&file[line][i], data) == 0)
 		{
-			data->map_start = line;
+			xpm_check(data);
+			if (data->status == 0)
+				data->map_start = line;
 			return ;
 		}
 		line++;
 	}
-	xpm_check(data);
 	return ;
 }
 
@@ -124,6 +125,7 @@ static bool is_xpm_file(const char *s)
 	int	i;
 
 	i = 0;
+	printf("str is %s\n",s);
 	if (ft_strlen(s) < 5)
 	{	
 		return (false);
@@ -134,6 +136,7 @@ static bool is_xpm_file(const char *s)
 	printf("i = %i char is %c\n", i, s[i]);
 	if (s[i] != 'm' || s[i - 1] != 'p' || s[i - 2] != 'x' || s[i - 3] != '.')
 	{	
+		printf("returning not xpm\n");
 		return (false);
 	}
 	return (true);
