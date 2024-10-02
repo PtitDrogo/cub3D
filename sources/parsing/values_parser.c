@@ -43,7 +43,7 @@ static int	char_process(const char *line, t_parse_data *data)
 		path_check(line, data->WE_texts, &data->status);
 	else if (line[0] == 'E' && is_correct_code(line, "EA"))
 		path_check(line, data->EA_texts, &data->status);
-	else if (line[0] == 'D' && is_correct_code(line, "DO")) //ADDED DOOR
+	else if (line[0] == 'D' && is_correct_code(line, "DO"))
 		path_check(line, data->DO_texts, &data->status);
 	else if (line[0] == 'C' && is_correct_code(line, "C"))
 		rgb_parsing(line, &data->ceiling_colors, &data->status);

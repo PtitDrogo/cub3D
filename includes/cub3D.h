@@ -20,6 +20,7 @@
 # define CAM_SPEED 0.030
 # define PLAYER_SPEED 0.090
 # define MAX_ZOOM 0.2
+# define MINIMAP_MARGIN 2
 
 # define INVALID_MAP -1
 
@@ -96,6 +97,20 @@ typedef struct t_m_vector
 	int		stepY;		//How much to step in y
 }				t_vector;
 
+typedef struct s_w_assets
+{
+	t_image			m_door; 		
+	t_image			n_wall;
+	t_image			s_wall;
+	t_image			e_wall;
+	t_image			w_wall;
+	t_image			boom1;
+	t_image			boom2;
+	t_image			boom3;
+	t_image			boom4;
+	t_image			boom5;
+}	t_assets;
+
 typedef struct t_w_info
 {
 	void			*id_mlx; 		//MLX Session ID
@@ -113,24 +128,12 @@ typedef struct t_w_info
 	bool			is_door;
 	int				x_strip; //NEW
 	int				y_strip; //NEW
-	t_input			p_inputs;
-	t_image			img_buffer;     //The actual image we are changing pixel in before we call the function to show it on screen; 
 	t_image			*in_use_texture; //added this to store which texture to use for a ray hit
-	t_image			m_door; // ADDED DOOR 2
-	t_image			n_wall;
-	t_image			s_wall;
-	t_image			e_wall;
-	t_image			w_wall;
+	t_input			p_inputs;
 	t_rgb			floor_v;
 	t_rgb			ceiling_v;
-	t_vector		vectors;
-	//animation
-	t_image			boom1;
-	t_image			boom2;
-	t_image			boom3;
-	t_image			boom4;
-	t_image			boom5;
-
+	t_image			img_buffer;     //The actual image we are changing pixel in before we call the function to show it on screen; 
+	t_assets		assets;
 	//Tfreydie variables Im adding here for convenience.
 	double			rayDirX;  //w->vectors.xPos + w->vectors.xCam * cameraX;
 	double			rayDirY;  //w->vectors.yPos + w->vectors.yCam * cameraX;
@@ -140,6 +143,7 @@ typedef struct t_w_info
 	int					line_height;
 	int					draw_start;
 	int					draw_end;
+	t_vector		vectors;
 
 	bool			anim_playing;
 	int				anim_frames;
@@ -155,6 +159,8 @@ int		deal_key(int id_key, t_info *w);
 int		free_window(t_info *w);
 int		load_window(t_info *w);
 void	print_error_msg(int err_code);
+
+
 
 //---------------------Innit---------------------//
 void	init_game(t_info *w, t_parse_data *data, int argc, char const *argv[]);
@@ -174,30 +180,42 @@ void	print_map(char **map);	//Only for debug, to delete after
 bool	is_map_char(char c);
 bool	is_direction_c(char c);
 void	find_player(t_info *w); //Set player x | y
-void	set_rays(t_info *w); 	//Raytracing
 void	print_map_current(char **map, int x, int y);
 void	get_map_height(char **map, int *height, int *length);
 int		load_sprites(t_info *w, t_parse_data *d, int err);
 
 //---------------------Render---------------------//
 void	pixel_fill(t_image *img, int x, int y, int color);
-int		rgb_squeeze(int r, int g, int b);
 void	draw_floor_sky(int x, int y, t_info *data);
 
 //---------------------DDA---------------------//
+void		dda_innit(t_info *w, int i);
 double		applyDDA(t_info *w, double	wallDist);
-void	movetoFirstXY(t_info *w, double rayX, double rayY);
-void	getDrawLimits(t_info *w);
+void		movetoFirstXY(t_info *w, double rayX, double rayY);
+void		getDrawLimits(t_info *w);
+void		move_player(t_info *w);
+
+//---------------------Keys---------------------//
+int	release_countermesures(int id_key, t_info *w);
+int	deal_key(int id_key, t_info *w);
 
 
 //---------------------BONUSES---------------------//
+//mouse
 int mouse_movement(int x, int y, t_info *w);
-//tmp;
+
 //camera
 void	rotate_camera(t_info *w, int id);
+
 //minimap
 int 	display_minimap(t_info *w);
-void	move_player(t_info *w);
-int		generate_square(t_info *w, float x, float y, int color); //Changed this to float for the minimap but gotta double check for animation
+int		generate_square(t_info *w, float x, float y, int color);
+void    remove_spaces(t_info *w);
 
+//animation
+void	draw_on_screen(t_image *img_buffer, t_image	*current_sprite);
+void	play_animation(t_info *w);
+
+//door
+void	check_doors(t_info *w);
 #endif

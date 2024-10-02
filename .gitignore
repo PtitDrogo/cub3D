@@ -1,6 +1,7 @@
 *.o
 *.d
 *.cub
+sides.cub
 .vscode
 cub3D
 raycaster_textured.cpp
