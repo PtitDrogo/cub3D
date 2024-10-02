@@ -143,7 +143,6 @@ static void	cub_check(const char *s)
 	while (s[i])
 		i++;
 	i--;
-	printf("i = %i char is %c\n", i, s[i]);
 	if (s[i] != 'b' || s[i - 1] != 'u' || s[i - 2] != 'c' || s[i - 3] != '.')
 		printf_exit("Error\nnot a .cub file\n");
 	return ;

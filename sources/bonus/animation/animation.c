@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   animation.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/02 19:33:28 by tfreydie          #+#    #+#             */
+/*   Updated: 2024/10/02 19:38:41 by tfreydie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
-
-void	draw_on_screen(t_image *img_buffer, t_image	*current_sprite)
+void	draw_on_screen(t_image *buffer, t_image	*sprite)
 {
 	char	*color;
 	int		x_bits_pixel;
@@ -9,19 +20,20 @@ void	draw_on_screen(t_image *img_buffer, t_image	*current_sprite)
 	int		y;
 
 	y = 0;
-	x_bits_pixel = current_sprite->bits_per_pixel / 8;
-	while (y < current_sprite->height)
+	x_bits_pixel = sprite->bits_per_pixel / 8;
+	while (y < sprite->height)
 	{
 		x = 0;
-		while (x < current_sprite->width)
+		while (x < sprite->width)
 		{
-			
-			color = current_sprite->pix_addr + (y * current_sprite->size_line) + (x * x_bits_pixel);
-			if (*(unsigned int *)color != 0xFF000000)	
-				pixel_fill(img_buffer, x + (DEFAULT_LENGTH/2) - current_sprite->width/2,
-						y + (DEFAULT_HEIGHT/2) - current_sprite->height/2, *(unsigned int *)color);
+			color = sprite->pix_addr + (y * sprite->size_line)
+				+ (x * x_bits_pixel);
+			if (*(unsigned int *)color != 0xFF000000)
+				pixel_fill(buffer, x + (DEFAULT_LENGTH / 2) - sprite->width / 2,
+					y + (DEFAULT_HEIGHT / 2) - sprite->height / 2,
+					*(unsigned int *)color);
 			x++;
-		}      
+		}
 		y++;
 	}
 	return ;
@@ -85,7 +97,7 @@ void	animate_boom(t_info *w)
 		w->anim_playing = false;
 }
 
-void play_animation(t_info *w)
+void	play_animation(t_info *w)
 {
 	if (w->anim_playing == false)
 		return ;

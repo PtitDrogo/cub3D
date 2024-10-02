@@ -133,7 +133,6 @@ static bool is_xpm_file(const char *s)
 	while (s[i])
 		i++;
 	i--;
-	printf("i = %i char is %c\n", i, s[i]);
 	if (s[i] != 'm' || s[i - 1] != 'p' || s[i - 2] != 'x' || s[i - 3] != '.')
 	{	
 		printf("returning not xpm\n");
