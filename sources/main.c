@@ -4,7 +4,7 @@
 int main(int argc, char const *argv[])
 {
 	t_info 			w;
-	t_parse_data	data;
+	t_parse	data;
 
 	init_game(&w, &data, argc, argv);
 	mlx_hook(w.id_wind, MotionNotify, PointerMotionMask, mouse_movement, &w);

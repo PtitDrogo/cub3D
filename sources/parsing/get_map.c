@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_map.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/02 20:15:51 by tfreydie          #+#    #+#             */
+/*   Updated: 2024/10/02 20:30:03 by tfreydie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
-static void replace_endline(char **map);
+static void	replace_endline(char **map);
 
 char	**get_map_file2d(int cub_fd, int line_count)
 {
@@ -24,10 +36,10 @@ char	**get_map_file2d(int cub_fd, int line_count)
 	return (map_file);
 }
 
-static void replace_endline(char **map)
+static void	replace_endline(char **map)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	j = 0;
 	while (map[j])

@@ -79,7 +79,7 @@ int	load_bonus_sprites2(t_info *w)
 	return (0);
 }
 
-int	load_sprites(t_info *w, t_parse_data *d, int err)
+int	load_sprites(t_info *w, t_parse *d, int err)
 {
 	w->assets.n_wall.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
 		d->NO_texts, &w->assets.n_wall.height, &w->assets.n_wall.width);

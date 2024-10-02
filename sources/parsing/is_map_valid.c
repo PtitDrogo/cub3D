@@ -119,7 +119,7 @@ int	check_inner_map(char **map, int height, int length)
 		x = 1;
 		while (x < length - 1)
 		{
-			if (map[y][x] == '0' || is_direction_c(map[y][x]) || map[y][x] == 'D') //added door here I think that makes sense
+			if (map[y][x] == '0' || is_direction_c(map[y][x]) || map[y][x] == 'D')
 			{
 				if (invalid_neighbour(map, x, y))
 					return (1);
@@ -135,12 +135,10 @@ int	unclosed_map(char **map, int height, int length)
 {
 	if (check_outer_line(map, height, length))
 	{	
-		// printf("outer line bad\n");
 		return (ERR_INVALID_CHAR_MAP);
 	}
 	if (check_inner_map(map, height, length))
 	{	
-		// printf("inner map bad\n");
 		return (ERR_INVALID_CHAR_MAP);
 	}
 	return (0);
@@ -172,8 +170,6 @@ void	expand_map(char **map, int max_len)
 			map[i] = add_spaces_to_str(map[i], max_len, len);
 		i++;
 	}
-	// printf("the map that map parser sees is : \n");
-	// print_map(map);
 }
 
 bool	is_map_valid(t_info *w, char **m_map)
@@ -197,15 +193,10 @@ bool	is_map_valid(t_info *w, char **m_map)
 	if (err_code)
 	{
 		print_error_msg(err_code);
-		printf("Leaving errcode was %i...\n\n\n", err_code);
 		return (false);
 	}
-	// printf("Everything is valid ! Leaving ...\n");
-	// printf("\n\n\n###########\n\n\n");
 	return (true);
 }
-
-//Tfreydie function for checking empty line
 
 bool	is_there_invalid_empty_line(char **map)
 {

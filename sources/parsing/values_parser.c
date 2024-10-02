@@ -1,13 +1,13 @@
 #include "cub3D.h"
 
 static void		path_check(const char *line, char *data_buffer, int *status);
-static int		char_process(const char *line, t_parse_data *data);
+static int		char_process(const char *line, t_parse *data);
 static bool		is_correct_code(const char *line, const char *code);
-static bool		is_premap_data_ready(const t_parse_data *m);
+static bool		is_premap_data_ready(const t_parse *m);
 static bool		is_xpm_file(const char *s);
-static void		xpm_check(t_parse_data *data);
+static void		xpm_check(t_parse *data);
 
-void	values_parser(char **file, t_parse_data *data)
+void	values_parser(char **file, t_parse *data)
 {
 	size_t	i;
 	size_t	line;
@@ -33,7 +33,7 @@ void	values_parser(char **file, t_parse_data *data)
 	return ;
 }
 
-static void xpm_check(t_parse_data *data)
+static void xpm_check(t_parse *data)
 {
 	if (is_xpm_file(data->NO_texts) == false)
 		data->status = ERR_NOT_XPM_FILE;
@@ -46,7 +46,7 @@ static void xpm_check(t_parse_data *data)
 	return ;
 }
 
-static int	char_process(const char *line, t_parse_data *data)
+static int	char_process(const char *line, t_parse *data)
 {
 	if (line[0] == '\0')
 		return (1);
@@ -95,7 +95,7 @@ static void	path_check(const char *line, char *data_buffer, int *status)
 		return (update_status(ERR_TOO_MANY_PATHS, status));
 }
 
-static bool	is_premap_data_ready(const t_parse_data *m)
+static bool	is_premap_data_ready(const t_parse *m)
 {
 	if (!*m->NO_texts || !*m->NO_texts || !*m->WE_texts || !*m->EA_texts)
 		return (false);
@@ -125,7 +125,6 @@ static bool is_xpm_file(const char *s)
 	int	i;
 
 	i = 0;
-	printf("str is %s\n",s);
 	if (ft_strlen(s) < 5)
 	{	
 		return (false);
