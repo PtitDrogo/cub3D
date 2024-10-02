@@ -5,17 +5,21 @@ static char		**get_map(const char *map_path_name);
 static void		map_parser(t_info *w, t_parse_data *data);
 static void		parser_init(t_info *w, t_parse_data *data, int argc, char const *argv[]);
 int				count_lines(int cub_fd);
+static void		init_img_buffer(t_info *w);
 
 
 //TO delete
-static void debug_print_printed_parameters(t_parse_data *data);
+// static void debug_print_printed_parameters(t_parse_data *data);
 
 void	init_game(t_info *w, t_parse_data *data, int argc, char const *argv[])
 {
 	parser_init(w, data, argc, argv);
 	values_parser(w->map_file, data);
-	debug_print_printed_parameters(data); //DEBUG
+	// debug_print_printed_parameters(data); //DEBUG
 	map_parser(w, data);
+	load_window(w);
+	load_sprites(w, data, 0);
+	init_img_buffer(w);
 	return ;
 }
 
@@ -104,33 +108,6 @@ static void	transfer_parsing_data(t_info *w, t_parse_data *data)
 	w->ceiling_v.b = data->ceiling_colors.b;
 }
 
-static void debug_print_printed_parameters(t_parse_data *data)
-{
-	printf("My parameters are :\n\
-		- NO_texts = %s\n\
-		- SO_texts = %s\n\
-		- WE_texts = %s\n\
-		- EA_texts = %s\n\
-		- DO_texts = %s\n\
-		- FLOOR_r = %i\n\
-		- FLOOR_g = %i\n\
-		- FLOOR_b = %i\n\
-		- Ceiling_r = %i\n\
-		- Ceiling_g = %i\n\
-		- Ceiling_b = %i\n", 
-		  data->NO_texts
-		, data->SO_texts
-		, data->WE_texts
-		, data->EA_texts
-		, data->DO_texts
-		, data->floor_colors.r
-		, data->floor_colors.g
-		, data->floor_colors.b
-		, data->ceiling_colors.r
-		, data->ceiling_colors.g
-		, data->ceiling_colors.b);	
-}
-
 int	count_lines(int cub_fd)
 {
 	char	*line;
@@ -146,8 +123,25 @@ int	count_lines(int cub_fd)
 		free(line);
 		line = get_next_line_safe(cub_fd, &gnl_status);
 	}
-	// free(line); is this necessary
 	if (gnl_status == 1)
 		return (-1);
 	return (line_count);
+}
+
+static void	init_img_buffer(t_info *w)
+{
+	t_image *buffer;
+
+	buffer = &w->img_buffer;
+	buffer->img_ptr = mlx_new_image(w->id_mlx, DEFAULT_LENGTH, DEFAULT_HEIGHT); //Get the img buffer we will use to fill in
+	if (!buffer->img_ptr)
+	{
+		free_window(w);
+	}
+	//Saw some people update a "map ready" bool here
+	buffer->pix_addr = mlx_get_data_addr(buffer->img_ptr,
+			&buffer->bits_per_pixel, &buffer->size_line,
+			&buffer->endian); //Get start of picture and size info so we can change pixel colors (THIS DOESNT NEED TO BE FREED)
+	if (!buffer->pix_addr)
+		printf("The function (and not malloc) failed ! I will put the proper cleanup here later !\n");
 }

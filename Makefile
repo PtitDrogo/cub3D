@@ -15,6 +15,7 @@ DEPS 	= 	$(OBJS:.o=.d)
 SRCS =		$(SRCS_DIR)/parsing/get_map.c \
 			$(SRCS_DIR)/main.c \
 			$(SRCS_DIR)/events.c \
+			$(SRCS_DIR)/handle_keys.c \
 			$(SRCS_DIR)/windows_op.c \
 			$(SRCS_DIR)/parsing/values_parser.c \
 			$(SRCS_DIR)/parsing/parsing_utils.c \
@@ -27,9 +28,11 @@ SRCS =		$(SRCS_DIR)/parsing/get_map.c \
 			$(SRCS_DIR)/innits/main_innit.c \
 			$(SRCS_DIR)/Errors/errors.c \
 			$(SRCS_DIR)/render/pre_render.c \
-			$(SRCS_DIR)/mouse_bonus/mouse_move.c \
-			$(SRCS_DIR)/minimap/minimap.c \
-			$(SRCS_DIR)/minimap/remove_spaces.c \
+			$(SRCS_DIR)/bonus/mouse_bonus/mouse_move.c \
+			$(SRCS_DIR)/bonus/minimap/minimap.c \
+			$(SRCS_DIR)/bonus/minimap/remove_spaces.c \
+			$(SRCS_DIR)/bonus/animation/animation.c \
+			$(SRCS_DIR)/bonus/door/door.c \
 			
 #------------------------------------------------------------------------#
 

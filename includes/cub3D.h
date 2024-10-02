@@ -157,6 +157,8 @@ int		free_window(t_info *w);
 int		load_window(t_info *w);
 void	print_error_msg(int err_code);
 
+
+
 //---------------------Innit---------------------//
 void	init_game(t_info *w, t_parse_data *data, int argc, char const *argv[]);
 
@@ -175,7 +177,6 @@ void	print_map(char **map);	//Only for debug, to delete after
 bool	is_map_char(char c);
 bool	is_direction_c(char c);
 void	find_player(t_info *w); //Set player x | y
-void	set_rays(t_info *w); 	//Raytracing
 void	print_map_current(char **map, int x, int y);
 void	get_map_height(char **map, int *height, int *length);
 int		load_sprites(t_info *w, t_parse_data *d, int err);
@@ -185,19 +186,33 @@ void	pixel_fill(t_image *img, int x, int y, int color);
 void	draw_floor_sky(int x, int y, t_info *data);
 
 //---------------------DDA---------------------//
+void		dda_innit(t_info *w, int i);
 double		applyDDA(t_info *w, double	wallDist);
-void	movetoFirstXY(t_info *w, double rayX, double rayY);
-void	getDrawLimits(t_info *w);
+void		movetoFirstXY(t_info *w, double rayX, double rayY);
+void		getDrawLimits(t_info *w);
+void		move_player(t_info *w);
+
+//---------------------Keys---------------------//
+int	release_countermesures(int id_key, t_info *w);
+int	deal_key(int id_key, t_info *w);
 
 
 //---------------------BONUSES---------------------//
+//mouse
 int mouse_movement(int x, int y, t_info *w);
+
 //camera
 void	rotate_camera(t_info *w, int id);
+
 //minimap
 int 	display_minimap(t_info *w);
-void	move_player(t_info *w);
-int		generate_square(t_info *w, float x, float y, int color); //Changed this to float for the minimap but gotta double check for animation
+int		generate_square(t_info *w, float x, float y, int color);
 void    remove_spaces(t_info *w);
 
+//animation
+void	draw_on_screen(t_image *img_buffer, t_image	*current_sprite);
+void	play_animation(t_info *w);
+
+//door
+void	check_doors(t_info *w);
 #endif

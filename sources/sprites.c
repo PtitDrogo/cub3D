@@ -78,7 +78,7 @@ int	load_sprites(t_info *w, t_parse_data *d, int err)
 	{
 		ft_printf("Error!\nCouldn't load sprites!\n");
 		free_window(w);
-		return (1);
+		exit (EXIT_FAILURE);
 	}
 	err = set_addr_sprites(w);
 	err += set_addr_sprites_bonus(w);
@@ -86,7 +86,7 @@ int	load_sprites(t_info *w, t_parse_data *d, int err)
 	{
 		ft_printf("Error!\nCouldn't set sprite adress!\n");
 		free_window(w);
-		return (1);
+		exit (EXIT_FAILURE);
 	}
 	return (0);
 }
