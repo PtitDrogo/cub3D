@@ -68,7 +68,7 @@ static char **get_map(const char *map_path_name)
 		exit (1); //TODO I think its ok but double check at the end
 	}
     map = get_map_file2d(map_fd, line_count);
-    print_map(map); //TODELETE
+    // print_map(map); //TODELETE
 	if (map == NULL)
 	{	
         ft_printf2(MALLOC_FAILED_MSG);
@@ -98,7 +98,7 @@ static void	map_parser(t_info *w, t_parse_data *data)
 }
 static void	transfer_parsing_data(t_info *w, t_parse_data *data)
 {
-	printf("map start value is %i\n", data->map_start);
+	// printf("map start value is %i\n", data->map_start);
 	w->actual_map = &w->map_file[data->map_start];
 	w->floor_v.r = data->floor_colors.r;
 	w->floor_v.g = data->floor_colors.g;

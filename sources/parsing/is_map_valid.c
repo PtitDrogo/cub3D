@@ -164,8 +164,8 @@ void	expand_map(char **map, int max_len)
 			map[i] = add_spaces_to_str(map[i], max_len, len);
 		i++;
 	}
-	printf("the map that map parser sees is : \n");
-	print_map(map);
+	// printf("the map that map parser sees is : \n");
+	// print_map(map);
 }
 
 bool	is_map_valid(t_info *w, char **m_map)

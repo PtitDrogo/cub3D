@@ -1,6 +1,6 @@
 #include "cub3D.h"
 
-int	release_countermesures(int id_key, t_info *w)
+int	release_countermeasures(int id_key, t_info *w)
 {
 	if (id_key == XK_w && w->p_inputs.going_up == true)
 		w->p_inputs.going_up = false;
