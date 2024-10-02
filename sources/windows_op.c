@@ -36,7 +36,7 @@ int	free_window(t_info *w)
 	i = 0;
 	while (i < end)
 	{
-		if (&ptr[i] != NULL)
+		if (ptr[i].img_ptr != NULL)
 			mlx_destroy_image(w->id_mlx, ptr[i].img_ptr);
 		i++;
 	}

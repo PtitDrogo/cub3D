@@ -6,16 +6,12 @@ static void		map_parser(t_info *w, t_parse_data *data);
 static void		parser_init(t_info *w, t_parse_data *data, int argc, char const *argv[]);
 int				count_lines(int cub_fd);
 static void		init_img_buffer(t_info *w);
-
-
-//TO delete
-// static void debug_print_printed_parameters(t_parse_data *data);
+static void		cub_check(const char *s);
 
 void	init_game(t_info *w, t_parse_data *data, int argc, char const *argv[])
 {
 	parser_init(w, data, argc, argv);
 	values_parser(w->map_file, data);
-	// debug_print_printed_parameters(data); //DEBUG
 	map_parser(w, data);
 	load_window(w);
 	load_sprites(w, data, 0);
@@ -27,6 +23,12 @@ static void    parser_init(t_info *w, t_parse_data *data, int argc, char const *
 {
 	if (argc != 2)
 		printf_exit("Error\nInvalid number of arguments\n");
+	if (DEFAULT_LENGTH < MIN_LENGTH || DEFAULT_HEIGHT < MIN_HEIGHT
+		|| DEFAULT_LENGTH > MAX_HEIGHT || DEFAULT_HEIGHT > MAX_HEIGHT)
+	{
+		printf_exit("Error\nInvalid screen size\n");
+	}
+	cub_check(argv[1]);
 	ft_bzero(w, sizeof(*w));
 	ft_bzero(data, sizeof(*data));
 	w->player_speed = PLAYER_SPEED;
@@ -129,4 +131,20 @@ static void	init_img_buffer(t_info *w)
 		ft_printf2("Error\nCouldn't load mlx_image buffer address\n");
 		free_window(w);
 	}
+}
+
+static void	cub_check(const char *s)
+{
+	int	i;
+
+	i = 0;
+	if (ft_strlen(s) < 5)
+		printf_exit("Error\nnot a .cub file\n");
+	while (s[i])
+		i++;
+	i--;
+	printf("i = %i char is %c\n", i, s[i]);
+	if (s[i] != 'b' || s[i - 1] != 'u' || s[i - 2] != 'c' || s[i - 3] != '.')
+		printf_exit("Error\nnot a .cub file\n");
+	return ;
 }

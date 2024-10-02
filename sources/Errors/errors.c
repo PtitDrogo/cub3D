@@ -25,6 +25,8 @@ void	print_error_msg(int err_code)
 		ft_printf2("Not enough characteres to be a viable value !\n");
 	else if (err_code == ERR_INVALID_CHAR)
 		ft_printf2("Character isnt valid code for value !\n");
+	else if (err_code == ERR_NOT_XPM_FILE)
+		ft_printf2("Not a .xpm file\n");
 }
 
 void	perror_exit(const char *err_msg)

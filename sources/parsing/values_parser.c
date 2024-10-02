@@ -4,6 +4,8 @@ static void		path_check(const char *line, char *data_buffer, int *status);
 static int		char_process(const char *line, t_parse_data *data);
 static bool		is_correct_code(const char *line, const char *code);
 static bool		is_premap_data_ready(const t_parse_data *m);
+static bool		is_xpm_file(const char *s);
+static void		xpm_check(t_parse_data *data);
 
 void	values_parser(char **file, t_parse_data *data)
 {
@@ -26,6 +28,20 @@ void	values_parser(char **file, t_parse_data *data)
 		}
 		line++;
 	}
+	xpm_check(data);
+	return ;
+}
+
+static void xpm_check(t_parse_data *data)
+{
+	if (is_xpm_file(data->NO_texts) == false)
+		data->status = ERR_NOT_XPM_FILE;
+	if (is_xpm_file(data->SO_texts) == false)
+		data->status = ERR_NOT_XPM_FILE;
+	if (is_xpm_file(data->WE_texts) == false)
+		data->status = ERR_NOT_XPM_FILE;
+	if (is_xpm_file(data->EA_texts) == false)
+		data->status = ERR_NOT_XPM_FILE;
 	return ;
 }
 
@@ -101,4 +117,24 @@ static bool	is_correct_code(const char *line, const char *code)
 		return (is_white_space(line[i]));
 	}
 	return (false);
+}
+
+static bool is_xpm_file(const char *s)
+{
+	int	i;
+
+	i = 0;
+	if (ft_strlen(s) < 5)
+	{	
+		return (false);
+	}
+	while (s[i])
+		i++;
+	i--;
+	printf("i = %i char is %c\n", i, s[i]);
+	if (s[i] != 'm' || s[i - 1] != 'p' || s[i - 2] != 'x' || s[i - 3] != '.')
+	{	
+		return (false);
+	}
+	return (true);
 }

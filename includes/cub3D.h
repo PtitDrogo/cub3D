@@ -11,8 +11,10 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define MAX_HEIGHT 2100 // bruteforce, recuperable ailleurs
-# define MAX_LENGTH 3905 // taille max pour ecran mac
+# define MAX_HEIGHT 2100
+# define MAX_LENGTH 3905
+# define MIN_LENGTH 1440
+# define MIN_HEIGHT 810
 # define DEFAULT_LENGTH 1440
 # define DEFAULT_HEIGHT 810
 # define SPRITE_HEIGHT 64
@@ -38,6 +40,7 @@
 # define ERR_TOO_MANY_PLYR 708
 # define ERR_ZERO_PLAYER 709
 # define ERR_INVALID_CHAR_MAP 710
+# define ERR_NOT_XPM_FILE 711
 
 
 typedef struct s_rgb 
@@ -63,7 +66,6 @@ typedef struct s_parse_data
 	char			SO_texts[PATH_MAX];
 	char			WE_texts[PATH_MAX];
 	char			EA_texts[PATH_MAX];
-	char			DO_texts[PATH_MAX];
 	t_rgb 			floor_colors;
 	t_rgb 			ceiling_colors;
 	int				status;
@@ -236,4 +238,5 @@ void	play_animation(t_info *w);
 
 //door
 void	check_doors(t_info *w);
+
 #endif
