@@ -31,15 +31,15 @@ void play_animation(t_info *w)
 	if (w->anim_playing == false)
 		return ;
 	if (w->anim_frames >= 8 && w->anim_frames <= 10)
-		draw_on_screen(&w->img_buffer, &w->boom1);
+		draw_on_screen(&w->img_buffer, &w->assets.boom1);
 	else if (w->anim_frames >= 6 && w->anim_frames < 8)
-		draw_on_screen(&w->img_buffer, &w->boom2);
+		draw_on_screen(&w->img_buffer, &w->assets.boom2);
 	else if (w->anim_frames >= 4 && w->anim_frames < 6)
-		draw_on_screen(&w->img_buffer, &w->boom3);
+		draw_on_screen(&w->img_buffer, &w->assets.boom3);
 	else if (w->anim_frames >= 2 && w->anim_frames < 4)
-		draw_on_screen(&w->img_buffer, &w->boom4);
+		draw_on_screen(&w->img_buffer, &w->assets.boom4);
 	else if (w->anim_frames >= 0 && w->anim_frames < 2)
-		draw_on_screen(&w->img_buffer, &w->boom5);
+		draw_on_screen(&w->img_buffer, &w->assets.boom5);
 	w->anim_frames--;
 	if (w->anim_frames == 0)
 		w->anim_playing = false;

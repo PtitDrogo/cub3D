@@ -40,11 +40,11 @@ static void	draw_line(t_info *w, int x)
 	{
 		scaling = (y * 256) - DEFAULT_HEIGHT * 128 + w->line_height * 128; //Tres utile !
 		// scaling = 1;
-		texture_y = ((scaling * w->n_wall.height) / w->line_height) / 256;
+		texture_y = ((scaling * w->assets.n_wall.height) / w->line_height) / 256;
 		if (texture_y < 0)
 			texture_y = 0; //Pour les segfaults dans les coins
-		if (texture_y >= w->n_wall.height) //IMAGE TROP GROSSE LOL OU TROP PETITE QUI SAIT
-			texture_y = w->n_wall.height - 1;
+		if (texture_y >= w->assets.n_wall.height) //IMAGE TROP GROSSE LOL OU TROP PETITE QUI SAIT
+			texture_y = w->assets.n_wall.height - 1;
 		color = pixel_color(w, texture_y);
 		// color = apply_fog(color);
 		pixel_fill(&w->img_buffer, x, y, color);
@@ -72,9 +72,9 @@ static void	apply_texture(t_info *w)
 	else
 		touched_wall = (w->distWall * w->rayDirX) + w->x_pl;
 	touched_wall -= floor(touched_wall);
-	w->texture_x = (int)(touched_wall * (double)w->n_wall.width); //It could be any texture i just want the standard width
+	w->texture_x = (int)(touched_wall * (double)w->assets.n_wall.width); //It could be any texture i just want the standard width
 	if ((w->side == 0 && w->rayDirX > 0) || (w->side == 1 && w->rayDirY < 0))
-		w->texture_x = w->n_wall.width - w->texture_x - 1;
+		w->texture_x = w->assets.n_wall.width - w->texture_x - 1;
 	/*
 	The last condition checks if:
 	The ray hit a vertical wall AND the player is facing right (positive X)
@@ -88,20 +88,20 @@ static void	apply_texture(t_info *w)
 static t_image	*get_texture(t_info *w)
 {
 	if (w->is_door)
-		return (&w->m_door);
+		return (&w->assets.m_door);
 	if (w->side == 0)
 	{
 		if (w->rayDirX > 0)
-			return (&w->e_wall);
+			return (&w->assets.e_wall);
 		else
-			return (&w->w_wall);
+			return (&w->assets.w_wall);
 	}
 	else
 	{
 		if (w->rayDirY > 0)
-			return (&w->s_wall);
+			return (&w->assets.s_wall);
 		else
-			return (&w->n_wall);
+			return (&w->assets.n_wall);
 	}
 }
 

@@ -97,6 +97,20 @@ typedef struct t_m_vector
 	int		stepY;		//How much to step in y
 }				t_vector;
 
+typedef struct s_w_assets
+{
+	t_image			m_door; 		
+	t_image			n_wall;
+	t_image			s_wall;
+	t_image			e_wall;
+	t_image			w_wall;
+	t_image			boom1;
+	t_image			boom2;
+	t_image			boom3;
+	t_image			boom4;
+	t_image			boom5;
+}	t_assets;
+
 typedef struct t_w_info
 {
 	void			*id_mlx; 		//MLX Session ID
@@ -114,24 +128,12 @@ typedef struct t_w_info
 	bool			is_door;
 	int				x_strip; //NEW
 	int				y_strip; //NEW
-	t_input			p_inputs;
-	t_image			img_buffer;     //The actual image we are changing pixel in before we call the function to show it on screen; 
 	t_image			*in_use_texture; //added this to store which texture to use for a ray hit
-	t_image			m_door; // ADDED DOOR 2
-	t_image			n_wall;
-	t_image			s_wall;
-	t_image			e_wall;
-	t_image			w_wall;
+	t_input			p_inputs;
 	t_rgb			floor_v;
 	t_rgb			ceiling_v;
-	t_vector		vectors;
-	//animation
-	t_image			boom1;
-	t_image			boom2;
-	t_image			boom3;
-	t_image			boom4;
-	t_image			boom5;
-
+	t_image			img_buffer;     //The actual image we are changing pixel in before we call the function to show it on screen; 
+	t_assets		assets;
 	//Tfreydie variables Im adding here for convenience.
 	double			rayDirX;  //w->vectors.xPos + w->vectors.xCam * cameraX;
 	double			rayDirY;  //w->vectors.yPos + w->vectors.yCam * cameraX;
@@ -141,6 +143,7 @@ typedef struct t_w_info
 	int					line_height;
 	int					draw_start;
 	int					draw_end;
+	t_vector		vectors;
 
 	bool			anim_playing;
 	int				anim_frames;
