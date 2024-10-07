@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 19:44:59 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/02 19:58:52 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:58:33 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	update_animation_info(t_info *w, char type);
 void	check_doors(t_info *w)
 {
 	dda_innit(w, DEFAULT_LENGTH / 2);
-	movetoFirstXY(w, w->rayDirX, w->rayDirY);
+	movetoFirstXY(w, w->ray_dir_x, w->ray_dir_y);
 	check_mid_ray(w);
 	door_logic(w);
 }
@@ -66,15 +66,15 @@ static void	check_mid_ray(t_info *w)
 {
 	while (42)
 	{
-		if (w->vectors.nextDistX < w->vectors.nextDistY)
+		if (w->vectors.next_dist_x < w->vectors.next_dist_y)
 		{
-			w->vectors.nextDistX += w->vectors.deltaX;
-			w->current_map_x += w->vectors.stepX;
+			w->vectors.next_dist_x += w->vectors.delta_x;
+			w->current_map_x += w->vectors.step_x;
 		}
 		else
 		{
-			w->vectors.nextDistY += w->vectors.deltaY;
-			w->current_map_y += w->vectors.stepY;
+			w->vectors.next_dist_y += w->vectors.delta_y;
+			w->current_map_y += w->vectors.step_y;
 		}
 		if (w->actual_map[w->current_map_y][w->current_map_x] == '1')
 			break ;

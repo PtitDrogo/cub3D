@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:29:02 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 12:29:29 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:55:00 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ static int	char_process(const char *line, t_parse *data)
 	if (ft_strlen(line) < 3)
 		return (update_status(ERR_TOO_FEW_CHARS, &data->status), 1);
 	if (line[0] == 'N' && is_correct_code(line, "NO"))
-		path_check(line, data->NO_texts, &data->status);
+		path_check(line, data->no_texts, &data->status);
 	else if (line[0] == 'S' && is_correct_code(line, "SO"))
-		path_check(line, data->SO_texts, &data->status);
+		path_check(line, data->so_texts, &data->status);
 	else if (line[0] == 'W' && is_correct_code(line, "WE"))
-		path_check(line, data->WE_texts, &data->status);
+		path_check(line, data->we_texts, &data->status);
 	else if (line[0] == 'E' && is_correct_code(line, "EA"))
-		path_check(line, data->EA_texts, &data->status);
+		path_check(line, data->ea_texts, &data->status);
 	else if (line[0] == 'C' && is_correct_code(line, "C"))
 		rgb_parsing(line, &data->ceiling_colors, &data->status);
 	else if (line[0] == 'F' && is_correct_code(line, "F"))
@@ -94,7 +94,7 @@ static void	path_check(const char *line, char *data_buffer, int *status)
 
 static bool	is_premap_data_ready(const t_parse *m)
 {
-	if (!*m->NO_texts || !*m->NO_texts || !*m->WE_texts || !*m->EA_texts)
+	if (!*m->no_texts || !*m->no_texts || !*m->we_texts || !*m->ea_texts)
 		return (false);
 	if (m->floor_colors.is_defined == false)
 		return (false);

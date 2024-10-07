@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 19:59:41 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/02 19:59:44 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:00:14 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	print_error_msg(int err_code)
 		ft_printf2("Value defined twice !\n");
 	else if (err_code == ERR_RGB_WRONG_FORMAT)
 		ft_printf2("Wrong RGB format !\n");
-	else if (err_code == ERR_RGB_NaN)
+	else if (err_code == ERR_RGB_NAN)
 		ft_printf2("RGB is not a number !\n");
 	else if (err_code == ERR_MAP_TOO_SOON)
 		ft_printf2("Game Map starting before all values are set !\n");

@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:27:36 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 12:30:34 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:55:00 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ bool	is_xpm_file(const char *s)
 
 void	xpm_check(t_parse *data)
 {
-	if (is_xpm_file(data->NO_texts) == false)
+	if (is_xpm_file(data->no_texts) == false)
 		data->status = ERR_NOT_XPM_FILE;
-	if (is_xpm_file(data->SO_texts) == false)
+	if (is_xpm_file(data->so_texts) == false)
 		data->status = ERR_NOT_XPM_FILE;
-	if (is_xpm_file(data->WE_texts) == false)
+	if (is_xpm_file(data->we_texts) == false)
 		data->status = ERR_NOT_XPM_FILE;
-	if (is_xpm_file(data->EA_texts) == false)
+	if (is_xpm_file(data->ea_texts) == false)
 		data->status = ERR_NOT_XPM_FILE;
 	return ;
 }
