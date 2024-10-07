@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 19:33:28 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/02 19:38:41 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 12:55:39 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,27 @@ void	draw_on_screen(t_image *buffer, t_image	*sprite)
 void	animate_poof(t_info *w)
 {
 	if (w->anim_frames >= 10 && w->anim_frames <= 11)
-		draw_on_screen(&w->img_buffer, &w->assets.cloud1);
+		draw_on_screen(&w->img_buffer, &w->assets.c1);
 	else if (w->anim_frames >= 9 && w->anim_frames < 10)
-		draw_on_screen(&w->img_buffer, &w->assets.cloud2);
+		draw_on_screen(&w->img_buffer, &w->assets.c2);
 	else if (w->anim_frames >= 8 && w->anim_frames < 9)
-		draw_on_screen(&w->img_buffer, &w->assets.cloud3);
+		draw_on_screen(&w->img_buffer, &w->assets.c3);
 	else if (w->anim_frames >= 7 && w->anim_frames < 8)
-		draw_on_screen(&w->img_buffer, &w->assets.cloud4);
+		draw_on_screen(&w->img_buffer, &w->assets.c4);
 	else if (w->anim_frames >= 6 && w->anim_frames < 7)
-		draw_on_screen(&w->img_buffer, &w->assets.cloud5);
+		draw_on_screen(&w->img_buffer, &w->assets.c5);
 	else if (w->anim_frames >= 5 && w->anim_frames < 6)
-		draw_on_screen(&w->img_buffer, &w->assets.cloud6);
+		draw_on_screen(&w->img_buffer, &w->assets.c6);
 	else if (w->anim_frames >= 4 && w->anim_frames < 5)
-		draw_on_screen(&w->img_buffer, &w->assets.cloud6);
+		draw_on_screen(&w->img_buffer, &w->assets.c6);
 	else if (w->anim_frames >= 3 && w->anim_frames < 4)
-		draw_on_screen(&w->img_buffer, &w->assets.cloud7);
+		draw_on_screen(&w->img_buffer, &w->assets.c7);
 	else if (w->anim_frames >= 2 && w->anim_frames < 3)
-		draw_on_screen(&w->img_buffer, &w->assets.cloud8);
+		draw_on_screen(&w->img_buffer, &w->assets.c8);
 	else if (w->anim_frames >= 1 && w->anim_frames < 2)
-		draw_on_screen(&w->img_buffer, &w->assets.cloud9);
+		draw_on_screen(&w->img_buffer, &w->assets.c9);
 	else if (w->anim_frames >= 0 && w->anim_frames < 1)
-		draw_on_screen(&w->img_buffer, &w->assets.cloud10);
+		draw_on_screen(&w->img_buffer, &w->assets.c10);
 	w->anim_frames--;
 	if (w->anim_frames == 0)
 		w->anim_playing = false;
@@ -71,27 +71,27 @@ void	animate_poof(t_info *w)
 void	animate_boom(t_info *w)
 {
 	if (w->anim_frames >= 10 && w->anim_frames <= 11)
-		draw_on_screen(&w->img_buffer, &w->assets.boom1);
+		draw_on_screen(&w->img_buffer, &w->assets.b1);
 	else if (w->anim_frames >= 9 && w->anim_frames < 10)
-		draw_on_screen(&w->img_buffer, &w->assets.boom2);
+		draw_on_screen(&w->img_buffer, &w->assets.b2);
 	else if (w->anim_frames >= 8 && w->anim_frames < 9)
-		draw_on_screen(&w->img_buffer, &w->assets.boom3);
+		draw_on_screen(&w->img_buffer, &w->assets.b3);
 	else if (w->anim_frames >= 7 && w->anim_frames < 8)
-		draw_on_screen(&w->img_buffer, &w->assets.boom4);
+		draw_on_screen(&w->img_buffer, &w->assets.b4);
 	else if (w->anim_frames >= 6 && w->anim_frames < 7)
-		draw_on_screen(&w->img_buffer, &w->assets.boom5);
+		draw_on_screen(&w->img_buffer, &w->assets.b5);
 	else if (w->anim_frames >= 5 && w->anim_frames < 6)
-		draw_on_screen(&w->img_buffer, &w->assets.boom6);
+		draw_on_screen(&w->img_buffer, &w->assets.b6);
 	else if (w->anim_frames >= 4 && w->anim_frames < 5)
-		draw_on_screen(&w->img_buffer, &w->assets.boom6);
+		draw_on_screen(&w->img_buffer, &w->assets.b6);
 	else if (w->anim_frames >= 3 && w->anim_frames < 4)
-		draw_on_screen(&w->img_buffer, &w->assets.boom7);
+		draw_on_screen(&w->img_buffer, &w->assets.b7);
 	else if (w->anim_frames >= 2 && w->anim_frames < 3)
-		draw_on_screen(&w->img_buffer, &w->assets.boom8);
+		draw_on_screen(&w->img_buffer, &w->assets.b8);
 	else if (w->anim_frames >= 1 && w->anim_frames < 2)
-		draw_on_screen(&w->img_buffer, &w->assets.boom9);
+		draw_on_screen(&w->img_buffer, &w->assets.b9);
 	else if (w->anim_frames >= 0 && w->anim_frames < 1)
-		draw_on_screen(&w->img_buffer, &w->assets.boom10);
+		draw_on_screen(&w->img_buffer, &w->assets.b10);
 	w->anim_frames--;
 	if (w->anim_frames == 0)
 		w->anim_playing = false;

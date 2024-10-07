@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 19:05:03 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/01 19:05:24 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:00:32 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	display_minimap(t_info *w)
 {
 	int		x;
 	int		y;
-	float	pixel_x;
-	float	pixel_y;
+	int		pixel_x;
+	int		pixel_y;
 
 	pixel_x = DEFAULT_LENGTH / w->map_length * 0.20;
 	pixel_y = DEFAULT_HEIGHT / w->map_height * 0.20;

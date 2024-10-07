@@ -6,13 +6,13 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:29:48 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/02 20:29:58 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 12:16:20 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	release_countermeasures(int id_key, t_info *w)
+int	release_countermeasure(int id_key, t_info *w)
 {
 	if (id_key == XK_w && w->p_inputs.going_up == true)
 		w->p_inputs.going_up = false;
