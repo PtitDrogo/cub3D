@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:50:30 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 13:58:50 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:38:58 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ static void	apply_texture(t_info *w)
 		touched_wall = (w->distwall * w->ray_dir_x) + w->x_pl;
 	touched_wall -= floor(touched_wall);
 	w->texture_x = (int)(touched_wall * (double)w->assets.n_wall.width);
-	if ((w->side == 0 && w->ray_dir_x < 0) || (w->side == 1 && w->ray_dir_y > 0))
+	if ((w->side == 0 && w->ray_dir_x < 0)
+		|| (w->side == 1 && w->ray_dir_y > 0))
 		w->texture_x = w->assets.n_wall.width - w->texture_x - 1;
 }
 

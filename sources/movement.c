@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:26:12 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 13:56:02 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:38:12 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,12 @@ void	rotate_camera(t_info *w, int coef)
 
 	cam = coef * CAM_SPEED;
 	save_dir_x = w->vectors.x_pos;
-	w->vectors.x_pos = w->vectors.x_pos * cos(cam) - w->vectors.y_pos * sin(cam);
+	w->vectors.x_pos = w->vectors.x_pos * cos(cam)
+		- w->vectors.y_pos * sin(cam);
 	w->vectors.y_pos = save_dir_x * sin(cam) + w->vectors.y_pos * cos(cam);
 	save_plane_x = w->vectors.x_cam;
-	w->vectors.x_cam = w->vectors.x_cam * cos(cam) - w->vectors.y_cam * sin(cam);
+	w->vectors.x_cam = w->vectors.x_cam * cos(cam)
+		- w->vectors.y_cam * sin(cam);
 	w->vectors.y_cam = save_plane_x * sin(cam) + w->vectors.y_cam * cos(cam);
 }
 
