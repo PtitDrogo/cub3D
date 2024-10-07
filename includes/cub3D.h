@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:57:08 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 14:36:54 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:48:39 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define MAX_HEIGHT 2100
 # define MAX_LENGTH 3905
+# define MAX_HEIGHT 2100
 # define MIN_LENGTH 1440
 # define MIN_HEIGHT 810
 # define DEFAULT_LENGTH 1440

@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:07:26 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/02 20:15:38 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:47:46 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	parse_init(t_info *w, t_parse *data,
 	if (argc != 2)
 		printf_exit("Error\nInvalid number of arguments\n");
 	if (DEFAULT_LENGTH < MIN_LENGTH || DEFAULT_HEIGHT < MIN_HEIGHT
-		|| DEFAULT_LENGTH > MAX_HEIGHT || DEFAULT_HEIGHT > MAX_HEIGHT)
+		|| DEFAULT_LENGTH > MAX_LENGTH || DEFAULT_HEIGHT > MAX_HEIGHT)
 	{
 		printf_exit("Error\nInvalid screen size\n");
 	}
