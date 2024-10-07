@@ -155,7 +155,7 @@ typedef struct t_w_info
 	double			rayDirX;  //w->vectors.xPos + w->vectors.xCam * cameraX;
 	double			rayDirY;  //w->vectors.yPos + w->vectors.yCam * cameraX;
 	double			cameraX;  //2 * i / (double)DEFAULT_LENGTH - 1;
-	double				distWall; // = applyDDA(w, 0);
+	double				distWall; // = apply_dda(w, 0);
 	int					texture_x; //position of the texture I think ?
 	int					line_height;
 	int					draw_start;
@@ -202,12 +202,15 @@ void	xpm_check(t_parse *data);
 //---------------------Map-Parsing---------------------//
 bool	is_map_valid(t_info *w, char **m_map);
 void	print_map(char **map);	//Only for debug, to delete after
+void	expand_map(char **map, int max_len);
 bool	is_map_char(char c);
 bool	is_direction_c(char c);
 void	find_player(t_info *w); //Set player x | y
+int		invalid_player(char **m_map);
 void	print_map_current(char **map, int x, int y);
 void	get_map_height(char **map, int *height, int *length);
 int		load_sprites(t_info *w, t_parse *d, int err);
+bool	contains_invalid_char(char *str, int *cpt);
 
 //---------------------Render---------------------//
 void	pixel_fill(t_image *img, int x, int y, int color);
@@ -221,9 +224,9 @@ void	load_all_address_sprites(t_info *w);;
 
 //---------------------DDA---------------------//
 void		dda_innit(t_info *w, int i);
-double		applyDDA(t_info *w, double	wallDist);
-void		movetoFirstXY(t_info *w, double rayX, double rayY);
-void		getDrawLimits(t_info *w);
+double		apply_dda(t_info *w, double	wallDist);
+void		goto_first_xy(t_info *w, double rayX, double rayY);
+void		get_drawlimits(t_info *w);
 void		move_player(t_info *w);
 
 //---------------------Keys---------------------//

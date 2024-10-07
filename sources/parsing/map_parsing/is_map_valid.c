@@ -1,70 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   is_map_valid.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lchapard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/07 13:48:47 by lchapard          #+#    #+#             */
+/*   Updated: 2024/10/07 13:48:48 by lchapard         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 bool	is_map_over(char **map, int index_past_line);
 bool	is_there_invalid_empty_line(char **map);
-
-bool	contains_invalid_char(char *str, int *cpt)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (is_map_char(str[i]))
-		{
-			if (is_direction_c(str[i]))
-				(*cpt) += 1;
-			i++;
-		}
-		else
-		{
-			return (true);
-		}
-	}
-	return (false);
-}
-
-int	invalid_player(char **m_map)
-{
-	int	i;
-	int	cpt;
-
-	i = 0;
-	cpt = 0;
-	while (m_map[i])
-	{
-		if (contains_invalid_char(m_map[i], &cpt))
-			return (ERR_INVALID_CHAR_MAP);
-		if (cpt > 1)
-			return (ERR_TOO_MANY_PLYR);
-		i++;
-	}
-	if (cpt == 0)
-		return (ERR_ZERO_PLAYER);
-	return (0);
-}
-
-void	get_map_height(char **map, int *height, int *length)
-{
-	int	i;
-	int	longest;
-	int	current;
-
-	i = 0;
-	longest = 0;
-	while (map[i])
-		i++;
-	*height = i;
-	i = 0;
-	while (map[i])
-	{
-		current = ft_strlen(map[i]);
-		if (current > longest)
-			longest = current;
-		i++;
-	}
-	*length = longest;
-}
 
 int	check_outer_line(char **map, int height, int length)
 {
@@ -119,7 +68,8 @@ int	check_inner_map(char **map, int height, int length)
 		x = 1;
 		while (x < length - 1)
 		{
-			if (map[y][x] == '0' || is_direction_c(map[y][x]) || map[y][x] == 'D')
+			if (map[y][x] == '0' || is_direction_c(map[y][x])
+					|| map[y][x] == 'D')
 			{
 				if (invalid_neighbour(map, x, y))
 					return (1);
@@ -134,42 +84,14 @@ int	check_inner_map(char **map, int height, int length)
 int	unclosed_map(char **map, int height, int length)
 {
 	if (check_outer_line(map, height, length))
-	{	
+	{
 		return (ERR_INVALID_CHAR_MAP);
 	}
 	if (check_inner_map(map, height, length))
-	{	
+	{
 		return (ERR_INVALID_CHAR_MAP);
 	}
 	return (0);
-}
-
-char	*add_spaces_to_str(char *line, int max_len, int len)
-{
-	char	*new_line;
-
-	new_line = ft_calloc(sizeof(char), max_len + 1);
-	if (!new_line)
-		return (NULL);
-	ft_memset(new_line, ' ', max_len);
-	ft_memcpy(new_line, line, len);
-	free(line);
-	return (new_line);
-}
-
-void	expand_map(char **map, int max_len)
-{
-	int		len;
-	int		i;
-
-	i = 0;
-	while (map[i])
-	{
-		len = ft_strlen(map[i]);
-		if (len < max_len)
-			map[i] = add_spaces_to_str(map[i], max_len, len);
-		i++;
-	}
 }
 
 bool	is_map_valid(t_info *w, char **m_map)
@@ -181,7 +103,7 @@ bool	is_map_valid(t_info *w, char **m_map)
 	if (is_there_invalid_empty_line(m_map) == true)
 	{
 		ft_printf2("Error\nEmpty line in map\n");
-		return(false);
+		return (false);
 	}
 	get_map_height(m_map, &m_height, &m_length);
 	w->map_height = m_height;
@@ -194,45 +116,6 @@ bool	is_map_valid(t_info *w, char **m_map)
 	{
 		print_error_msg(err_code);
 		return (false);
-	}
-	return (true);
-}
-
-bool	is_there_invalid_empty_line(char **map)
-{
-	int i;
-	int j;
-
-	j = 0;
-	while (map[j])
-	{
-		i = 0;
-		while (is_white_space(map[j][i]))
-			i++;
-		if (map[j][i] == '\0')
-		{	
-			if (is_map_over(map, j + 1) == false)
-				return (true);
-		}
-		j++;
-	}
-	return (false);
-}
-
-bool	is_map_over(char **map, int index_past_line)
-{
-	int i;
-
-	i = 0;	
-	while (map[index_past_line])
-	{
-		while (map[index_past_line][i])
-		{
-			if (is_white_space(map[index_past_line][i]) == false)
-				return(false);
-			i++;
-		}
-		index_past_line++;
 	}
 	return (true);
 }

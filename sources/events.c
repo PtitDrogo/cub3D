@@ -15,10 +15,10 @@ int	no_events(t_info *w)
 	while (i < DEFAULT_LENGTH)
 	{
 		dda_innit(w, i);
-		movetoFirstXY(w, w->rayDirX, w->rayDirY);
-		w->distWall = applyDDA(w, 0);
+		goto_first_xy(w, w->rayDirX, w->rayDirY);
+		w->distWall = apply_dda(w, 0);
 		apply_texture(w);
-		getDrawLimits(w);
+		get_drawlimits(w);
 		draw_line(w, i);
 		i++;
 	}

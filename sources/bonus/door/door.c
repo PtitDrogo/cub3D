@@ -19,7 +19,7 @@ static void	update_animation_info(t_info *w, char type);
 void	check_doors(t_info *w)
 {
 	dda_innit(w, DEFAULT_LENGTH / 2);
-	movetoFirstXY(w, w->rayDirX, w->rayDirY);
+	goto_first_xy(w, w->rayDirX, w->rayDirY);
 	check_mid_ray(w);
 	door_logic(w);
 }
