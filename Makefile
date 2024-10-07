@@ -25,7 +25,8 @@ SRCS =		$(SRCS_DIR)/parsing/get_map.c \
 			$(SRCS_DIR)/set_elements.c \
 			$(SRCS_DIR)/raytrace.c \
 			$(SRCS_DIR)/sprites.c \
-			$(SRCS_DIR)/innits/main_innit.c \
+			$(SRCS_DIR)/init/main_init.c \
+			$(SRCS_DIR)/init/init_utils.c \
 			$(SRCS_DIR)/Errors/errors.c \
 			$(SRCS_DIR)/render/pre_render.c \
 			$(SRCS_DIR)/bonus/mouse_bonus/mouse_move.c \

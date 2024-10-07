@@ -1,11 +1,13 @@
 #include "cub3D.h"
 
 static void		path_check(const char *line, char *data_buffer, int *status);
-static int		char_process(const char *line, t_parse_data *data);
+static int		char_process(const char *line, t_parse *data);
 static bool		is_correct_code(const char *line, const char *code);
-static bool		is_premap_data_ready(const t_parse_data *m);
+static bool		is_premap_data_ready(const t_parse *m);
+static bool		is_xpm_file(const char *s);
+static void		xpm_check(t_parse *data);
 
-void	values_parser(char **file, t_parse_data *data)
+void	values_parser(char **file, t_parse *data)
 {
 	size_t	i;
 	size_t	line;
@@ -21,7 +23,9 @@ void	values_parser(char **file, t_parse_data *data)
 			i++;
 		if (char_process(&file[line][i], data) == 0)
 		{
-			data->map_start = line;
+			xpm_check(data);
+			if (data->status == 0)
+				data->map_start = line;
 			return ;
 		}
 		line++;
@@ -29,7 +33,20 @@ void	values_parser(char **file, t_parse_data *data)
 	return ;
 }
 
-static int	char_process(const char *line, t_parse_data *data)
+static void xpm_check(t_parse *data)
+{
+	if (is_xpm_file(data->NO_texts) == false)
+		data->status = ERR_NOT_XPM_FILE;
+	if (is_xpm_file(data->SO_texts) == false)
+		data->status = ERR_NOT_XPM_FILE;
+	if (is_xpm_file(data->WE_texts) == false)
+		data->status = ERR_NOT_XPM_FILE;
+	if (is_xpm_file(data->EA_texts) == false)
+		data->status = ERR_NOT_XPM_FILE;
+	return ;
+}
+
+static int	char_process(const char *line, t_parse *data)
 {
 	if (line[0] == '\0')
 		return (1);
@@ -43,8 +60,6 @@ static int	char_process(const char *line, t_parse_data *data)
 		path_check(line, data->WE_texts, &data->status);
 	else if (line[0] == 'E' && is_correct_code(line, "EA"))
 		path_check(line, data->EA_texts, &data->status);
-	else if (line[0] == 'D' && is_correct_code(line, "DO"))
-		path_check(line, data->DO_texts, &data->status);
 	else if (line[0] == 'C' && is_correct_code(line, "C"))
 		rgb_parsing(line, &data->ceiling_colors, &data->status);
 	else if (line[0] == 'F' && is_correct_code(line, "F"))
@@ -80,7 +95,7 @@ static void	path_check(const char *line, char *data_buffer, int *status)
 		return (update_status(ERR_TOO_MANY_PATHS, status));
 }
 
-static bool	is_premap_data_ready(const t_parse_data *m)
+static bool	is_premap_data_ready(const t_parse *m)
 {
 	if (!*m->NO_texts || !*m->NO_texts || !*m->WE_texts || !*m->EA_texts)
 		return (false);
@@ -103,4 +118,24 @@ static bool	is_correct_code(const char *line, const char *code)
 		return (is_white_space(line[i]));
 	}
 	return (false);
+}
+
+static bool is_xpm_file(const char *s)
+{
+	int	i;
+
+	i = 0;
+	if (ft_strlen(s) < 5)
+	{	
+		return (false);
+	}
+	while (s[i])
+		i++;
+	i--;
+	if (s[i] != 'm' || s[i - 1] != 'p' || s[i - 2] != 'x' || s[i - 3] != '.')
+	{	
+		printf("returning not xpm\n");
+		return (false);
+	}
+	return (true);
 }

@@ -11,8 +11,10 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define MAX_HEIGHT 2100 // bruteforce, recuperable ailleurs
-# define MAX_LENGTH 3905 // taille max pour ecran mac
+# define MAX_HEIGHT 2100
+# define MAX_LENGTH 3905
+# define MIN_LENGTH 1440
+# define MIN_HEIGHT 810
 # define DEFAULT_LENGTH 1440
 # define DEFAULT_HEIGHT 810
 # define SPRITE_HEIGHT 64
@@ -38,6 +40,7 @@
 # define ERR_TOO_MANY_PLYR 708
 # define ERR_ZERO_PLAYER 709
 # define ERR_INVALID_CHAR_MAP 710
+# define ERR_NOT_XPM_FILE 711
 
 
 typedef struct s_rgb 
@@ -63,12 +66,11 @@ typedef struct s_parse_data
 	char			SO_texts[PATH_MAX];
 	char			WE_texts[PATH_MAX];
 	char			EA_texts[PATH_MAX];
-	char			DO_texts[PATH_MAX];
 	t_rgb 			floor_colors;
 	t_rgb 			ceiling_colors;
 	int				status;
 	int				map_start;
-} t_parse_data;
+} t_parse;
 
 typedef struct t_my_image
 {
@@ -172,15 +174,22 @@ int		no_events(t_info *w);
 int		deal_key(int id_key, t_info *w);
 int		free_window(t_info *w);
 int		load_window(t_info *w);
-void	print_error_msg(int err_code);
 
+
+//---------------------Errors---------------------//
+void	print_error_msg(int err_code);
+void	perror_exit(const char *err_msg);
+void	printf_exit(const char *err_msg);
 
 
 //---------------------Innit---------------------//
-void	init_game(t_info *w, t_parse_data *data, int argc, char const *argv[]);
+void	init_game(t_info *w, t_parse *data, int argc, char const *argv[]);
+void	transfer_parsing_data(t_info *w, t_parse *data);
+int		count_lines(int cub_fd);
+void	cub_check(const char *s);
 
 //---------------------Parsing---------------------//
-void	values_parser(char **file, t_parse_data *data);
+void	values_parser(char **file, t_parse *data);
 bool	is_white_space(char c);
 size_t	strlen_until_whitespace(const char *s);
 void    update_status(int err_value, int *status);
@@ -196,7 +205,7 @@ bool	is_direction_c(char c);
 void	find_player(t_info *w); //Set player x | y
 void	print_map_current(char **map, int x, int y);
 void	get_map_height(char **map, int *height, int *length);
-int		load_sprites(t_info *w, t_parse_data *d, int err);
+int		load_sprites(t_info *w, t_parse *d, int err);
 
 //---------------------Render---------------------//
 void	pixel_fill(t_image *img, int x, int y, int color);
@@ -232,4 +241,5 @@ void	play_animation(t_info *w);
 
 //door
 void	check_doors(t_info *w);
+
 #endif
