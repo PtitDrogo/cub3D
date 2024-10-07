@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   windows_op.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/07 13:20:15 by tfreydie          #+#    #+#             */
+/*   Updated: 2024/10/07 13:21:20 by tfreydie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 static void	free_mlx_map(t_info *w);
@@ -12,7 +24,7 @@ int	load_window(t_info *w)
 		exit(0);
 	}
 	w->id_wind = mlx_new_window(w->id_mlx,
-			DEFAULT_LENGTH, DEFAULT_HEIGHT , "My beautiful cube...");
+			DEFAULT_LENGTH, DEFAULT_HEIGHT, "My beautiful cube");
 	if (w->id_wind == NULL)
 	{
 		free_mlx_map(w);
@@ -22,17 +34,16 @@ int	load_window(t_info *w)
 	return (0);
 }
 
-
 int	free_window(t_info *w)
 {
-	int i;
-	int end;
-	int err;
-	t_image *ptr;
+	int		i;
+	int		end;
+	int		err;
+	t_image	*ptr;
 
 	err = 0;
 	ptr = (t_image *)&w->assets;
-	end = sizeof(t_assets) / sizeof(t_image); //very big brain
+	end = sizeof(t_assets) / sizeof(t_image);
 	i = 0;
 	while (i < end)
 	{
