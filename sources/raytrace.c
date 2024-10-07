@@ -71,7 +71,7 @@ double	apply_dda(t_info *w, double wall_dist)
 			w->current_map_y += w->vectors.stepY;
 			w->side = 1;
 		}
-		if (is_special_block == true)
+		if (is_special_block(w) == true)
 			break ;
 	}
 	if (w->side == 0)

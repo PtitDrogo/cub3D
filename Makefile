@@ -22,6 +22,7 @@ SRCS =		$(SRCS_DIR)/main.c \
 			$(SRCS_DIR)/parsing/parsing_utils.c \
 			$(SRCS_DIR)/parsing/values_parsing/rgb_parsing.c \
 			$(SRCS_DIR)/parsing/map_parsing/is_map_valid.c \
+			$(SRCS_DIR)/parsing/map_file_utils.c \
 			$(SRCS_DIR)/parsing/map_parsing/map_parsing_utils.c \
 			$(SRCS_DIR)/set_elements.c \
 			$(SRCS_DIR)/raytrace.c \

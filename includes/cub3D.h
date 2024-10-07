@@ -134,6 +134,7 @@ typedef struct t_w_info
 	void			*id_wind;		//Window ID
 	char			**map_file;		//Map[][] with NO, SE, RGB...
 	char			**actual_map;	//Map[][] only
+	char			*map_path;		//to know which door to pick
 	int				side;			//side hit by ray
 	int				map_height;		//Number of rows
 	int				map_length;		//Size of longest line
@@ -220,6 +221,7 @@ void	draw_floor_sky(int x, int y, t_info *data);
 int	load_bonus_boom(t_info *w);
 int	load_bonus_cloud(t_info *w);
 int	load_sprites(t_info *w, t_parse *d, int err);
+void	*pick_door_sprite(t_info *w);
 void	load_all_address_sprites(t_info *w);;
 
 //---------------------DDA---------------------//

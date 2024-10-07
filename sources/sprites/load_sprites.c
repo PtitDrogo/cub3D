@@ -81,9 +81,7 @@ int	load_sprites(t_info *w, t_parse *d, int err)
 			d->EA_texts, &w->assets.e_wall.height, &w->assets.e_wall.width);
 	w->assets.w_wall.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
 			d->WE_texts, &w->assets.w_wall.height, &w->assets.w_wall.width);
-	w->assets.m_door.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
-			"./sprites/cdoor21.xpm", &w->assets.m_door.height,
-			&w->assets.m_door.width);
+	w->assets.m_door.img_ptr = pick_door_sprite(w);
 	err = load_bonus_boom(w);
 	err += load_bonus_cloud(w);
 	if (w->assets.n_wall.img_ptr == NULL || w->assets.s_wall.img_ptr == NULL

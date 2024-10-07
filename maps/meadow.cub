@@ -1,15 +1,9 @@
-WE ./sprites/grass3.xpm      
-
-EA    ./sprites/trees.xpm
-
-NO          ./sprites/grass3.xpm
-
+WE ./sprites/grass3.xpm
+EA ./sprites/trees.xpm
+NO ./sprites/grass3.xpm
 SO ./sprites/trees.xpm    
 
-DO          ./sprites/cdoor21.xpm
-
-F       51, 26, 0    
-
+F   51, 26, 0
 C   0, 153, 255
 
 
