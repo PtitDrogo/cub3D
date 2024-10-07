@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   windows_op.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/07 13:20:15 by tfreydie          #+#    #+#             */
+/*   Updated: 2024/10/07 13:21:20 by tfreydie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 static void	free_mlx_map(t_info *w);
@@ -7,44 +19,38 @@ int	load_window(t_info *w)
 	w->id_mlx = mlx_init();
 	if (w->id_mlx == NULL)
 	{
-		ft_printf(" Error \n/!\\ mlx init failed!\n");
+		ft_printf2("Error\n/!\\ mlx init failed!\n");
 		ft_free_array((void *)w->map_file);
 		exit(0);
 	}
 	w->id_wind = mlx_new_window(w->id_mlx,
-			DEFAULT_LENGTH, DEFAULT_HEIGHT , "My beautiful cube...");
+			DEFAULT_LENGTH, DEFAULT_HEIGHT, "My beautiful cube");
 	if (w->id_wind == NULL)
 	{
 		free_mlx_map(w);
-		ft_printf(" Error \n/!\\ couldn't open window!\n");
+		ft_printf2("Error\n/!\\ couldn't open window!\n");
 		exit(0);
 	}
 	return (0);
 }
 
-
 int	free_window(t_info *w)
 {
-	if (w->assets.m_door.img_ptr != NULL)
-		mlx_destroy_image(w->id_mlx, w->assets.m_door.img_ptr);
-	if (w->assets.n_wall.img_ptr != NULL)
-		mlx_destroy_image(w->id_mlx, w->assets.n_wall.img_ptr);
-	if (w->assets.s_wall.img_ptr != NULL)
-		mlx_destroy_image(w->id_mlx, w->assets.s_wall.img_ptr);
-	if (w->assets.e_wall.img_ptr != NULL)
-		mlx_destroy_image(w->id_mlx, w->assets.e_wall.img_ptr);
-	if (w->assets.w_wall.img_ptr != NULL)
-		mlx_destroy_image(w->id_mlx, w->assets.w_wall.img_ptr);
-	if (w->assets.boom1.img_ptr != NULL)
-		mlx_destroy_image(w->id_mlx, w->assets.boom1.img_ptr);
-	if (w->assets.boom2.img_ptr != NULL)
-		mlx_destroy_image(w->id_mlx, w->assets.boom2.img_ptr);
-	if (w->assets.boom3.img_ptr != NULL)
-		mlx_destroy_image(w->id_mlx, w->assets.boom3.img_ptr);
-	if (w->assets.boom4.img_ptr != NULL)
-		mlx_destroy_image(w->id_mlx, w->assets.boom4.img_ptr);
-	if (w->assets.boom5.img_ptr != NULL)
-		mlx_destroy_image(w->id_mlx, w->assets.boom5.img_ptr);
+	int		i;
+	int		end;
+	int		err;
+	t_image	*ptr;
+
+	err = 0;
+	ptr = (t_image *)&w->assets;
+	end = sizeof(t_assets) / sizeof(t_image);
+	i = 0;
+	while (i < end)
+	{
+		if (ptr[i].img_ptr != NULL)
+			mlx_destroy_image(w->id_mlx, ptr[i].img_ptr);
+		i++;
+	}
 	if (w->img_buffer.img_ptr != NULL)
 		mlx_destroy_image(w->id_mlx, w->img_buffer.img_ptr);
 	mlx_destroy_window(w->id_mlx, w->id_wind);

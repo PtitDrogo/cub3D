@@ -1,6 +1,27 @@
-# include "cub3D.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_elements.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/07 13:13:03 by tfreydie          #+#    #+#             */
+/*   Updated: 2024/10/07 13:16:38 by tfreydie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	setMapVectors(t_vector *vec, char c)
+#include "cub3D.h"
+
+static void	set_vertical(t_vector *vec, char c);
+static void	set_horizontal(t_vector *vec, char c);
+
+void	set_map_vectors(t_vector *vec, char c)
+{
+	set_vertical(vec, c);
+	set_horizontal(vec, c);
+}
+
+static void	set_vertical(t_vector *vec, char c)
 {
 	if (c == 'N')
 	{
@@ -16,6 +37,11 @@ void	setMapVectors(t_vector *vec, char c)
 		vec->xCam = -0.66;
 		vec->yCam = 0.0;
 	}
+	return ;
+}
+
+static void	set_horizontal(t_vector *vec, char c)
+{
 	if (c == 'W')
 	{
 		vec->xPos = -1.0;
@@ -30,6 +56,7 @@ void	setMapVectors(t_vector *vec, char c)
 		vec->xCam = 0.0;
 		vec->yCam = 0.66;
 	}
+	return ;
 }
 
 void	find_player(t_info *w)
@@ -46,9 +73,9 @@ void	find_player(t_info *w)
 		{
 			if (is_direction_c(w->actual_map[y][x]))
 			{
-				w->x_pl = x + 0.5; //adding an offset so its not perfectly ligned up
-				w->y_pl = y + 0.5; //adding an offset so its not perfectly ligned up
-				setMapVectors(&w->vectors, w->actual_map[y][x]);
+				w->x_pl = x + 0.5;
+				w->y_pl = y + 0.5;
+				set_map_vectors(&w->vectors, w->actual_map[y][x]);
 				w->actual_map[y][x] = '0';
 				return ;
 			}

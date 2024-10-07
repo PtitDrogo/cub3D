@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   values_parser.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/07 12:29:02 by tfreydie          #+#    #+#             */
+/*   Updated: 2024/10/07 12:29:29 by tfreydie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 static void		path_check(const char *line, char *data_buffer, int *status);
-static int		char_process(const char *line, t_parse_data *data);
+static int		char_process(const char *line, t_parse *data);
 static bool		is_correct_code(const char *line, const char *code);
-static bool		is_premap_data_ready(const t_parse_data *m);
+static bool		is_premap_data_ready(const t_parse *m);
 
-void	values_parser(char **file, t_parse_data *data)
+void	values_parser(char **file, t_parse *data)
 {
 	size_t	i;
 	size_t	line;
@@ -21,7 +33,9 @@ void	values_parser(char **file, t_parse_data *data)
 			i++;
 		if (char_process(&file[line][i], data) == 0)
 		{
-			data->map_start = line;
+			xpm_check(data);
+			if (data->status == 0)
+				data->map_start = line;
 			return ;
 		}
 		line++;
@@ -29,7 +43,7 @@ void	values_parser(char **file, t_parse_data *data)
 	return ;
 }
 
-static int	char_process(const char *line, t_parse_data *data)
+static int	char_process(const char *line, t_parse *data)
 {
 	if (line[0] == '\0')
 		return (1);
@@ -43,8 +57,6 @@ static int	char_process(const char *line, t_parse_data *data)
 		path_check(line, data->WE_texts, &data->status);
 	else if (line[0] == 'E' && is_correct_code(line, "EA"))
 		path_check(line, data->EA_texts, &data->status);
-	else if (line[0] == 'D' && is_correct_code(line, "DO"))
-		path_check(line, data->DO_texts, &data->status);
 	else if (line[0] == 'C' && is_correct_code(line, "C"))
 		rgb_parsing(line, &data->ceiling_colors, &data->status);
 	else if (line[0] == 'F' && is_correct_code(line, "F"))
@@ -80,7 +92,7 @@ static void	path_check(const char *line, char *data_buffer, int *status)
 		return (update_status(ERR_TOO_MANY_PATHS, status));
 }
 
-static bool	is_premap_data_ready(const t_parse_data *m)
+static bool	is_premap_data_ready(const t_parse *m)
 {
 	if (!*m->NO_texts || !*m->NO_texts || !*m->WE_texts || !*m->EA_texts)
 		return (false);

@@ -11,8 +11,10 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define MAX_HEIGHT 2100 // bruteforce, recuperable ailleurs
-# define MAX_LENGTH 3905 // taille max pour ecran mac
+# define MAX_HEIGHT 2100
+# define MAX_LENGTH 3905
+# define MIN_LENGTH 1440
+# define MIN_HEIGHT 810
 # define DEFAULT_LENGTH 1440
 # define DEFAULT_HEIGHT 810
 # define SPRITE_HEIGHT 64
@@ -38,6 +40,7 @@
 # define ERR_TOO_MANY_PLYR 708
 # define ERR_ZERO_PLAYER 709
 # define ERR_INVALID_CHAR_MAP 710
+# define ERR_NOT_XPM_FILE 711
 
 
 typedef struct s_rgb 
@@ -63,12 +66,11 @@ typedef struct s_parse_data
 	char			SO_texts[PATH_MAX];
 	char			WE_texts[PATH_MAX];
 	char			EA_texts[PATH_MAX];
-	char			DO_texts[PATH_MAX];
 	t_rgb 			floor_colors;
 	t_rgb 			ceiling_colors;
 	int				status;
 	int				map_start;
-} t_parse_data;
+} t_parse;
 
 typedef struct t_my_image
 {
@@ -104,26 +106,26 @@ typedef struct s_w_assets
 	t_image			s_wall;
 	t_image			e_wall;
 	t_image			w_wall;
-	t_image			boom1;
-	t_image			boom2;
-	t_image			boom3;
-	t_image			boom4;
-	t_image			boom5;
-	t_image			boom6;
-	t_image			boom7;
-	t_image			boom8;
-	t_image			boom9;
-	t_image			boom10;
-	t_image			cloud1;
-	t_image			cloud2;
-	t_image			cloud3;
-	t_image			cloud4;
-	t_image			cloud5;
-	t_image			cloud6;
-	t_image			cloud7;
-	t_image			cloud8;
-	t_image			cloud9;
-	t_image			cloud10;
+	t_image			b1;
+	t_image			b2;
+	t_image			b3;
+	t_image			b4;
+	t_image			b5;
+	t_image			b6;
+	t_image			b7;
+	t_image			b8;
+	t_image			b9;
+	t_image			b10;
+	t_image			c1;
+	t_image			c2;
+	t_image			c3;
+	t_image			c4;
+	t_image			c5;
+	t_image			c6;
+	t_image			c7;
+	t_image			c8;
+	t_image			c9;
+	t_image			c10;
 }	t_assets;
 
 typedef struct t_w_info
@@ -172,21 +174,30 @@ int		no_events(t_info *w);
 int		deal_key(int id_key, t_info *w);
 int		free_window(t_info *w);
 int		load_window(t_info *w);
-void	print_error_msg(int err_code);
 
+
+//---------------------Errors---------------------//
+void	print_error_msg(int err_code);
+void	perror_exit(const char *err_msg);
+void	printf_exit(const char *err_msg);
 
 
 //---------------------Innit---------------------//
-void	init_game(t_info *w, t_parse_data *data, int argc, char const *argv[]);
+void	init_game(t_info *w, t_parse *data, int argc, char const *argv[]);
+void	transfer_parsing_data(t_info *w, t_parse *data);
+int		count_lines(int cub_fd);
+void	cub_check(const char *s);
 
 //---------------------Parsing---------------------//
-void	values_parser(char **file, t_parse_data *data);
+void	values_parser(char **file, t_parse *data);
 bool	is_white_space(char c);
 size_t	strlen_until_whitespace(const char *s);
 void    update_status(int err_value, int *status);
 void	rgb_parsing(const char *line, t_rgb *rgb, int *status);
 bool	is_map_char(char c);
 void	skip_word(const char *line, size_t *index);
+bool	is_xpm_file(const char *s);
+void	xpm_check(t_parse *data);
 
 //---------------------Map-Parsing---------------------//
 bool	is_map_valid(t_info *w, char **m_map);
@@ -196,11 +207,17 @@ bool	is_direction_c(char c);
 void	find_player(t_info *w); //Set player x | y
 void	print_map_current(char **map, int x, int y);
 void	get_map_height(char **map, int *height, int *length);
-int		load_sprites(t_info *w, t_parse_data *d, int err);
+int		load_sprites(t_info *w, t_parse *d, int err);
 
 //---------------------Render---------------------//
 void	pixel_fill(t_image *img, int x, int y, int color);
 void	draw_floor_sky(int x, int y, t_info *data);
+
+//---------------------Sprites---------------------//
+int	load_bonus_boom(t_info *w);
+int	load_bonus_cloud(t_info *w);
+int	load_sprites(t_info *w, t_parse *d, int err);
+void	load_all_address_sprites(t_info *w);;
 
 //---------------------DDA---------------------//
 void		dda_innit(t_info *w, int i);
@@ -210,7 +227,7 @@ void		getDrawLimits(t_info *w);
 void		move_player(t_info *w);
 
 //---------------------Keys---------------------//
-int	release_countermeasures(int id_key, t_info *w);
+int	release_countermeasure(int id_key, t_info *w);
 int	deal_key(int id_key, t_info *w);
 
 
@@ -232,4 +249,5 @@ void	play_animation(t_info *w);
 
 //door
 void	check_doors(t_info *w);
+
 #endif
