@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:29:14 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 14:00:14 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:43:07 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ static int	get_rgb_value(const char buffer[4], int *status)
 		i++;
 	}
 	rgb_value = ft_atoi(buffer);
+	if (rgb_value < 0 || rgb_value > 255)
+		return (update_status(ERR_RGB_NAN, status), -1);
 	return (rgb_value);
 }
 

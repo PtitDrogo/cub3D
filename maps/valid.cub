@@ -2,14 +2,18 @@ NO ./sprites/chocbarre.xpm
 
 SO     ./sprites/chocbarre.xpm
 
-WE          ./sprites/chocbarre.xpm  
+WE      ./sprites/chocbarre.xpm  
 
-EA ./sprites/chocbarre.xpm       
+EA      ./sprites/chocbarre.xpm       
 
 F       220   ,  100 ,  0       
 
-C   225 ,30,   010  
+C       255, 255, 10
 
+
+111
+101
+111
 1111111111111111111111111    
 1000000000110000000000001    
 1011000001110000000000001    

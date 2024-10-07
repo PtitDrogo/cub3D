@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 19:59:41 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 14:00:14 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:44:05 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_error_msg(int err_code)
 	else if (err_code == ERR_RGB_WRONG_FORMAT)
 		ft_printf2("Wrong RGB format !\n");
 	else if (err_code == ERR_RGB_NAN)
-		ft_printf2("RGB is not a number !\n");
+		ft_printf2("RGB is not a valid number !\n");
 	else if (err_code == ERR_MAP_TOO_SOON)
 		ft_printf2("Game Map starting before all values are set !\n");
 	else if (err_code == ERR_TOO_FEW_CHARS)

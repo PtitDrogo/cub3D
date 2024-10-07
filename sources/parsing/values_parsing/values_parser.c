@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:29:02 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 13:55:00 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:47:07 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	char_process(const char *line, t_parse *data)
 {
 	if (line[0] == '\0')
 		return (1);
-	if (ft_strlen(line) < 3)
+	if (is_premap_data_ready(data) == false && ft_strlen(line) < 3)
 		return (update_status(ERR_TOO_FEW_CHARS, &data->status), 1);
 	if (line[0] == 'N' && is_correct_code(line, "NO"))
 		path_check(line, data->no_texts, &data->status);
