@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pre_render.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/07 12:12:12 by tfreydie          #+#    #+#             */
+/*   Updated: 2024/10/07 12:14:16 by tfreydie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 static	int	rgb_squeeze(int r, int g, int b);
@@ -29,10 +41,11 @@ void	draw_floor_sky(int x, int y, t_info *w)
 
 void	pixel_fill(t_image *img, int x, int y, int color)
 {
-	char	*real_pixel_coor;
+	char	*real_color;
 
-	real_pixel_coor = img->pix_addr + (y * img->size_line) + (x * (img->bits_per_pixel / 8));
-	*(unsigned int *)real_pixel_coor = color;
+	real_color = img->pix_addr + (y * img->size_line)
+		+ (x * (img->bits_per_pixel / 8));
+	*(unsigned int *)real_color = color;
 }
 
 static	int	rgb_squeeze(int r, int g, int b)

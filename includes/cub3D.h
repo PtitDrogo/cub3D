@@ -106,26 +106,26 @@ typedef struct s_w_assets
 	t_image			s_wall;
 	t_image			e_wall;
 	t_image			w_wall;
-	t_image			boom1;
-	t_image			boom2;
-	t_image			boom3;
-	t_image			boom4;
-	t_image			boom5;
-	t_image			boom6;
-	t_image			boom7;
-	t_image			boom8;
-	t_image			boom9;
-	t_image			boom10;
-	t_image			cloud1;
-	t_image			cloud2;
-	t_image			cloud3;
-	t_image			cloud4;
-	t_image			cloud5;
-	t_image			cloud6;
-	t_image			cloud7;
-	t_image			cloud8;
-	t_image			cloud9;
-	t_image			cloud10;
+	t_image			b1;
+	t_image			b2;
+	t_image			b3;
+	t_image			b4;
+	t_image			b5;
+	t_image			b6;
+	t_image			b7;
+	t_image			b8;
+	t_image			b9;
+	t_image			b10;
+	t_image			c1;
+	t_image			c2;
+	t_image			c3;
+	t_image			c4;
+	t_image			c5;
+	t_image			c6;
+	t_image			c7;
+	t_image			c8;
+	t_image			c9;
+	t_image			c10;
 }	t_assets;
 
 typedef struct t_w_info
@@ -196,6 +196,8 @@ void    update_status(int err_value, int *status);
 void	rgb_parsing(const char *line, t_rgb *rgb, int *status);
 bool	is_map_char(char c);
 void	skip_word(const char *line, size_t *index);
+bool	is_xpm_file(const char *s);
+void	xpm_check(t_parse *data);
 
 //---------------------Map-Parsing---------------------//
 bool	is_map_valid(t_info *w, char **m_map);
@@ -211,6 +213,12 @@ int		load_sprites(t_info *w, t_parse *d, int err);
 void	pixel_fill(t_image *img, int x, int y, int color);
 void	draw_floor_sky(int x, int y, t_info *data);
 
+//---------------------Sprites---------------------//
+int	load_bonus_boom(t_info *w);
+int	load_bonus_cloud(t_info *w);
+int	load_sprites(t_info *w, t_parse *d, int err);
+void	load_all_address_sprites(t_info *w);;
+
 //---------------------DDA---------------------//
 void		dda_innit(t_info *w, int i);
 double		applyDDA(t_info *w, double	wallDist);
@@ -219,7 +227,7 @@ void		getDrawLimits(t_info *w);
 void		move_player(t_info *w);
 
 //---------------------Keys---------------------//
-int	release_countermeasures(int id_key, t_info *w);
+int	release_countermeasure(int id_key, t_info *w);
 int	deal_key(int id_key, t_info *w);
 
 
