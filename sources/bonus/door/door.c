@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 19:44:59 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 13:56:42 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:58:33 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	update_animation_info(t_info *w, char type);
 void	check_doors(t_info *w)
 {
 	dda_innit(w, DEFAULT_LENGTH / 2);
-	movetoFirstXY(w, w->rayDirX, w->rayDirY);
+	movetoFirstXY(w, w->ray_dir_x, w->ray_dir_y);
 	check_mid_ray(w);
 	door_logic(w);
 }

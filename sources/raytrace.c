@@ -60,7 +60,7 @@ double	applyDDA(t_info *w, double wall_dist)
 
 void	getDrawLimits(t_info *w)
 {
-	w->line_height = (DEFAULT_HEIGHT / w->distWall); //BUG Distwall can be 0 and it crashes stuff
+	w->line_height = (DEFAULT_HEIGHT / w->distwall); //BUG Distwall can be 0 and it crashes stuff
 	// printf("distwall : %f\n",  w->distWall);
 	//calculate lowest and highest pixel to fill in current stripe
 	// w->draw_start = -w->line_height / 2 + DEFAULT_HEIGHT / 2;

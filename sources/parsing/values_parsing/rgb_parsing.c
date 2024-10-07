@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:29:14 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 12:29:16 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:00:14 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	get_rgb_value(const char buffer[4], int *status)
 	while (buffer[i] && i < ft_strlen(buffer))
 	{
 		if (ft_isdigit(buffer[i]) == false)
-			return (update_status(ERR_RGB_NaN, status), -1);
+			return (update_status(ERR_RGB_NAN, status), -1);
 		i++;
 	}
 	rgb_value = ft_atoi(buffer);
