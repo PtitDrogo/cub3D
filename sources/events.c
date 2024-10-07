@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:50:30 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 14:56:43 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:26:22 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ static void	draw_line(t_info *w, int x)
 	while (y <= w->draw_end)
 	{
 		scaling = (y * 256) - DEFAULT_HEIGHT * 128 + w->line_height * 128;
-		textur_y = ((scaling * w->assets.n_wall.height) / w->line_height) / 256;
+		textur_y = (scaling * w->in_use_texture->height / w->line_height) / 256;
 		if (textur_y < 0)
 			textur_y = 0;
-		if (textur_y >= w->assets.n_wall.height)
-			textur_y = w->assets.n_wall.height - 1;
+		if (textur_y >= w->in_use_texture->height)
+			textur_y = w->in_use_texture->height - 1;
 		color = pixel_color(w, textur_y);
 		pixel_fill(&w->img_buffer, x, y, color);
 		y++;
@@ -71,10 +71,10 @@ static void	apply_texture(t_info *w)
 	else
 		touched_wall = (w->distwall * w->ray_dir_x) + w->x_pl;
 	touched_wall -= floor(touched_wall);
-	w->texture_x = (int)(touched_wall * (double)w->assets.n_wall.width);
+	w->texture_x = (int)(touched_wall * (double)w->in_use_texture->width);
 	if ((w->side == 0 && w->ray_dir_x < 0)
 		|| (w->side == 1 && w->ray_dir_y > 0))
-		w->texture_x = w->assets.n_wall.width - w->texture_x - 1;
+		w->texture_x = w->in_use_texture->width - w->texture_x - 1;
 }
 
 static t_image	*get_texture(t_info *w)

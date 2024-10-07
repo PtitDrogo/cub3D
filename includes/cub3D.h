@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:57:08 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 15:07:44 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:24:25 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@
 # define MIN_HEIGHT 810
 # define DEFAULT_LENGTH 1440
 # define DEFAULT_HEIGHT 810
-# define SPRITE_HEIGHT 64
-# define SPRITE_LENGTH 64
 # define CAM_SPEED 0.030
 # define PLAYER_SPEED 0.090
 # define MAX_ZOOM 0.2
