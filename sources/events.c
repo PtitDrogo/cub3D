@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   events.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/07 13:50:30 by tfreydie          #+#    #+#             */
+/*   Updated: 2024/10/07 14:56:43 by tfreydie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 static void		apply_texture(t_info *w);
 static t_image	*get_texture(t_info *w);
 static void		draw_line(t_info *w, int x);
-static int		pixel_color(t_info *data, int texture_y);
 
 int	no_events(t_info *w)
 {
@@ -15,8 +26,8 @@ int	no_events(t_info *w)
 	while (i < DEFAULT_LENGTH)
 	{
 		dda_innit(w, i);
-		goto_first_xy(w, w->rayDirX, w->rayDirY);
-		w->distWall = apply_dda(w, 0);
+		goto_first_xy(w, w->ray_dir_x, w->ray_dir_y);
+		w->distwall = apply_dda(w, 0);
 		apply_texture(w);
 		get_drawlimits(w);
 		draw_line(w, i);
@@ -33,33 +44,21 @@ static void	draw_line(t_info *w, int x)
 	int	y;
 	int	scaling;
 	int	color;
-	int	texture_y;
+	int	textur_y;
 
 	y = w->draw_start;
 	while (y <= w->draw_end)
 	{
-		scaling = (y * 256) - DEFAULT_HEIGHT * 128 + w->line_height * 128; //Tres utile !
-		// scaling = 1;
-		texture_y = ((scaling * w->assets.n_wall.height) / w->line_height) / 256;
-		if (texture_y < 0)
-			texture_y = 0; //Pour les segfaults dans les coins
-		if (texture_y >= w->assets.n_wall.height) //IMAGE TROP GROSSE LOL OU TROP PETITE QUI SAIT
-			texture_y = w->assets.n_wall.height - 1;
-		color = pixel_color(w, texture_y);
-		// color = apply_fog(color);
+		scaling = (y * 256) - DEFAULT_HEIGHT * 128 + w->line_height * 128;
+		textur_y = ((scaling * w->assets.n_wall.height) / w->line_height) / 256;
+		if (textur_y < 0)
+			textur_y = 0;
+		if (textur_y >= w->assets.n_wall.height)
+			textur_y = w->assets.n_wall.height - 1;
+		color = pixel_color(w, textur_y);
 		pixel_fill(&w->img_buffer, x, y, color);
 		y++;
 	}
-}
-
-static int	pixel_color(t_info *w, int texture_y)
-{
-	char			*color;
-	t_image			*texture;
-
-	texture = w->in_use_texture;
-	color = texture->pix_addr + (texture_y * texture->size_line) + (w->texture_x * (texture->bits_per_pixel / 8));
-	return (*(unsigned int *)color); //casting very important
 }
 
 static void	apply_texture(t_info *w)
@@ -68,21 +67,14 @@ static void	apply_texture(t_info *w)
 
 	w->in_use_texture = get_texture(w);
 	if (w->side == 0)
-		touched_wall = (w->distWall * w->rayDirY) + w->y_pl;
+		touched_wall = (w->distwall * w->ray_dir_y) + w->y_pl;
 	else
-		touched_wall = (w->distWall * w->rayDirX) + w->x_pl;
+		touched_wall = (w->distwall * w->ray_dir_x) + w->x_pl;
 	touched_wall -= floor(touched_wall);
-	w->texture_x = (int)(touched_wall * (double)w->assets.n_wall.width); //It could be any texture i just want the standard width
-	if ((w->side == 0 && w->rayDirX < 0) || (w->side == 1 && w->rayDirY > 0))
+	w->texture_x = (int)(touched_wall * (double)w->assets.n_wall.width);
+	if ((w->side == 0 && w->ray_dir_x < 0)
+		|| (w->side == 1 && w->ray_dir_y > 0))
 		w->texture_x = w->assets.n_wall.width - w->texture_x - 1;
-	/*
-	The last condition checks if:
-	The ray hit a vertical wall AND the player is facing right (positive X)
-	OR
-	The ray hit a horizontal wall AND the player is facing up (negative Y)
-	If either of these conditions is true, the code flips the texture horizontally:
-	data->texture_x = data->textures[0].width - data->texture_x - 1;
-	This operation mirrors the texture coordinate. If texture_x was 10 in a 64-pixel wide texture, it becomes 53 (64 - 10 - 1).*/
 }
 
 static t_image	*get_texture(t_info *w)
@@ -91,34 +83,34 @@ static t_image	*get_texture(t_info *w)
 		return (&w->assets.m_door);
 	if (w->side == 0)
 	{
-		if (w->rayDirX > 0)
+		if (w->ray_dir_x > 0)
 			return (&w->assets.e_wall);
 		else
 			return (&w->assets.w_wall);
 	}
 	else
 	{
-		if (w->rayDirY > 0)
+		if (w->ray_dir_y > 0)
 			return (&w->assets.s_wall);
 		else
 			return (&w->assets.n_wall);
 	}
 }
 
-void dda_innit(t_info *w, int i)
+void	dda_innit(t_info *w, int i)
 {
-	w->cameraX = 2 * i / (double)DEFAULT_LENGTH - 1;
-	w->rayDirX = w->vectors.xPos + w->vectors.xCam * w->cameraX;
-	w->rayDirY = w->vectors.yPos + w->vectors.yCam * w->cameraX;
+	w->camera_x = 2 * i / (double)DEFAULT_LENGTH - 1;
+	w->ray_dir_x = w->vectors.x_pos + w->vectors.x_cam * w->camera_x;
+	w->ray_dir_y = w->vectors.y_pos + w->vectors.y_cam * w->camera_x;
 	w->current_map_x = (int)w->x_pl;
 	w->current_map_y = (int)w->y_pl;
-	if (w->rayDirX == 0)
-		w->vectors.deltaX = 1e30;
+	if (w->ray_dir_x == 0)
+		w->vectors.delta_x = 1e30;
 	else
-		w->vectors.deltaX = fabs(1 / w->rayDirX);
-	if (w->rayDirY == 0)
-		w->vectors.deltaY = 1e30;
+		w->vectors.delta_x = fabs(1 / w->ray_dir_x);
+	if (w->ray_dir_y == 0)
+		w->vectors.delta_y = 1e30;
 	else
-		w->vectors.deltaY = fabs(1 / w->rayDirY);
+		w->vectors.delta_y = fabs(1 / w->ray_dir_y);
 	return ;
 }

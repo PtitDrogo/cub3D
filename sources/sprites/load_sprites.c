@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:37:55 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 13:12:00 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:57:05 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,13 @@ int	load_bonus_cloud(t_info *w)
 int	load_sprites(t_info *w, t_parse *d, int err)
 {
 	w->assets.n_wall.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
-			d->NO_texts, &w->assets.n_wall.height, &w->assets.n_wall.width);
+			d->no_texts, &w->assets.n_wall.height, &w->assets.n_wall.width);
 	w->assets.s_wall.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
-			d->SO_texts, &w->assets.s_wall.height, &w->assets.s_wall.width);
+			d->so_texts, &w->assets.s_wall.height, &w->assets.s_wall.width);
 	w->assets.e_wall.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
-			d->EA_texts, &w->assets.e_wall.height, &w->assets.e_wall.width);
+			d->ea_texts, &w->assets.e_wall.height, &w->assets.e_wall.width);
 	w->assets.w_wall.img_ptr = mlx_xpm_file_to_image(w->id_mlx,
-			d->WE_texts, &w->assets.w_wall.height, &w->assets.w_wall.width);
+			d->we_texts, &w->assets.w_wall.height, &w->assets.w_wall.width);
 	w->assets.m_door.img_ptr = pick_door_sprite(w);
 	err = load_bonus_boom(w);
 	err += load_bonus_cloud(w);
