@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:13:03 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 13:16:38 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:56:02 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ static void	set_vertical(t_vector *vec, char c)
 {
 	if (c == 'N')
 	{
-		vec->xPos = 0.0;
-		vec->yPos = -1.0;
-		vec->xCam = 0.66;
-		vec->yCam = 0.0;
+		vec->x_pos = 0.0;
+		vec->y_pos = -1.0;
+		vec->x_cam = 0.66;
+		vec->y_cam = 0.0;
 	}
 	if (c == 'S')
 	{
-		vec->xPos = 0.0;
-		vec->yPos = 1.0;
-		vec->xCam = -0.66;
-		vec->yCam = 0.0;
+		vec->x_pos = 0.0;
+		vec->y_pos = 1.0;
+		vec->x_cam = -0.66;
+		vec->y_cam = 0.0;
 	}
 	return ;
 }
@@ -44,17 +44,17 @@ static void	set_horizontal(t_vector *vec, char c)
 {
 	if (c == 'W')
 	{
-		vec->xPos = -1.0;
-		vec->yPos = 0.0;
-		vec->xCam = 0.0;
-		vec->yCam = -0.66;
+		vec->x_pos = -1.0;
+		vec->y_pos = 0.0;
+		vec->x_cam = 0.0;
+		vec->y_cam = -0.66;
 	}
 	if (c == 'E')
 	{
-		vec->xPos = 1.0;
-		vec->yPos = 0.0;
-		vec->xCam = 0.0;
-		vec->yCam = 0.66;
+		vec->x_pos = 1.0;
+		vec->y_pos = 0.0;
+		vec->x_cam = 0.0;
+		vec->y_cam = 0.66;
 	}
 	return ;
 }

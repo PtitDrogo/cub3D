@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/07 13:57:08 by tfreydie          #+#    #+#             */
+/*   Updated: 2024/10/07 13:57:30 by tfreydie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -62,10 +74,10 @@ typedef struct s_input
 
 typedef struct s_parse_data
 {
-	char			NO_texts[PATH_MAX];
-	char			SO_texts[PATH_MAX];
-	char			WE_texts[PATH_MAX];
-	char			EA_texts[PATH_MAX];
+	char			no_texts[PATH_MAX];
+	char			so_texts[PATH_MAX];
+	char			we_texts[PATH_MAX];
+	char			ea_texts[PATH_MAX];
 	t_rgb 			floor_colors;
 	t_rgb 			ceiling_colors;
 	int				status;
@@ -87,16 +99,16 @@ typedef struct t_my_image
 
 typedef struct t_m_vector
 {
-	double	xPos; //x of player vector (dirX)
-	double	yPos; //y of player vector (dirY)
-	double	xCam; //x of cam vector (planeX)
-	double	yCam; //y of cam vector (planeY)
-	double	nextDistX;	//Length of ray from current position to next x-side (sideDistX)
-	double	nextDistY;	//Length of ray from current position to next y-side (sideDistY)
-	double	deltaX;		//Length of ray from one x to next x-side (deltaDistX)
-	double	deltaY;		//Length of ray from one y to next y-side (deltaDistY)
-	int		stepX;		//How much to step in x
-	int		stepY;		//How much to step in y
+	double	x_pos; //x of player vector (dirX)
+	double	y_pos; //y of player vector (dirY)
+	double	x_cam; //x of cam vector (planeX)
+	double	y_cam; //y of cam vector (planeY)
+	double	next_dist_x;	//Length of ray from current position to next x-side (sideDistX)
+	double	next_dist_y;	//Length of ray from current position to next y-side (sideDistY)
+	double	delta_x;		//Length of ray from one x to next x-side (deltaDistX)
+	double	delta_y;		//Length of ray from one y to next y-side (deltaDistY)
+	int		step_x;		//How much to step in x
+	int		step_y;		//How much to step in y
 }				t_vector;
 
 typedef struct s_w_assets
@@ -212,6 +224,7 @@ int		load_sprites(t_info *w, t_parse *d, int err);
 //---------------------Render---------------------//
 void	pixel_fill(t_image *img, int x, int y, int color);
 void	draw_floor_sky(int x, int y, t_info *data);
+int		pixel_color(t_info *w, int texture_y);
 
 //---------------------Sprites---------------------//
 int	load_bonus_boom(t_info *w);

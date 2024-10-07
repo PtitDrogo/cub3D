@@ -1,14 +1,12 @@
-WE ./sprites/TongueClose64.xpm      
+WE  ./sprites/TongueClose64.xpm      
 
-EA    ./sprites/TongueOpen64.xpm
+EA  ./sprites/TongueOpen64.xpm
 
-NO          ./sprites/BrickWall64.xpm
+NO  ./sprites/BrickWall64.xpm
 
-SO ./sprites/BrickWall64.xpm    
+SO  ./sprites/BrickWall64.xpm    
 
-DO          ./sprites/stolendoor64.xpm
-
-F       33, 12, 12    
+F       33, 12, 12
 
 C   0, 0, 0
 

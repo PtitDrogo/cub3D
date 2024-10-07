@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:12:12 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 12:14:16 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:53:13 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,17 @@ void	pixel_fill(t_image *img, int x, int y, int color)
 	real_color = img->pix_addr + (y * img->size_line)
 		+ (x * (img->bits_per_pixel / 8));
 	*(unsigned int *)real_color = color;
+}
+
+int	pixel_color(t_info *w, int texture_y)
+{
+	char			*color;
+	t_image			*texture;
+
+	texture = w->in_use_texture;
+	color = texture->pix_addr + (texture_y * texture->size_line)
+		+ (w->texture_x * (texture->bits_per_pixel / 8));
+	return (*(unsigned int *)color);
 }
 
 static	int	rgb_squeeze(int r, int g, int b)
