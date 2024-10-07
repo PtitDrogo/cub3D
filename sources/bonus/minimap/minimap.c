@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 19:05:03 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 16:24:01 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:33:12 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	get_color(t_info *w, int x, int y)
 	else if (c == 'N' || c == 'E' || c == 'S' || c == 'W')
 		return (0x71);
 	else if (is_white_space(c))
-		return (0x005500);
+		return (0x191736);
 	else if (c == 'D')
 		return (0x582900);
 	else if (c == 'O')
