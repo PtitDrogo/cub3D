@@ -45,3 +45,19 @@ void	load_all_address_sprites(t_info *w)
 	}
 	return ;
 }
+
+void	*pick_door_sprite(t_info *w)
+{
+	char	*path;
+	void	*im;
+
+	path = "./sprites/rockdoor64.xpm";
+	if (ft_strcmp(w->map_path, "maps/mineshaft.cub") == 0)
+		path = "./sprites/lockmine.xpm";
+	else if (ft_strcmp(w->map_path, "maps/meadow.cub") == 0)
+		path = "./sprites/cdoor21.xpm";
+	im = mlx_xpm_file_to_image(w->id_mlx,
+			path, &w->assets.m_door.height,
+			&w->assets.m_door.width);
+	return (im);
+}

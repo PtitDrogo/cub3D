@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:50:30 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 14:38:58 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:56:43 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int	no_events(t_info *w)
 	while (i < DEFAULT_LENGTH)
 	{
 		dda_innit(w, i);
-		movetoFirstXY(w, w->ray_dir_x, w->ray_dir_y);
-		w->distwall = applyDDA(w, 0);
+		goto_first_xy(w, w->ray_dir_x, w->ray_dir_y);
+		w->distwall = apply_dda(w, 0);
 		apply_texture(w);
-		getDrawLimits(w);
+		get_drawlimits(w);
 		draw_line(w, i);
 		i++;
 	}

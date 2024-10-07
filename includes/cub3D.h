@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:57:08 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 14:48:39 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:58:24 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ typedef struct t_w_info
 	void			*id_wind;
 	char			**map_file;
 	char			**actual_map;
+	char			*map_path;
 	int				side;
 	int				map_height;
 	int				map_length;
@@ -209,12 +210,15 @@ void	xpm_check(t_parse *data);
 //---------------------Map-Parsing---------------------//
 bool	is_map_valid(t_info *w, char **m_map);
 void	print_map(char **map);	//Only for debug, to delete after
+void	expand_map(char **map, int max_len);
 bool	is_map_char(char c);
 bool	is_direction_c(char c);
 void	find_player(t_info *w); //Set player x | y
+int		invalid_player(char **m_map);
 void	print_map_current(char **map, int x, int y);
 void	get_map_height(char **map, int *height, int *length);
 int		load_sprites(t_info *w, t_parse *d, int err);
+bool	contains_invalid_char(char *str, int *cpt);
 
 //---------------------Render---------------------//
 void	pixel_fill(t_image *img, int x, int y, int color);

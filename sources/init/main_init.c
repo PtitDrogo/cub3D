@@ -44,6 +44,7 @@ void	parse_init(t_info *w, t_parse *data,
 	ft_bzero(data, sizeof(*data));
 	w->player_speed = PLAYER_SPEED;
 	w->map_file = get_map(argv[1]);
+	w->map_path = (char *) argv[1];
 }
 
 static char	**get_map(const char *map_path_name)
