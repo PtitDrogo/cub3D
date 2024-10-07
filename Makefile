@@ -28,6 +28,7 @@ SRCS =		$(SRCS_DIR)/main.c \
 			$(SRCS_DIR)/sprites/sprites.c \
 			$(SRCS_DIR)/sprites/load_sprites.c \
 			$(SRCS_DIR)/init/main_init.c \
+			$(SRCS_DIR)/movement.c \
 			$(SRCS_DIR)/init/init_utils.c \
 			$(SRCS_DIR)/Errors/errors.c \
 			$(SRCS_DIR)/render/pre_render.c \

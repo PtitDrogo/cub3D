@@ -6,7 +6,7 @@
 /*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:32:32 by tfreydie          #+#    #+#             */
-/*   Updated: 2024/10/07 12:43:18 by tfreydie         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:04:38 by tfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,12 @@ int	load_addr_sprites(t_image *image)
 	return (0);
 }
 
-
-void load_all_address_sprites(t_info *w)
+void	load_all_address_sprites(t_info *w)
 {
-	int i;
-	int end;
-	int err;
-	t_image *ptr;
+	int		i;
+	int		end;
+	int		err;
+	t_image	*ptr;
 
 	err = 0;
 	i = 0;
