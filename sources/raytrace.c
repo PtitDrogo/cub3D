@@ -17,22 +17,26 @@ void	goto_first_xy(t_info *w, double rayX, double rayY)
 	if (rayX < 0)
 	{
 		w->vectors.step_x = -1;
-		w->vectors.next_dist_x = (w->x_pl - w->current_map_x) * w->vectors.delta_x;
+		w->vectors.next_dist_x = (w->x_pl - w->current_map_x)
+			* w->vectors.delta_x;
 	}
 	else
 	{
 		w->vectors.step_x = 1;
-		w->vectors.next_dist_x = (w->current_map_x + 1.0 - w->x_pl) * w->vectors.delta_x;
+		w->vectors.next_dist_x = (w->current_map_x + 1.0 - w->x_pl)
+			* w->vectors.delta_x;
 	}
 	if (rayY < 0)
 	{
 		w->vectors.step_y = -1;
-		w->vectors.next_dist_y = (w->y_pl - w->current_map_y) * w->vectors.delta_y;
+		w->vectors.next_dist_y = (w->y_pl - w->current_map_y)
+			* w->vectors.delta_y;
 	}
 	else
 	{
 		w->vectors.step_y = 1;
-		w->vectors.next_dist_y = (w->current_map_y + 1.0 - w->y_pl) * w->vectors.delta_y;
+		w->vectors.next_dist_y = (w->current_map_y + 1.0 - w->y_pl)
+			* w->vectors.delta_y;
 	}
 }
 
@@ -55,7 +59,7 @@ double	apply_dda(t_info *w, double wall_dist)
 	w->is_door = false;
 	while (42)
 	{
-		if(w->vectors.next_dist_x < w->vectors.next_dist_y)
+		if (w->vectors.next_dist_x < w->vectors.next_dist_y)
 		{
 			w->vectors.next_dist_x += w->vectors.delta_x;
 			w->current_map_x += w->vectors.step_x;
@@ -70,7 +74,7 @@ double	apply_dda(t_info *w, double wall_dist)
 		if (is_special_block(w) == true)
 			break ;
 	}
-	if(w->side == 0)
+	if (w->side == 0)
 		wall_dist = (w->vectors.next_dist_x - w->vectors.delta_x);
 	else
 		wall_dist = (w->vectors.next_dist_y - w->vectors.delta_y);
