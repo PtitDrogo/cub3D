@@ -46,8 +46,8 @@ void	find_player(t_info *w)
 		{
 			if (is_direction_c(w->actual_map[y][x]))
 			{
-				w->x_pl = x + 0.5; //adding an offset so its not perfectly ligned up
-				w->y_pl = y + 0.5; //adding an offset so its not perfectly ligned up
+				w->x_pl = x + 0.5;
+				w->y_pl = y + 0.5;
 				setMapVectors(&w->vectors, w->actual_map[y][x]);
 				w->actual_map[y][x] = '0';
 				return ;

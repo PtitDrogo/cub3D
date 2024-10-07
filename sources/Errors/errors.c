@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   errors.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tfreydie <tfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/02 19:59:41 by tfreydie          #+#    #+#             */
+/*   Updated: 2024/10/02 19:59:44 by tfreydie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 void	print_error_msg(int err_code)
@@ -25,4 +37,18 @@ void	print_error_msg(int err_code)
 		ft_printf2("Not enough characteres to be a viable value !\n");
 	else if (err_code == ERR_INVALID_CHAR)
 		ft_printf2("Character isnt valid code for value !\n");
+	else if (err_code == ERR_NOT_XPM_FILE)
+		ft_printf2("Not a .xpm file\n");
+}
+
+void	perror_exit(const char *err_msg)
+{
+	perror(err_msg);
+	exit (1);
+}
+
+void	printf_exit(const char *err_msg)
+{
+	ft_printf2(err_msg);
+	exit (1);
 }
